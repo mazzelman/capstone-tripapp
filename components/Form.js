@@ -15,20 +15,21 @@ export default function Form() {
   };
 
   // Function to get the user inputs from form
-
   function handleSubmit(event) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    console.log(data);
 
     const results = places.filter((place) => place.activity === data.activity);
 
     setFormresults(results);
   }
 
-  console.log(formResults);
+  // handle form reset
+  function handleFormReset() {
+    setFormresults(0);
+  }
 
   return (
     <>
@@ -43,6 +44,9 @@ export default function Form() {
           ))}
         </select>
         <button type="submit">Submit</button>
+        <button type="button" onClick={() => handleFormReset()}>
+          Reset
+        </button>
       </form>
       {/* Search results. Will later be a Card Component */}
 
@@ -50,8 +54,3 @@ export default function Form() {
     </>
   );
 }
-
-/* <option value="0">---</option>
-<option value="1">Hike</option>
-<option value="2">City</option>
-<option value="3">Beach</option> */

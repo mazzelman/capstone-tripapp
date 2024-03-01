@@ -14,5 +14,6 @@ export const StyledFooter = styled.footer`
 
 export const StyledFooterInner = styled.div`
   max-width: var(--max-with);
+  padding: var(--main-padding);
   margin: var(--main-margin);
 `;

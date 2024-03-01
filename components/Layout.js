@@ -21,5 +21,6 @@ export default function Layout({ children }) {
 
 export const StyledMain = styled.main`
   max-width: var(--max-with);
+  padding: var(--main-padding);
   margin: var(--main-margin);
 `;
