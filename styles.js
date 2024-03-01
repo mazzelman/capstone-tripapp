@@ -7,7 +7,13 @@ export default createGlobalStyle`
     box-sizing: border-box;
   }
 
-  body {
+  :root{
+    --max-with: 800px;
+    --main-margin: 0 auto;
+
+  }
+
+  body {    
     margin: 0;
     font-family: system-ui;
   }
