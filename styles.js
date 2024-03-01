@@ -10,6 +10,7 @@ export default createGlobalStyle`
   :root{
     --max-with: 800px;
     --main-margin: 0 auto;
+    --main-padding: 1em;
 
   }
 
