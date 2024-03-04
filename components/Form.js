@@ -10,7 +10,7 @@ export default function Form() {
   // Function to get unique values of the 'activity' key
   const getUniqueActivities = () => {
     const uniqueActivities = new Set();
-    dbPlaces.map((place) => uniqueActivities.add(place.activity));
+    dbPlaces.forEach((place) => uniqueActivities.add(place.activity));
     return Array.from(uniqueActivities);
   };
 
@@ -44,11 +44,10 @@ export default function Form() {
           ))}
         </select>
         <button type="submit">Submit</button>
-        <button type="button" onClick={() => handleFormReset()}>
+        <button type="button" onClick={handleFormReset}>
           Reset
         </button>
       </form>
-      {/* Search results. Will later be a Card Component */}
 
       {formResults.length > 0 && <PreviewCard formResults={formResults} />}
     </>
