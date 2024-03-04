@@ -19,7 +19,7 @@ export default function DetailsCard({ matchingPlace }) {
           height="0"
           alt={matchingPlace.name}
           loading="lazy"
-        ></Image>
+        />
         <h3>{matchingPlace.name}</h3>
         <p>Region: {matchingPlace.region}</p>
         <p>Activity: {matchingPlace.activity}</p>

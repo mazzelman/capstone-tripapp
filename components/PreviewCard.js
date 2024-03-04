@@ -18,8 +18,8 @@ export default function PreviewCard({ formResults }) {
             height="0"
             alt={name}
             loading="lazy"
-          ></Image>
-          <Link href={`./places/${id}`}>
+          />
+          <Link href={`/places/${id}`}>
             <h3>{name}</h3>
           </Link>
           <p>Region: {region}</p>
