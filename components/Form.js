@@ -1,19 +1,12 @@
-import { dbPlaces } from "@/lib/db";
-import { useState } from "react";
 import PreviewCard from "./PreviewCard";
 
-const places = dbPlaces;
-
-export default function Form() {
-  const [formResults, setFormresults] = useState(0);
-
-  // Function to get unique values of the 'activity' key
-  const getUniqueActivities = () => {
-    const uniqueActivities = new Set();
-    dbPlaces.forEach((place) => uniqueActivities.add(place.activity));
-    return Array.from(uniqueActivities);
-  };
-
+export default function Form({
+  formResults,
+  setFormResults,
+  handleResults,
+  getUniqueActivities,
+  places,
+}) {
   // Function to get the user inputs from form
   function handleSubmit(event) {
     event.preventDefault();
@@ -22,13 +15,12 @@ export default function Form() {
     const data = Object.fromEntries(formData);
 
     const results = places.filter((place) => place.activity === data.activity);
-
-    setFormresults(results);
+    handleResults(results);
   }
 
   // handle form reset
   function handleFormReset() {
-    setFormresults(0);
+    setFormResults(0);
   }
 
   return (

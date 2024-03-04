@@ -1,11 +1,27 @@
 import styled from "styled-components";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function PreviewCard({ formResults }) {
   return (
     <>
-      {formResults.map(({ id, name, activity, region }) => (
+      {formResults.map(({ id, name, activity, region, image }) => (
         <StyledCard key={id}>
-          <h3>{name}</h3>
+          <Image
+            src={image}
+            sizes="100vw"
+            style={{
+              width: "100%",
+              height: "auto",
+            }}
+            width="0"
+            height="0"
+            alt={name}
+            loading="lazy"
+          />
+          <Link href={`/places/${id}`}>
+            <h3>{name}</h3>
+          </Link>
           <p>Region: {region}</p>
           <p>Activity: {activity}</p>
         </StyledCard>
