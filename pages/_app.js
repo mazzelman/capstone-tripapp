@@ -9,6 +9,7 @@ const places = dbPlaces;
 export default function App({ Component, pageProps }) {
   //build a useState for the result of the Form
   const [formResults, setFormResults] = useState(0);
+  const [randomSurprise, setRandomSurprise] = useState(0);
 
   // Function to get unique values of the 'activity' key
   const getUniqueActivities = () => {
@@ -21,6 +22,13 @@ export default function App({ Component, pageProps }) {
     setFormResults(newResults);
   }
 
+  function handleSurprise() {
+    const randomPlace = places[Math.floor(Math.random() * places.length)];
+    setRandomSurprise(randomPlace);
+    console.log(randomSurprise);
+    return randomSurprise;
+  }
+
   return (
     <>
       <GlobalStyle />
@@ -31,6 +39,8 @@ export default function App({ Component, pageProps }) {
           handleResults={handleResults}
           getUniqueActivities={getUniqueActivities}
           places={places}
+          randomSurprise={randomSurprise}
+          handleSurprise={handleSurprise}
           {...pageProps}
         />
       </Layout>

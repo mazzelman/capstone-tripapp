@@ -6,6 +6,9 @@ export default function HomePage({
   handleResults,
   getUniqueActivities,
   places,
+  randomSurprise,
+
+  handleSurprise,
 }) {
   return (
     <div>
@@ -16,6 +19,8 @@ export default function HomePage({
         handleResults={handleResults}
         getUniqueActivities={getUniqueActivities}
         places={places}
+        randomSurprise={randomSurprise}
+        handleSurprise={handleSurprise}
       />
     </div>
   );
