@@ -6,8 +6,7 @@ export default function Form({
   formResults,
   setFormResults,
   handleResults,
-  getUniqueRegions,
-  getUniqueActivities,
+  getUniqueValues,
   places,
   randomSurprise,
   setRandomSurprise,
@@ -52,7 +51,7 @@ export default function Form({
         <label htmlFor="region">Choose your region</label>
         <select name="region" id="region">
           <option value="disabled">---</option>
-          {getUniqueRegions().map((region, id) => (
+          {getUniqueValues("region").map((region, id) => (
             <option key={id} value={region}>
               {region}
             </option>
@@ -62,7 +61,7 @@ export default function Form({
         <label htmlFor="activity">Choose your activity</label>
         <select name="activity" id="activity">
           <option value="disabled">---</option>
-          {getUniqueActivities().map((activity, id) => (
+          {getUniqueValues("activity").map((activity, id) => (
             <option key={id} value={activity}>
               {activity}
             </option>

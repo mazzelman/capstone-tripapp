@@ -11,18 +11,11 @@ export default function App({ Component, pageProps }) {
   const [formResults, setFormResults] = useState(0);
   const [randomSurprise, setRandomSurprise] = useState(0);
 
-  // Function to get unique values of the 'activity' key
-  const getUniqueActivities = () => {
-    const uniqueActivities = new Set();
-    dbPlaces.forEach((place) => uniqueActivities.add(place.activity));
-    return Array.from(uniqueActivities);
-  };
-
-  // Function to get unique values of the 'region' key
-  const getUniqueRegions = () => {
-    const uniqueRegions = new Set();
-    dbPlaces.forEach((place) => uniqueRegions.add(place.region));
-    return Array.from(uniqueRegions);
+  // Function to get unique values for a given key
+  const getUniqueValues = (key) => {
+    const uniqueValues = new Set();
+    dbPlaces.forEach((place) => uniqueValues.add(place[key]));
+    return Array.from(uniqueValues);
   };
 
   // handle the form results and set the state
@@ -44,8 +37,7 @@ export default function App({ Component, pageProps }) {
           formResults={formResults}
           setFormResults={setFormResults}
           handleResults={handleResults}
-          getUniqueRegions={getUniqueRegions}
-          getUniqueActivities={getUniqueActivities}
+          getUniqueValues={getUniqueValues}
           places={places}
           randomSurprise={randomSurprise}
           setRandomSurprise={setRandomSurprise}

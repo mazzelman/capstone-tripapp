@@ -4,8 +4,7 @@ export default function HomePage({
   formResults,
   setFormResults,
   handleResults,
-  getUniqueRegions,
-  getUniqueActivities,
+  getUniqueValues,
   places,
   randomSurprise,
   setRandomSurprise,
@@ -18,8 +17,7 @@ export default function HomePage({
         formResults={formResults}
         setFormResults={setFormResults}
         handleResults={handleResults}
-        getUniqueRegions={getUniqueRegions}
-        getUniqueActivities={getUniqueActivities}
+        getUniqueValues={getUniqueValues}
         places={places}
         randomSurprise={randomSurprise}
         setRandomSurprise={setRandomSurprise}
