@@ -56,7 +56,3 @@ export default function Form({
     </>
   );
 }
-
-// {
-//   isPacked ? name + " ✔" : name;
-// }
