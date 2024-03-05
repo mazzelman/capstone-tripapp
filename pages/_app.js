@@ -18,10 +18,19 @@ export default function App({ Component, pageProps }) {
     return Array.from(uniqueActivities);
   };
 
+  // Function to get unique values of the 'region' key
+  const getUniqueRegions = () => {
+    const uniqueRegions = new Set();
+    dbPlaces.forEach((place) => uniqueRegions.add(place.region));
+    return Array.from(uniqueRegions);
+  };
+
+  // handle the form results and set the state
   function handleResults(newResults) {
     setFormResults(newResults);
   }
 
+  // give a random id for the surprise me card
   function handleSurprise() {
     const randomPlace = places[Math.floor(Math.random() * places.length)];
     setRandomSurprise(randomPlace);
@@ -35,9 +44,11 @@ export default function App({ Component, pageProps }) {
           formResults={formResults}
           setFormResults={setFormResults}
           handleResults={handleResults}
+          getUniqueRegions={getUniqueRegions}
           getUniqueActivities={getUniqueActivities}
           places={places}
           randomSurprise={randomSurprise}
+          setRandomSurprise={setRandomSurprise}
           handleSurprise={handleSurprise}
           {...pageProps}
         />

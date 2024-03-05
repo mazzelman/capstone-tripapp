@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { StyledCard } from "./PreviewCard";
 import Image from "next/image";
 import Link from "next/link";

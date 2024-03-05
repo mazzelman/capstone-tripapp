@@ -4,10 +4,11 @@ export default function HomePage({
   formResults,
   setFormResults,
   handleResults,
+  getUniqueRegions,
   getUniqueActivities,
   places,
   randomSurprise,
-
+  setRandomSurprise,
   handleSurprise,
 }) {
   return (
@@ -17,9 +18,11 @@ export default function HomePage({
         formResults={formResults}
         setFormResults={setFormResults}
         handleResults={handleResults}
+        getUniqueRegions={getUniqueRegions}
         getUniqueActivities={getUniqueActivities}
         places={places}
         randomSurprise={randomSurprise}
+        setRandomSurprise={setRandomSurprise}
         handleSurprise={handleSurprise}
       />
     </div>
