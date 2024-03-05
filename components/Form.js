@@ -1,4 +1,5 @@
 import PreviewCard from "./PreviewCard";
+import SpotlightCard from "./SpotlightCard";
 
 export default function Form({
   formResults,
@@ -6,6 +7,9 @@ export default function Form({
   handleResults,
   getUniqueActivities,
   places,
+  randomSurprise,
+
+  handleSurprise,
 }) {
   // Function to get the user inputs from form
   function handleSubmit(event) {
@@ -36,12 +40,19 @@ export default function Form({
           ))}
         </select>
         <button type="submit">Submit</button>
-        <button type="button" onClick={handleFormReset}>
+        <button type="reset" onClick={handleFormReset}>
           Reset
+        </button>
+        <button type="button" onClick={handleSurprise}>
+          Surprise me
         </button>
       </form>
 
       {formResults.length > 0 && <PreviewCard formResults={formResults} />}
+
+      {randomSurprise ? (
+        <SpotlightCard randomSurprise={randomSurprise} />
+      ) : null}
     </>
   );
 }
