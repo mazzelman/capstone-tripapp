@@ -25,8 +25,6 @@ export default function App({ Component, pageProps }) {
   function handleSurprise() {
     const randomPlace = places[Math.floor(Math.random() * places.length)];
     setRandomSurprise(randomPlace);
-    console.log(randomSurprise);
-    return randomSurprise;
   }
 
   return (

@@ -43,7 +43,7 @@ export default function Form({
         <button type="reset" onClick={handleFormReset}>
           Reset
         </button>
-        <button type="button" onClick={() => handleSurprise()}>
+        <button type="button" onClick={handleSurprise}>
           Surprise me
         </button>
       </form>
