@@ -3,8 +3,7 @@ import Layout from "@/components/Layout";
 import { useState } from "react";
 
 //import fake DB from @/lib/db
-import { dbPlaces } from "@/lib/db";
-const places = dbPlaces;
+import { dbPlaces as places } from "@/lib/db";
 
 export default function App({ Component, pageProps }) {
   //build a useState for the result of the Form
@@ -14,7 +13,7 @@ export default function App({ Component, pageProps }) {
   // Function to get unique values for a given key
   const getUniqueValues = (key) => {
     const uniqueValues = new Set();
-    dbPlaces.forEach((place) => {
+    places.forEach((place) => {
       if (Array.isArray(place[key])) {
         place[key].forEach((value) => uniqueValues.add(value));
       } else {

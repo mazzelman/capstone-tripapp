@@ -22,12 +22,7 @@ export default function SpotlightCard({ randomSurprise }) {
         <h3>{randomSurprise.name}</h3>
       </Link>
       <p>Region: {randomSurprise.region}</p>
-      <p>
-        Activity:{" "}
-        {Array.isArray(randomSurprise.activity)
-          ? randomSurprise.activity.join(", ")
-          : randomSurprise.activity}
-      </p>
+      <p>Activity: {randomSurprise.activity.join(", ")}</p>
       <p>Description: {randomSurprise.description}</p>
     </StyledCard>
   );

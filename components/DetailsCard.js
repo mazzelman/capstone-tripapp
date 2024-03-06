@@ -21,12 +21,7 @@ export default function DetailsCard({ matchingPlace }) {
         />
         <h3>{matchingPlace.name}</h3>
         <p>Region: {matchingPlace.region}</p>
-        <p>
-          Activity:{" "}
-          {Array.isArray(matchingPlace.activity)
-            ? matchingPlace.activity.join(", ")
-            : matchingPlace.activity}
-        </p>
+        <p>Activity: {matchingPlace.activity.join(", ")}</p>
         <p>Description: {matchingPlace.description}</p>
       </StyledCard>
     </>
