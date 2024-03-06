@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function SpotlightCard({ randomSurprise }) {
   return (
@@ -17,9 +18,16 @@ export default function SpotlightCard({ randomSurprise }) {
         alt={randomSurprise.name}
         loading="lazy"
       />
-      <h3>{randomSurprise.name}</h3>
+      <Link href={`/places/${randomSurprise.id}`}>
+        <h3>{randomSurprise.name}</h3>
+      </Link>
       <p>Region: {randomSurprise.region}</p>
-      <p>Activity: {randomSurprise.activity}</p>
+      <p>
+        Activity:{" "}
+        {Array.isArray(randomSurprise.activity)
+          ? randomSurprise.activity.join(", ")
+          : randomSurprise.activity}
+      </p>
       <p>Description: {randomSurprise.description}</p>
     </StyledCard>
   );

@@ -22,13 +22,22 @@ export default function Form({
     let results = [];
 
     if (data.activity && data.region === "disabled") {
-      results = places.filter((place) => place.activity === data.activity);
+      results = places.filter((place) => {
+        if (Array.isArray(place.activity)) {
+          return place.activity.includes(data.activity);
+        } else {
+          return place.activity === data.activity;
+        }
+      });
     } else if (data.region && data.activity === "disabled") {
       results = places.filter((place) => place.region === data.region);
     } else if (data.region && data.activity) {
       results = places.filter(
         (place) =>
-          place.region === data.region && place.activity === data.activity
+          place.region === data.region &&
+          (Array.isArray(place.activity)
+            ? place.activity.includes(data.activity)
+            : place.activity === data.activity)
       );
     }
 

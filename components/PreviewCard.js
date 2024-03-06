@@ -23,7 +23,9 @@ export default function PreviewCard({ formResults }) {
             <h3>{name}</h3>
           </Link>
           <p>Region: {region}</p>
-          <p>Activity: {activity}</p>
+          <p>
+            Activity: {Array.isArray(activity) ? activity.join(", ") : activity}
+          </p>
         </StyledCard>
       ))}
     </>

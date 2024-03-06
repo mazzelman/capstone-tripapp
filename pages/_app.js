@@ -14,7 +14,13 @@ export default function App({ Component, pageProps }) {
   // Function to get unique values for a given key
   const getUniqueValues = (key) => {
     const uniqueValues = new Set();
-    dbPlaces.forEach((place) => uniqueValues.add(place[key]));
+    dbPlaces.forEach((place) => {
+      if (Array.isArray(place[key])) {
+        place[key].forEach((value) => uniqueValues.add(value));
+      } else {
+        uniqueValues.add(place[key]);
+      }
+    });
     return Array.from(uniqueValues);
   };
 
