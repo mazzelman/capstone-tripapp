@@ -9,6 +9,11 @@ export default function App({ Component, pageProps }) {
   //build a useState for the result of the Form
   const [formResults, setFormResults] = useState(0);
   const [randomSurprise, setRandomSurprise] = useState(0);
+  const [activePage, setActivePage] = useState(false);
+
+  const toggleActivePage = () => {
+    setActivePage(!activePage);
+  };
 
   // Function to get unique values for a given key
   const getUniqueValues = (key) => {
@@ -37,7 +42,11 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <GlobalStyle />
-      <Layout>
+      <Layout
+        activePage={activePage}
+        setActivePage={setActivePage}
+        toggleActivePage={toggleActivePage}
+      >
         <Component
           formResults={formResults}
           setFormResults={setFormResults}
