@@ -1,12 +1,9 @@
+import styled from "styled-components";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import styled from "styled-components";
+import { navigationLinks } from "@/lib/navigation";
 
-export default function Header({
-  activePage,
-  setActivePage,
-  toggleActivePage,
-}) {
+export default function Header({ togglePageActive }) {
   const router = useRouter();
   return (
     <StyledHeader>
@@ -14,33 +11,19 @@ export default function Header({
         <StyledLogo href="/">Trip and bla</StyledLogo>
         <nav>
           <StyledNavigationUl>
-            <li>
-              <StyledNavigationLink
-                href="/"
-                $active={router.pathname === "/"}
-                onClick={toggleActivePage}
-              >
-                Home
-              </StyledNavigationLink>
-            </li>
-            <li>
-              <StyledNavigationLink
-                href="/favorites"
-                $active={router.pathname === "/favorites"}
-                onClick={toggleActivePage}
-              >
-                Favorites
-              </StyledNavigationLink>
-            </li>
-            <li>
-              <StyledNavigationLink
-                href="/profile"
-                $active={router.pathname === "/profile"}
-                onClick={toggleActivePage}
-              >
-                Profile
-              </StyledNavigationLink>
-            </li>
+            {navigationLinks.map((link) =>
+              link.isHeader ? (
+                <li key={link.id}>
+                  <StyledNavigationLink
+                    href={link.href}
+                    $active={router.pathname === link.href}
+                    onClick={togglePageActive}
+                  >
+                    {link.name}
+                  </StyledNavigationLink>
+                </li>
+              ) : null
+            )}
           </StyledNavigationUl>
         </nav>
       </StyledHeaderInner>

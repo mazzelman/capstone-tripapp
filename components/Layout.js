@@ -3,12 +3,7 @@ import Head from "next/head";
 import Header from "./Header";
 import Footer from "./Footer";
 
-export default function Layout({
-  children,
-  activePage,
-  setActivePage,
-  toggleActivePage,
-}) {
+export default function Layout({ children, togglePageActive }) {
   return (
     <>
       <Head>
@@ -17,17 +12,9 @@ export default function Layout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header
-        activePage={activePage}
-        setActivePage={setActivePage}
-        toggleActivePage={toggleActivePage}
-      />
+      <Header togglePageActive={togglePageActive} />
       <StyledMain>{children}</StyledMain>
-      <Footer
-        activePage={activePage}
-        setActivePage={setActivePage}
-        toggleActivePage={toggleActivePage}
-      />
+      <Footer toggleActivePage={togglePageActive} />
     </>
   );
 }

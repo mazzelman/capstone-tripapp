@@ -1,45 +1,28 @@
 import styled from "styled-components";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { navigationLinks } from "@/lib/navigation";
 
-export default function Footer({
-  activePage,
-  setActivePage,
-  toggleActivePage,
-}) {
+export default function Footer({ togglePageActive }) {
   const router = useRouter();
   return (
     <StyledFooter>
       <StyledFooterInner>
         <nav>
           <StyledNavigationUl>
-            <li>
-              <StyledNavigationLink
-                href="/"
-                $active={router.pathname === "/"}
-                onClick={toggleActivePage}
-              >
-                Home
-              </StyledNavigationLink>
-            </li>
-            <li>
-              <StyledNavigationLink
-                href="/favorites"
-                $active={router.pathname === "/favorites"}
-                onClick={toggleActivePage}
-              >
-                Favorites
-              </StyledNavigationLink>
-            </li>
-            <li>
-              <StyledNavigationLink
-                href="/profile"
-                $active={router.pathname === "/profile"}
-                onClick={toggleActivePage}
-              >
-                Profile
-              </StyledNavigationLink>
-            </li>
+            {navigationLinks.map((link) =>
+              link.isFooter ? (
+                <li key={link.id}>
+                  <StyledNavigationLink
+                    href={link.href}
+                    $active={router.pathname === link.href}
+                    onClick={togglePageActive}
+                  >
+                    {link.name}
+                  </StyledNavigationLink>
+                </li>
+              ) : null
+            )}
           </StyledNavigationUl>
         </nav>
       </StyledFooterInner>

@@ -9,11 +9,16 @@ export default function App({ Component, pageProps }) {
   //build a useState for the result of the Form
   const [formResults, setFormResults] = useState(0);
   const [randomSurprise, setRandomSurprise] = useState(0);
-  const [activePage, setActivePage] = useState(false);
+  const [isPageActive, setPageActive] = useState(false);
 
-  const toggleActivePage = () => {
-    setActivePage(!activePage);
+  //----------------------------------------------------------------
+
+  // toogle the state for the active site, to see where you are
+  const togglePageActive = () => {
+    setPageActive(!isPageActive);
   };
+
+  //----------------------------------------------------------------
 
   // Function to get unique values for a given key
   const getUniqueValues = (key) => {
@@ -28,10 +33,14 @@ export default function App({ Component, pageProps }) {
     return Array.from(uniqueValues);
   };
 
+  //----------------------------------------------------------------
+
   // handle the form results and set the state
   function handleResults(newResults) {
     setFormResults(newResults);
   }
+
+  //----------------------------------------------------------------
 
   // give a random id for the surprise me card
   function handleSurprise() {
@@ -39,14 +48,12 @@ export default function App({ Component, pageProps }) {
     setRandomSurprise(randomPlace);
   }
 
+  //----------------------------------------------------------------
+
   return (
     <>
       <GlobalStyle />
-      <Layout
-        activePage={activePage}
-        setActivePage={setActivePage}
-        toggleActivePage={toggleActivePage}
-      >
+      <Layout togglePageActive={togglePageActive}>
         <Component
           formResults={formResults}
           setFormResults={setFormResults}
