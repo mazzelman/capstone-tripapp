@@ -1,15 +1,10 @@
 import styled from "styled-components";
-import PreviewCard from "./PreviewCard";
-import SpotlightCard from "./SpotlightCard";
 
 export default function Form({
-  formResults,
   setFormResults,
   handleResults,
-  getUniqueRegions,
-  getUniqueActivities,
+  getUniqueValues,
   places,
-  randomSurprise,
   setRandomSurprise,
   handleSurprise,
 }) {
@@ -23,13 +18,15 @@ export default function Form({
     let results = [];
 
     if (data.activity && data.region === "disabled") {
-      results = places.filter((place) => place.activity === data.activity);
+      results = places.filter((place) => {
+        return place.activity.includes(data.activity);
+      });
     } else if (data.region && data.activity === "disabled") {
       results = places.filter((place) => place.region === data.region);
     } else if (data.region && data.activity) {
       results = places.filter(
         (place) =>
-          place.region === data.region && place.activity === data.activity
+          place.region === data.region && place.activity.includes(data.activity)
       );
     }
 
@@ -47,43 +44,35 @@ export default function Form({
   }
 
   return (
-    <>
-      <StyledForm onSubmit={handleSubmit}>
-        <label htmlFor="region">Choose your region</label>
-        <select name="region" id="region">
-          <option value="disabled">---</option>
-          {getUniqueRegions().map((region, id) => (
-            <option key={id} value={region}>
-              {region}
-            </option>
-          ))}
-        </select>
+    <StyledForm onSubmit={handleSubmit}>
+      <label htmlFor="region">Choose your region</label>
+      <select name="region" id="region">
+        <option value="disabled">---</option>
+        {getUniqueValues("region").map((region, id) => (
+          <option key={id} value={region}>
+            {region}
+          </option>
+        ))}
+      </select>
 
-        <label htmlFor="activity">Choose your activity</label>
-        <select name="activity" id="activity">
-          <option value="disabled">---</option>
-          {getUniqueActivities().map((activity, id) => (
-            <option key={id} value={activity}>
-              {activity}
-            </option>
-          ))}
-        </select>
+      <label htmlFor="activity">Choose your activity</label>
+      <select name="activity" id="activity">
+        <option value="disabled">---</option>
+        {getUniqueValues("activity").map((activity, id) => (
+          <option key={id} value={activity}>
+            {activity}
+          </option>
+        ))}
+      </select>
 
-        <button type="submit">Submit</button>
-        <button type="reset" onClick={handleFormReset}>
-          Reset
-        </button>
-        <button type="button" onClick={handleSurprise}>
-          Surprise me
-        </button>
-      </StyledForm>
-
-      {randomSurprise ? (
-        <SpotlightCard randomSurprise={randomSurprise} />
-      ) : null}
-      {formResults.length > 0 && <PreviewCard formResults={formResults} />}
-      {formResults === -1 && <h2>no matches...</h2>}
-    </>
+      <button type="submit">Submit</button>
+      <button type="reset" onClick={handleFormReset}>
+        Reset
+      </button>
+      <button type="button" onClick={handleSurprise}>
+        Surprise me
+      </button>
+    </StyledForm>
   );
 }
 
