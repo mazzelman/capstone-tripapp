@@ -1,4 +1,6 @@
 import Form from "@/components/Form";
+import SpotlightCard from "@/components/SpotlightCard";
+import PreviewCard from "@/components/PreviewCard";
 
 export default function HomePage({
   formResults,
@@ -23,6 +25,11 @@ export default function HomePage({
         setRandomSurprise={setRandomSurprise}
         handleSurprise={handleSurprise}
       />
+      {randomSurprise ? (
+        <SpotlightCard randomSurprise={randomSurprise} />
+      ) : null}
+      {formResults.length > 0 && <PreviewCard formResults={formResults} />}
+      {formResults === -1 && <h2>no matches...</h2>}
     </div>
   );
 }
