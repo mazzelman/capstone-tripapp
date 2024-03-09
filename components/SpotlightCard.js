@@ -1,8 +1,13 @@
 import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
+import FavoriteButton from "./FavoriteButton";
 
-export default function SpotlightCard({ randomSurprise }) {
+export default function SpotlightCard({
+  randomSurprise,
+  favoritePlaces,
+  onToggleFavorite,
+}) {
   return (
     <StyledCard key={randomSurprise.id}>
       <h3>Surprise Card!</h3>
@@ -21,6 +26,11 @@ export default function SpotlightCard({ randomSurprise }) {
       <Link href={`/places/${randomSurprise.id}`}>
         <h3>{randomSurprise.name}</h3>
       </Link>
+      <FavoriteButton
+        id={randomSurprise.id}
+        favoritePlaces={favoritePlaces}
+        onToggleFavorite={onToggleFavorite}
+      />
       <p>Region: {randomSurprise.region}</p>
       <p>Activity: {randomSurprise.activity.join(", ")}</p>
       <p>Description: {randomSurprise.description}</p>

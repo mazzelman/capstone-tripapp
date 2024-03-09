@@ -11,6 +11,9 @@ export default function HomePage({
   randomSurprise,
   setRandomSurprise,
   handleSurprise,
+  isFavorite,
+  favoritePlaces,
+  onToggleFavorite,
 }) {
   return (
     <div>
@@ -26,9 +29,20 @@ export default function HomePage({
         handleSurprise={handleSurprise}
       />
       {randomSurprise ? (
-        <SpotlightCard randomSurprise={randomSurprise} />
+        <SpotlightCard
+          randomSurprise={randomSurprise}
+          favoritePlaces={favoritePlaces}
+          onToggleFavorite={onToggleFavorite}
+        />
       ) : null}
-      {formResults.length > 0 && <PreviewCard formResults={formResults} />}
+      {formResults.length > 0 && (
+        <PreviewCard
+          formResults={formResults}
+          isFavorite={isFavorite}
+          favoritePlaces={favoritePlaces}
+          onToggleFavorite={onToggleFavorite}
+        />
+      )}
       {formResults === -1 && <h2>no matches...</h2>}
     </div>
   );
