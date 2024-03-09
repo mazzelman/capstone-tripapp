@@ -36,8 +36,11 @@ export const StyledFooter = styled.footer`
 
 export const StyledFooterInner = styled.div`
   max-width: var(--max-with);
-  padding: var(--main-padding);
+  padding: var(--main-padding-mobile);
   margin: var(--main-margin);
+  @media only screen and (min-width: 600px) {
+    padding: var(--main-padding-desktop);
+  }
 `;
 
 export const StyledNavigationUl = styled.ul`

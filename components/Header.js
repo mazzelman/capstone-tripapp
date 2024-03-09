@@ -32,22 +32,26 @@ export default function Header({ togglePageActive }) {
 }
 
 export const StyledHeader = styled.header`
-  background-color: lightcoral;
-`;
-
-export const StyledLogo = styled(Link)`
-  color: #ffffff;
-  font-weight: 600;
-  text-decoration: none;
+  background-color: var(--secondary-color-background);
 `;
 
 export const StyledHeaderInner = styled.div`
   display: flex;
   justify-content: space-between;
   max-width: var(--max-with);
-  padding: var(--main-padding);
+  padding: var(--main-padding-mobile);
   margin: var(--main-margin);
   align-items: center;
+  @media only screen and (min-width: 600px) {
+    padding: var(--main-padding-desktop);
+  }
+`;
+
+export const StyledLogo = styled(Link)`
+  color: var(--primary-color);
+  font-size: 1.2em;
+  font-weight: 700;
+  text-decoration: none;
 `;
 
 export const StyledNavigationUl = styled.ul`
@@ -61,8 +65,9 @@ export const StyledNavigationUl = styled.ul`
 `;
 
 export const StyledNavigationLink = styled(Link)`
+  color: var(--primary-color);
   text-decoration: ${(props) => (props.$active ? "underline" : "none")};
-  color: white;
+  font-weight: ${(props) => (props.$active ? "700" : "400")};
   &:hover {
     text-decoration: underline;
   }

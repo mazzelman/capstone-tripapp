@@ -16,8 +16,7 @@ export default function HomePage({
   onToggleFavorite,
 }) {
   return (
-    <div>
-      <h1>Create your Trip!</h1>
+    <>
       <Form
         formResults={formResults}
         setFormResults={setFormResults}
@@ -44,6 +43,6 @@ export default function HomePage({
         />
       )}
       {formResults === -1 && <h2>no matches...</h2>}
-    </div>
+    </>
   );
 }
