@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGift as faGiftSolid } from "@fortawesome/free-solid-svg-icons";
 import { faRotateRight as faRotateRightSolid } from "@fortawesome/free-solid-svg-icons";
+import { faUmbrellaBeach as faUmbrellaBeachSolid } from "@fortawesome/free-solid-svg-icons";
 
 export default function Form({
   setFormResults,
@@ -76,20 +77,17 @@ export default function Form({
         </StyledFieldset>
 
         <StyledFieldset>
-          <StyledPrimaryButton type="submit">Submit</StyledPrimaryButton>
+          <StyledPrimaryButton type="submit">
+            <span>Submit</span>&nbsp;
+            <FontAwesomeIcon icon={faUmbrellaBeachSolid} />
+          </StyledPrimaryButton>
           <StyledSecondaryButton type="button" onClick={handleSurprise}>
             <span>Surprise me</span>&nbsp;
-            <FontAwesomeIcon
-              icon={faGiftSolid}
-              style={{ color: "#59a2b7", width: "1em" }}
-            />
+            <FontAwesomeIcon icon={faGiftSolid} />
           </StyledSecondaryButton>
           <StyledSecondaryButton type="reset" onClick={handleFormReset}>
             <span>Reset</span>&nbsp;
-            <FontAwesomeIcon
-              icon={faRotateRightSolid}
-              style={{ color: "#59a2b7", width: "1em" }}
-            />
+            <FontAwesomeIcon icon={faRotateRightSolid} />
           </StyledSecondaryButton>
         </StyledFieldset>
       </StyledForm>
@@ -188,8 +186,6 @@ export const StyledPrimaryButton = styled.button`
 
 export const StyledSecondaryButton = styled.button`
   flex-grow: 1;
-  display: flex;
-  justify-content: space-evenly;
   color: var(--primary-color);
   background-color: var(--secondary-color-background);
   padding: 0.5em;

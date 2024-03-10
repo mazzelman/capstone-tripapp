@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import FavoriteCard from "@/components/FavoriteCard";
 
 export default function Favorites({
@@ -6,16 +7,38 @@ export default function Favorites({
   onToggleFavorite,
 }) {
   if (favoritePlaces.length === 0) {
-    return <h2>Wow, so much empty...</h2>;
+    return (
+      <StyledSectionEmpty>
+        <StyledEmpty>Wow, so much empty...</StyledEmpty>
+      </StyledSectionEmpty>
+    );
   } else {
     return (
-      <>
+      <StyledSection>
         <FavoriteCard
           isFavorite={isFavorite}
           favoritePlaces={favoritePlaces}
           onToggleFavorite={onToggleFavorite}
         />
-      </>
+      </StyledSection>
     );
   }
 }
+
+export const StyledSectionEmpty = styled.section`
+  padding: var(--main-padding-mobile);
+  @media only screen and (min-width: 600px) {
+    padding: var(--hero-padding-desktop);
+  }
+`;
+
+export const StyledSection = styled.section`
+  padding: var(--main-padding-mobile);
+  @media only screen and (min-width: 600px) {
+    padding: var(--main-padding-desktop);
+  }
+`;
+
+export const StyledEmpty = styled.h2`
+  text-align: center;
+`;

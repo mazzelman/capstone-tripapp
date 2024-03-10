@@ -1,11 +1,22 @@
-import { StyledCard } from "./PreviewCard";
+import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft as faChevronLeftSolid } from "@fortawesome/free-solid-svg-icons";
+
 import Image from "next/image";
 import Link from "next/link";
 
+import { StyledSection } from "@/pages/favorites";
+import { StyledCardBody } from "./PreviewCard";
+import { StyledTitle } from "./PreviewCard";
+import { StyledInfo } from "./PreviewCard";
+
 export default function DetailsCard({ matchingPlace }) {
   return (
-    <>
-      <Link href="/">back</Link>
+    <StyledSection>
+      <StyledLink href="/">
+        <FontAwesomeIcon icon={faChevronLeftSolid} size="xs" fixedWidth />
+        <span>go back</span>
+      </StyledLink>
       <StyledCard key={matchingPlace.id}>
         <Image
           src={matchingPlace.image}
@@ -19,11 +30,35 @@ export default function DetailsCard({ matchingPlace }) {
           alt={matchingPlace.name}
           loading="lazy"
         />
-        <h3>{matchingPlace.name}</h3>
-        <p>Region: {matchingPlace.region}</p>
-        <p>Activity: {matchingPlace.activity.join(", ")}</p>
-        <p>Description: {matchingPlace.description}</p>
+        <StyledCardBody>
+          <StyledTitle>{matchingPlace.name}</StyledTitle>
+
+          <StyledInfo>
+            {matchingPlace.region} &#183; {matchingPlace.activity.join(", ")}
+          </StyledInfo>
+          <p>Description: {matchingPlace.description}</p>
+        </StyledCardBody>
       </StyledCard>
-    </>
+    </StyledSection>
   );
 }
+
+export const StyledCard = styled.article`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 0;
+  grid-row-gap: 0;
+  padding: var(--main-padding-mobile);
+  @media only screen and (min-width: 600px) {
+    padding: var(--card-padding-desktop);
+  }
+`;
+
+export const StyledLink = styled(Link)`
+  display: block;
+  padding: var(--main-padding-mobile);
+  @media only screen and (min-width: 600px) {
+    padding: 2em 8em 0;
+  }
+`;
