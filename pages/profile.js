@@ -1,3 +1,9 @@
+import { StyledSection } from "./favorites";
+
 export default function Profile() {
-  return <h2>profile page</h2>;
+  return (
+    <StyledSection>
+      <h2>The lovley profile page...</h2>
+    </StyledSection>
+  );
 }

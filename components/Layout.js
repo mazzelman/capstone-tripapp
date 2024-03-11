@@ -21,6 +21,5 @@ export default function Layout({ children, togglePageActive }) {
 
 export const StyledMain = styled.main`
   max-width: var(--max-with);
-  padding: var(--main-padding);
   margin: var(--main-margin);
 `;
