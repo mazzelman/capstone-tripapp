@@ -48,13 +48,13 @@ export default function HomePage({
         <StyledAvailableTrips>Available trips:</StyledAvailableTrips>
       )}
       <StyledSection>
-        {randomSurprise ? (
+        {randomSurprise && (
           <SpotlightCard
             randomSurprise={randomSurprise}
             favoritePlaces={favoritePlaces}
             onToggleFavorite={onToggleFavorite}
           />
-        ) : null}
+        )}
         {formResults.length > 0 && (
           <PreviewCard
             formResults={formResults}
