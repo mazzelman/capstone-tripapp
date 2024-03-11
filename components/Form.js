@@ -121,6 +121,7 @@ export const StyledForm = styled.form`
 `;
 
 export const StyledFormHeadline = styled.h1`
+  margin-top: 0.2em;
   margin-bottom: 0;
   @media only screen and (min-width: 600px) {
     padding-left: 0.6em;
