@@ -28,6 +28,11 @@ export default function HomePage({
         setRandomSurprise={setRandomSurprise}
         handleSurprise={handleSurprise}
       />
+      {formResults === -1 && (
+        <StyledSectionEmpty>
+          <h2>no matches...</h2>
+        </StyledSectionEmpty>
+      )}
       {!formResults && (
         <StyledSectionEmpty>
           <h2>Howdy, and welcome to our site!</h2>
@@ -57,11 +62,6 @@ export default function HomePage({
             favoritePlaces={favoritePlaces}
             onToggleFavorite={onToggleFavorite}
           />
-        )}
-        {formResults === -1 && (
-          <StyledSectionEmpty>
-            <h2>Please choose one region or activity.</h2>
-          </StyledSectionEmpty>
         )}
       </StyledSection>
     </>

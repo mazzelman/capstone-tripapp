@@ -100,6 +100,7 @@ export const StyledSection = styled.section`
   background-image: url(/images/hero.jpg);
   background-size: cover;
   @media only screen and (min-width: 600px) {
+    margin: 0 2em;
     padding: var(--hero-padding-desktop);
   }
 `;
@@ -111,8 +112,11 @@ export const StyledForm = styled.form`
   padding: 1em;
   border-radius: 0.3em;
   @media only screen and (min-width: 600px) {
-    width: 40%;
+    width: 50%;
     padding: 1em 1em 1em 0;
+  }
+  @media only screen and (min-width: 992px) {
+    width: 40%;
   }
 `;
 
