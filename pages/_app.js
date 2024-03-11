@@ -10,6 +10,21 @@ export default function App({ Component, pageProps }) {
   const [formResults, setFormResults] = useState(0);
   const [randomSurprise, setRandomSurprise] = useState(0);
   const [isPageActive, setPageActive] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(places);
+
+  // get the favorites with id
+  function onToggleFavorite(id) {
+    setIsFavorite((prevFavorites) => {
+      return prevFavorites.map((place) =>
+        place.id === id ? { ...place, isFavorite: !place.isFavorite } : place
+      );
+    });
+  }
+
+  // filter for the favorites
+  const favoritePlaces = isFavorite.filter((favorite) => {
+    return favorite.isFavorite;
+  });
 
   //----------------------------------------------------------------
 
@@ -63,6 +78,9 @@ export default function App({ Component, pageProps }) {
           randomSurprise={randomSurprise}
           setRandomSurprise={setRandomSurprise}
           handleSurprise={handleSurprise}
+          isFavorite={isFavorite}
+          favoritePlaces={favoritePlaces}
+          onToggleFavorite={onToggleFavorite}
           {...pageProps}
         />
       </Layout>

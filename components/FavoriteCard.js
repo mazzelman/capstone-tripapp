@@ -2,15 +2,12 @@ import styled from "styled-components";
 import Link from "next/link";
 import Image from "next/image";
 import FavoriteButton from "./FavoriteButton";
+import { StyledCard } from "./PreviewCard";
 
-export default function PreviewCard({
-  formResults,
-  favoritePlaces,
-  onToggleFavorite,
-}) {
+export default function FavoriteCard({ favoritePlaces, onToggleFavorite }) {
   return (
     <>
-      {formResults.map(({ id, name, activity, region, image }) => (
+      {favoritePlaces.map(({ id, name, activity, region, image }) => (
         <StyledCard key={id}>
           <Image
             src={image}
@@ -39,10 +36,3 @@ export default function PreviewCard({
     </>
   );
 }
-
-export const StyledCard = styled.div`
-  margin: 1em 0;
-  padding: var(--main-padding);
-  border: 3px solid aliceblue;
-  border-radius: 8px;
-`;
