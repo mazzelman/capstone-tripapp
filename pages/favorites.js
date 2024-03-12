@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import FavoriteCard from "@/components/FavoriteCard";
 
-export default function Favorites({
-  isFavorite,
-  favoritePlaces,
-  onToggleFavorite,
-}) {
+export default function Favorites({ places, isFavorite, onToggleFavorite }) {
+  // Filter favorite places based on isFavorite state
+  const favoritePlaces = places.filter((place) => isFavorite[place._id]);
+
   if (favoritePlaces.length === 0) {
     return (
       <StyledSectionEmpty>

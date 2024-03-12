@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import useSWR from "swr";
+
 import Form from "@/components/Form";
 import SpotlightCard from "@/components/SpotlightCard";
 import PreviewCard from "@/components/PreviewCard";
@@ -14,23 +14,8 @@ export default function HomePage({
   setRandomSurprise,
   handleSurprise,
   isFavorite,
-  favoritePlaces,
   onToggleFavorite,
 }) {
-  const { data, error, isLoading } = useSWR("/api/places");
-
-  if (error) return <div>failed to load</div>;
-
-  if (isLoading) {
-    return <h1>Loading...</h1>;
-  }
-
-  if (!data) {
-    return;
-  }
-
-  console.log(data);
-
   return (
     <>
       <Form
@@ -66,7 +51,7 @@ export default function HomePage({
         {randomSurprise ? (
           <SpotlightCard
             randomSurprise={randomSurprise}
-            favoritePlaces={favoritePlaces}
+            isFavorite={isFavorite}
             onToggleFavorite={onToggleFavorite}
           />
         ) : null}
@@ -74,7 +59,6 @@ export default function HomePage({
           <PreviewCard
             formResults={formResults}
             isFavorite={isFavorite}
-            favoritePlaces={favoritePlaces}
             onToggleFavorite={onToggleFavorite}
           />
         )}

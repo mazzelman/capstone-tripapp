@@ -11,7 +11,7 @@ const placeSchema = new Schema({
   temperature: { type: Number, required: false },
   isFavorite: { type: Boolean, required: false },
   reviews: { type: [Schema.Types.ObjectId], ref: "Review" },
-  activity: { type: [Schema.Types.ObjectId], ref: "Activity" },
+  activitys: { type: [Schema.Types.ObjectId], ref: "Activity" },
 });
 
 const Place = mongoose.models.Place || mongoose.model("Place", placeSchema);

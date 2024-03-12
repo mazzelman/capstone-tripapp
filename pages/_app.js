@@ -1,4 +1,5 @@
 import { SWRConfig } from "swr";
+import useSWR from "swr";
 import GlobalStyle from "../styles";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
@@ -17,21 +18,34 @@ export default function App({ Component, pageProps }) {
   const [formResults, setFormResults] = useState(0);
   const [randomSurprise, setRandomSurprise] = useState(0);
   const [isPageActive, setPageActive] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(places);
+  const [isFavorite, setIsFavorite] = useState({});
 
-  // get the favorites with id
-  function onToggleFavorite(id) {
-    setIsFavorite((prevFavorites) => {
-      return prevFavorites.map((place) =>
-        place.id === id ? { ...place, isFavorite: !place.isFavorite } : place
-      );
-    });
+  const { data, error, isLoading } = useSWR("/api/places", fetcher);
+
+  if (error) return <div>failed to load</div>;
+
+  if (isLoading) {
+    return <h1>Loading...</h1>;
   }
 
-  // filter for the favorites
-  const favoritePlaces = isFavorite.filter((favorite) => {
-    return favorite.isFavorite;
-  });
+  if (!data) {
+    return <h1>Data could not be loaded...</h1>;
+  }
+
+  const places = data;
+
+  //----------------------------------------------------------------
+
+  // set the favorites
+  function onToggleFavorite(id) {
+    setIsFavorite((prevState) => ({
+      ...prevState,
+      [id]: !prevState[id], // Toggle favorite status for the given place id
+    }));
+
+    // Make API call to update favorite status in the database
+    // You can include this part here as well
+  }
 
   //----------------------------------------------------------------
 
@@ -47,7 +61,7 @@ export default function App({ Component, pageProps }) {
     const uniqueValues = new Set();
     places.forEach((place) => {
       if (Array.isArray(place[key])) {
-        place[key].forEach((value) => uniqueValues.add(value));
+        place[key].forEach((value) => uniqueValues.add(value.activity));
       } else {
         uniqueValues.add(place[key]);
       }
@@ -87,7 +101,6 @@ export default function App({ Component, pageProps }) {
             setRandomSurprise={setRandomSurprise}
             handleSurprise={handleSurprise}
             isFavorite={isFavorite}
-            favoritePlaces={favoritePlaces}
             onToggleFavorite={onToggleFavorite}
             {...pageProps}
           />
