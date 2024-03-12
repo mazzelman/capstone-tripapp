@@ -1,3 +1,4 @@
+import { SWRConfig } from "swr";
 import GlobalStyle from "../styles";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
@@ -8,6 +9,8 @@ import { useState } from "react";
 
 //import fake DB from @/lib/db
 import { dbPlaces as places } from "@/lib/db";
+
+const fetcher = (url) => fetch(url).then((response) => response.json());
 
 export default function App({ Component, pageProps }) {
   //build a useState for the result of the Form
@@ -72,22 +75,24 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <GlobalStyle />
-      <Layout togglePageActive={togglePageActive}>
-        <Component
-          formResults={formResults}
-          setFormResults={setFormResults}
-          handleResults={handleResults}
-          getUniqueValues={getUniqueValues}
-          places={places}
-          randomSurprise={randomSurprise}
-          setRandomSurprise={setRandomSurprise}
-          handleSurprise={handleSurprise}
-          isFavorite={isFavorite}
-          favoritePlaces={favoritePlaces}
-          onToggleFavorite={onToggleFavorite}
-          {...pageProps}
-        />
-      </Layout>
+      <SWRConfig value={{ fetcher }}>
+        <Layout togglePageActive={togglePageActive}>
+          <Component
+            formResults={formResults}
+            setFormResults={setFormResults}
+            handleResults={handleResults}
+            getUniqueValues={getUniqueValues}
+            places={places}
+            randomSurprise={randomSurprise}
+            setRandomSurprise={setRandomSurprise}
+            handleSurprise={handleSurprise}
+            isFavorite={isFavorite}
+            favoritePlaces={favoritePlaces}
+            onToggleFavorite={onToggleFavorite}
+            {...pageProps}
+          />
+        </Layout>
+      </SWRConfig>
     </>
   );
 }
