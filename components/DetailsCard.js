@@ -35,8 +35,8 @@ export default function DetailsCard({ matchingPlace }) {
 
           <StyledInfo>
             {matchingPlace.region} &#183;{" "}
-            {matchingPlace.activitys
-              .map((activity) => activity.activity)
+            {matchingPlace.activities
+              .map((activity) => activity.activityname)
               .join(", ")}
           </StyledInfo>
           <p>Description: {matchingPlace.description}</p>

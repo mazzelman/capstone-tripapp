@@ -23,7 +23,7 @@ export default function FavoriteCard({
         <FontAwesomeIcon icon={faChevronLeftSolid} size="xs" fixedWidth />
         <span>go back</span>
       </StyledLink>
-      {favoritePlaces.map(({ _id, name, activitys, region, image }) => (
+      {favoritePlaces.map(({ _id, name, activities, region, image }) => (
         <StyledCard key={_id}>
           <Image
             src={image}
@@ -48,7 +48,7 @@ export default function FavoriteCard({
             />
             <StyledInfo>
               {region} &#183;
-              {activitys.map((activity) => activity.activity).join(", ")}
+              {activities.map((activity) => activity.activityname).join(", ")}
             </StyledInfo>
           </StyledCardBody>
         </StyledCard>

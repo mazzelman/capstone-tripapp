@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const activitySchema = new Schema({
-  activity: { type: String, required: true },
+  activityname: { type: String, required: true },
 });
 
 const Activity =

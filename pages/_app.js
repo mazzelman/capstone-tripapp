@@ -61,7 +61,7 @@ export default function App({ Component, pageProps }) {
     const uniqueValues = new Set();
     places.forEach((place) => {
       if (Array.isArray(place[key])) {
-        place[key].forEach((value) => uniqueValues.add(value.activity));
+        place[key].forEach((value) => uniqueValues.add(value.activityname));
       } else {
         uniqueValues.add(place[key]);
       }

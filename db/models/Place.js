@@ -4,14 +4,13 @@ import "./Activity";
 const { Schema } = mongoose;
 
 const placeSchema = new Schema({
-  _id: { type: String, required: true },
   name: { type: String, required: true },
   description: { type: String, required: true },
   image: { type: String, required: true },
   temperature: { type: Number, required: false },
   isFavorite: { type: Boolean, required: false },
   reviews: { type: [Schema.Types.ObjectId], ref: "Review" },
-  activitys: { type: [Schema.Types.ObjectId], ref: "Activity" },
+  activities: { type: [Schema.Types.ObjectId], ref: "Activity" },
 });
 
 const Place = mongoose.models.Place || mongoose.model("Place", placeSchema);

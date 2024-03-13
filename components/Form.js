@@ -23,8 +23,8 @@ export default function Form({
 
     if (data.activity && data.region === "disabled") {
       results = places.filter((place) => {
-        return place.activitys.some(
-          (activity) => activity.activity === data.activity
+        return place.activities.some(
+          (activity) => activity.activityname === data.activity
         );
       });
     } else if (data.region && data.activity === "disabled") {
@@ -33,8 +33,8 @@ export default function Form({
       results = places.filter(
         (place) =>
           place.region === data.region &&
-          place.activitys.some(
-            (activity) => activity.activity === data.activity
+          place.activities.some(
+            (activity) => activity.activityname === data.activity
           )
       );
     }
@@ -73,7 +73,7 @@ export default function Form({
           <StyledLabel htmlFor="activity"></StyledLabel>
           <StyledSelect name="activity" id="activity">
             <option value="disabled">---</option>
-            {getUniqueValues("activitys").map((activity, id) => (
+            {getUniqueValues("activities").map((activity, id) => (
               <option key={id} value={activity}>
                 {activity}
               </option>
