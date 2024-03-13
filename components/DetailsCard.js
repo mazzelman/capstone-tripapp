@@ -17,7 +17,7 @@ export default function DetailsCard({ matchingPlace }) {
         <FontAwesomeIcon icon={faChevronLeftSolid} size="xs" fixedWidth />
         <span>go back</span>
       </StyledLink>
-      <StyledCard key={matchingPlace.id}>
+      <StyledCard key={matchingPlace._id}>
         <Image
           src={matchingPlace.image}
           sizes="100vw"
@@ -34,7 +34,10 @@ export default function DetailsCard({ matchingPlace }) {
           <StyledTitle>{matchingPlace.name}</StyledTitle>
 
           <StyledInfo>
-            {matchingPlace.region} &#183; {matchingPlace.activity.join(", ")}
+            {matchingPlace.region} &#183;{" "}
+            {matchingPlace.activitys
+              .map((activity) => activity.activity)
+              .join(", ")}
           </StyledInfo>
           <p>Description: {matchingPlace.description}</p>
         </StyledCardBody>

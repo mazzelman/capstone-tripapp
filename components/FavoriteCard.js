@@ -12,15 +12,19 @@ import { StyledTitle } from "./PreviewCard";
 import { StyledInfo } from "./PreviewCard";
 import { StyledLink } from "./DetailsCard";
 
-export default function FavoriteCard({ favoritePlaces, onToggleFavorite }) {
+export default function FavoriteCard({
+  favoritePlaces,
+  isFavorite,
+  onToggleFavorite,
+}) {
   return (
     <>
       <StyledLink href="/">
         <FontAwesomeIcon icon={faChevronLeftSolid} size="xs" fixedWidth />
         <span>go back</span>
       </StyledLink>
-      {favoritePlaces.map(({ id, name, activity, region, image }) => (
-        <StyledCard key={id}>
+      {favoritePlaces.map(({ _id, name, activitys, region, image }) => (
+        <StyledCard key={_id}>
           <Image
             src={image}
             sizes="100vw"
@@ -34,16 +38,17 @@ export default function FavoriteCard({ favoritePlaces, onToggleFavorite }) {
             loading="lazy"
           />
           <StyledCardBody>
-            <Link href={`/places/${id}`}>
+            <Link href={`/places/${_id}`}>
               <StyledTitle>{name}</StyledTitle>
             </Link>
             <FavoriteButton
-              id={id}
-              favoritePlaces={favoritePlaces}
+              id={_id}
+              isFavorite={isFavorite}
               onToggleFavorite={onToggleFavorite}
             />
             <StyledInfo>
-              {region} &#183; {activity.join(", ")}
+              {region} &#183;
+              {activitys.map((activity) => activity.activity).join(", ")}
             </StyledInfo>
           </StyledCardBody>
         </StyledCard>

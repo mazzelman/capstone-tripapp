@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import Form from "@/components/Form";
 import SpotlightCard from "@/components/SpotlightCard";
 import PreviewCard from "@/components/PreviewCard";
@@ -13,7 +14,6 @@ export default function HomePage({
   setRandomSurprise,
   handleSurprise,
   isFavorite,
-  favoritePlaces,
   onToggleFavorite,
 }) {
   return (
@@ -51,7 +51,7 @@ export default function HomePage({
         {randomSurprise ? (
           <SpotlightCard
             randomSurprise={randomSurprise}
-            favoritePlaces={favoritePlaces}
+            isFavorite={isFavorite}
             onToggleFavorite={onToggleFavorite}
           />
         ) : null}
@@ -59,7 +59,6 @@ export default function HomePage({
           <PreviewCard
             formResults={formResults}
             isFavorite={isFavorite}
-            favoritePlaces={favoritePlaces}
             onToggleFavorite={onToggleFavorite}
           />
         )}
