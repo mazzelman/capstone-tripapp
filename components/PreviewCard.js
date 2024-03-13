@@ -36,7 +36,7 @@ export default function PreviewCard({
               onToggleFavorite={onToggleFavorite}
             />
             <StyledInfo>
-              {region} &#183;{" "}
+              {region} &#183;
               {activitys.map((activity) => activity.activity).join(", ")}
             </StyledInfo>
           </StyledCardBody>

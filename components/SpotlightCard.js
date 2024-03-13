@@ -40,7 +40,7 @@ export default function SpotlightCard({
         />
 
         <StyledInfo>
-          {randomSurprise.region} &#183;{" "}
+          {randomSurprise.region} &#183;
           {randomSurprise.activitys
             .map((activity) => activity.activity)
             .join(", ")}

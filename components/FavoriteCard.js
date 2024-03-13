@@ -17,7 +17,6 @@ export default function FavoriteCard({
   isFavorite,
   onToggleFavorite,
 }) {
-  console.log(favoritePlaces);
   return (
     <>
       <StyledLink href="/">
@@ -48,7 +47,7 @@ export default function FavoriteCard({
               onToggleFavorite={onToggleFavorite}
             />
             <StyledInfo>
-              {region} &#183;{" "}
+              {region} &#183;
               {activitys.map((activity) => activity.activity).join(", ")}
             </StyledInfo>
           </StyledCardBody>
