@@ -10,7 +10,7 @@ export default function PreviewCard({
 }) {
   return (
     <>
-      {formResults.map(({ _id, name, activitys, region, image }) => (
+      {formResults.map(({ _id, name, activities, region, image }) => (
         <StyledCard key={_id}>
           <Link href={`/places/${_id}`}>
             <StyledCardImage
@@ -37,7 +37,7 @@ export default function PreviewCard({
             />
             <StyledInfo>
               {region} &#183;
-              {activitys.map((activity) => activity.activity).join(", ")}
+              {activities.map((activity) => activity.activityname).join(", ")}
             </StyledInfo>
           </StyledCardBody>
         </StyledCard>

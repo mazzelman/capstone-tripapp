@@ -41,8 +41,8 @@ export default function SpotlightCard({
 
         <StyledInfo>
           {randomSurprise.region} &#183;
-          {randomSurprise.activitys
-            .map((activity) => activity.activity)
+          {randomSurprise.activities
+            .map((activity) => activity.activityname)
             .join(", ")}
         </StyledInfo>
       </StyledCardBody>
