@@ -7,7 +7,7 @@ import { faChevronLeft as faChevronLeftSolid } from "@fortawesome/free-solid-svg
 import FavoriteCard from "@/components/FavoriteCard";
 import { StyledLink } from "@/components/DetailsCard";
 
-export default function Favorite(toggleFavorite) {
+export default function Favorite() {
   const session = useSession();
   const userId = session.data?.user.id;
 
@@ -18,7 +18,11 @@ export default function Favorite(toggleFavorite) {
   } = useSWR(userId ? `/api/user/${userId}` : null);
 
   if (!session.data) {
-    return <h2>Please sign in to view your favorite places</h2>;
+    return (
+      <StyledSectionEmpty>
+        <StyledEmpty>Please sign in to view your favorite places</StyledEmpty>
+      </StyledSectionEmpty>
+    );
   }
 
   if (error) return <div>failed to load</div>;
@@ -27,20 +31,19 @@ export default function Favorite(toggleFavorite) {
   return (
     <>
       <StyledSection>
-        <StyledLink href="/">
-          <FontAwesomeIcon icon={faChevronLeftSolid} size="xs" fixedWidth />
-          <span>go back</span>
-        </StyledLink>
+        {user.favoritePlaces.length === 0 && (
+          <StyledSectionEmpty>
+            <StyledEmpty>Wow, so much empty...</StyledEmpty>
+          </StyledSectionEmpty>
+        )}
+        {user.favoritePlaces.length > 0 && (
+          <StyledLink href="/">
+            <FontAwesomeIcon icon={faChevronLeftSolid} size="xs" fixedWidth />
+            <span>go back</span>
+          </StyledLink>
+        )}
         {user.favoritePlaces.map((place) => {
-          return (
-            <FavoriteCard
-              key={place._id}
-              place={place}
-              // isFavorite={isFavorite}
-              // favoritePlaces={favoritePlaces}
-              toggleFavorite={toggleFavorite}
-            />
-          );
+          return <FavoriteCard key={place._id} place={place} />;
         })}
       </StyledSection>
     </>

@@ -3,6 +3,8 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import useSWR, { mutate } from "swr";
 
+import { StyledSectionEmpty } from "../favorites";
+
 export default function Place({ places }) {
   const router = useRouter();
   const { id } = router.query;
@@ -23,8 +25,10 @@ export default function Place({ places }) {
     isLoading,
   } = useSWR(id ? `/api/places/${id}` : null);
 
-  if (error || userError) return <div>failed to load</div>;
-  if (isLoading || userIsLoading) return <div>loading...</div>;
+  if (error || userError)
+    return <StyledSectionEmpty>failed to load...</StyledSectionEmpty>;
+  if (isLoading || userIsLoading)
+    return <StyledSectionEmpty>loading...</StyledSectionEmpty>;
   if (!place) return null;
 
   async function toggleFavorite(id) {
@@ -62,8 +66,8 @@ export default function Place({ places }) {
   return (
     <DetailsCard
       id={id}
-      toggleFavorite={toggleFavorite}
       isFavorite={isFavorite}
+      toggleFavorite={toggleFavorite}
       place={place}
       matchingPlace={matchingPlace}
     />

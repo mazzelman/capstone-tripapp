@@ -2,7 +2,6 @@ import styled from "styled-components";
 import Form from "@/components/Form";
 import SpotlightCard from "@/components/SpotlightCard";
 import PreviewCard from "@/components/PreviewCard";
-import { useSession } from "next-auth/react";
 export default function HomePage({
   formResults,
   setFormResults,
@@ -30,7 +29,7 @@ export default function HomePage({
           <h2>no matches...</h2>
         </StyledSectionEmpty>
       )}
-      {!formResults && (
+      {!formResults ? (
         <StyledSectionEmpty>
           <h2>Howdy, and welcome to our site!</h2>
           <p>
@@ -40,24 +39,18 @@ export default function HomePage({
             <br /> Thanks, the Travel App Team Jeanny, Jeanette and Marcel.
           </p>
         </StyledSectionEmpty>
-      )}
+      ) : null}
       {formResults.length > 0 && (
         <StyledAvailableTrips>Available trips:</StyledAvailableTrips>
       )}
-      <StyledSection>
-        {randomSurprise ? (
-          <SpotlightCard
-            randomSurprise={randomSurprise}
-            // toggleFavorite={toggleFavorite}
-          />
-        ) : null}
-        {formResults.length > 0 && (
-          <PreviewCard
-            formResults={formResults}
-            // toggleFavorite={toggleFavorite}
-          />
-        )}
-      </StyledSection>
+      {formResults.length > 0 && (
+        <StyledSection>
+          {randomSurprise ? (
+            <SpotlightCard randomSurprise={randomSurprise} />
+          ) : null}
+          {formResults.length > 0 && <PreviewCard formResults={formResults} />}
+        </StyledSection>
+      )}
     </>
   );
 }

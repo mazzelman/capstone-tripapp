@@ -7,6 +7,8 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 config.autoAddCss = false;
 
 import Layout from "@/components/Layout";
+import { StyledSectionEmpty } from "./favorites";
+import { StyledEmpty } from "./favorites";
 import { useState } from "react";
 
 // global swr fetcher
@@ -23,30 +25,30 @@ export default function App({
 
   const { data, error, isLoading } = useSWR("/api/places", fetcher);
 
-  if (error) return <div>failed to load</div>;
+  if (error)
+    return (
+      <StyledSectionEmpty>
+        <StyledEmpty>Failed to load...</StyledEmpty>
+      </StyledSectionEmpty>
+    );
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return (
+      <StyledSectionEmpty>
+        <StyledEmpty>loading...</StyledEmpty>
+      </StyledSectionEmpty>
+    );
   }
 
   if (!data) {
-    return <h1>Data could not be loaded...</h1>;
+    return (
+      <StyledSectionEmpty>
+        <StyledEmpty>Data could not be loaded...</StyledEmpty>
+      </StyledSectionEmpty>
+    );
   }
 
   const places = data;
-
-  //----------------------------------------------------------------
-
-  // set the favorites
-  // function onToggleFavorite(id) {
-  //   setIsFavorite((prevState) => ({
-  //     ...prevState,
-  //     [id]: !prevState[id], // Toggle favorite status for the given place id
-  //   }));
-
-  //   // Make API call to update favorite status in the database
-  //   // You can include this part here as well
-  // }
 
   //----------------------------------------------------------------
 
