@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import Link from "next/link";
 import Image from "next/image";
-import FavoriteButton from "./FavoriteButton";
 
-export default function PreviewCard({ formResults, toggleFavorite }) {
+export default function PreviewCard({ formResults }) {
   return (
     <>
       {formResults.map(({ _id, name, activities, region, image }) => (
@@ -26,7 +25,6 @@ export default function PreviewCard({ formResults, toggleFavorite }) {
             <Link href={`/places/${_id}`}>
               <StyledTitle>{name}</StyledTitle>
             </Link>
-            <FavoriteButton id={_id} toggleFavorite={toggleFavorite} />
             <StyledInfo>
               {region} &#183; &nbsp;
               {activities.map((activity) => activity.activityname).join(", ")}

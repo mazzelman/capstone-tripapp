@@ -1,13 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
-import FavoriteButton from "./FavoriteButton";
 
 import { StyledCard } from "./DetailsCard";
 import { StyledCardBody } from "./PreviewCard";
 import { StyledTitle } from "./PreviewCard";
 import { StyledInfo } from "./PreviewCard";
 
-export default function FavoriteCard({ place, toggleFavorite }) {
+export default function FavoriteCard({ place }) {
   const {
     _id,
     name,
@@ -38,7 +37,6 @@ export default function FavoriteCard({ place, toggleFavorite }) {
           <Link href={`/places/${_id}`}>
             <StyledTitle>{place.name}</StyledTitle>
           </Link>
-          <FavoriteButton id={_id} toggleFavorite={toggleFavorite} />
           <StyledInfo>
             {region} &#183; &nbsp;
             {activities.map((activity) => activity.activityname).join(", ")}

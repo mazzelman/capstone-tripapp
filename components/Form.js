@@ -120,8 +120,8 @@ export const StyledForm = styled.form`
     width: 50%;
     padding: 1em 1em 1em 0;
   }
-  @media only screen and (min-width: 992px) {
-    width: 40%;
+  @media only screen and (max-width: 799px) {
+    width: 100%;
   }
 `;
 

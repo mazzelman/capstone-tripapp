@@ -12,21 +12,27 @@ import { StyledCardBody } from "./PreviewCard";
 import { StyledTitle } from "./PreviewCard";
 import { StyledInfo } from "./PreviewCard";
 
-export default function DetailsCard({
-  id,
-  isFavorite,
-  toggleFavorite,
-  matchingPlace,
-}) {
+export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
+  const {
+    _id,
+    name,
+    description,
+    region,
+    image,
+    temperature,
+    reviews,
+    activities,
+  } = place;
+  // console.log(place);
   return (
     <StyledSection>
       <StyledLink href="/">
         <FontAwesomeIcon icon={faChevronLeftSolid} size="xs" fixedWidth />
         <span>go back</span>
       </StyledLink>
-      <StyledCard key={matchingPlace._id}>
+      <StyledCard key={_id}>
         <Image
-          src={matchingPlace.image}
+          src={image}
           sizes="100vw"
           style={{
             width: "100%",
@@ -34,28 +40,26 @@ export default function DetailsCard({
           }}
           width="0"
           height="0"
-          alt={matchingPlace.name}
+          alt={name}
           loading="lazy"
         />
         <StyledCardBody>
-          <StyledTitle>{matchingPlace.name}</StyledTitle>
+          <StyledTitle>{name}</StyledTitle>
           <FavoriteButton
-            id={id}
+            id={_id}
             isFavorite={isFavorite}
             toggleFavorite={toggleFavorite}
           />
           <StyledInfo>
-            {matchingPlace.region} &#183; &nbsp;
-            {matchingPlace.activities
-              .map((activity) => activity.activityname)
-              .join(", ")}
+            {region} &#183; &nbsp;
+            {activities.map((activity) => activity.activityname).join(", ")}
           </StyledInfo>
           <p>
-            Description: <br /> {matchingPlace.description}
+            Description: <br /> {description}
           </p>
           <p>
             Reviews: <br />
-            {matchingPlace.reviews.map((review) => review.review).join(", ")}
+            {reviews.map((review) => review.review).join(", ")}
           </p>
         </StyledCardBody>
       </StyledCard>
