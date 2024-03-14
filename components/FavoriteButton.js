@@ -3,13 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
 
-export default function FavoriteButton({ id, isFavorite, onToggleFavorite }) {
-  // Check if the current place is favorited
-  const isFavorited = isFavorite[id] || false;
+export default function FavoriteButton({ id, isFavorite, toggleFavorite }) {
   return (
     <>
-      <StyledFavoriteButton type="button" onClick={() => onToggleFavorite(id)}>
-        {isFavorited ? (
+      <StyledFavoriteButton type="button" onClick={() => toggleFavorite(id)}>
+        {isFavorite ? (
           <FontAwesomeIcon icon={faHeartSolid} size="2x" />
         ) : (
           <FontAwesomeIcon icon={faHeartRegular} size="2x" />

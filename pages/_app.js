@@ -1,5 +1,6 @@
 import { SWRConfig } from "swr";
 import useSWR from "swr";
+import { SessionProvider } from "next-auth/react";
 import GlobalStyle from "../styles";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
@@ -8,17 +9,17 @@ config.autoAddCss = false;
 import Layout from "@/components/Layout";
 import { useState } from "react";
 
-//import fake DB from @/lib/db
-import { dbPlaces as places } from "@/lib/db";
-
+// global swr fetcher
 const fetcher = (url) => fetch(url).then((response) => response.json());
 
-export default function App({ Component, pageProps }) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   //build a useState for the result of the Form
   const [formResults, setFormResults] = useState(0);
   const [randomSurprise, setRandomSurprise] = useState(0);
   const [isPageActive, setPageActive] = useState(false);
-  const [isFavorite, setIsFavorite] = useState({});
 
   const { data, error, isLoading } = useSWR("/api/places", fetcher);
 
@@ -37,15 +38,15 @@ export default function App({ Component, pageProps }) {
   //----------------------------------------------------------------
 
   // set the favorites
-  function onToggleFavorite(id) {
-    setIsFavorite((prevState) => ({
-      ...prevState,
-      [id]: !prevState[id], // Toggle favorite status for the given place id
-    }));
+  // function onToggleFavorite(id) {
+  //   setIsFavorite((prevState) => ({
+  //     ...prevState,
+  //     [id]: !prevState[id], // Toggle favorite status for the given place id
+  //   }));
 
-    // Make API call to update favorite status in the database
-    // You can include this part here as well
-  }
+  //   // Make API call to update favorite status in the database
+  //   // You can include this part here as well
+  // }
 
   //----------------------------------------------------------------
 
@@ -89,23 +90,23 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <GlobalStyle />
-      <SWRConfig value={{ fetcher }}>
-        <Layout togglePageActive={togglePageActive}>
-          <Component
-            formResults={formResults}
-            setFormResults={setFormResults}
-            handleResults={handleResults}
-            getUniqueValues={getUniqueValues}
-            places={places}
-            randomSurprise={randomSurprise}
-            setRandomSurprise={setRandomSurprise}
-            handleSurprise={handleSurprise}
-            isFavorite={isFavorite}
-            onToggleFavorite={onToggleFavorite}
-            {...pageProps}
-          />
-        </Layout>
-      </SWRConfig>
+      <SessionProvider session={session}>
+        <SWRConfig value={{ fetcher }}>
+          <Layout togglePageActive={togglePageActive}>
+            <Component
+              formResults={formResults}
+              setFormResults={setFormResults}
+              handleResults={handleResults}
+              getUniqueValues={getUniqueValues}
+              places={places}
+              randomSurprise={randomSurprise}
+              setRandomSurprise={setRandomSurprise}
+              handleSurprise={handleSurprise}
+              {...pageProps}
+            />
+          </Layout>
+        </SWRConfig>
+      </SessionProvider>
     </>
   );
 }

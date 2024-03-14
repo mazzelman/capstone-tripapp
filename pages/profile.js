@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import { StyledSection } from "./favorites";
 import Image from "next/image";
+import LoginButton from "@/components/LoginButton";
 
 export default function Profile() {
   return (
     <StyledSection>
+      <LoginButton />
       <StyledArticle>
         <h2>Lizzy Lazycat</h2>
         <Image
