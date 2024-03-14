@@ -43,14 +43,13 @@ export default function HomePage({
       {formResults.length > 0 && (
         <StyledAvailableTrips>Available trips:</StyledAvailableTrips>
       )}
-      {formResults.length > 0 && (
-        <StyledSection>
-          {randomSurprise ? (
-            <SpotlightCard randomSurprise={randomSurprise} />
-          ) : null}
-          {formResults.length > 0 && <PreviewCard formResults={formResults} />}
-        </StyledSection>
-      )}
+
+      <StyledSection>
+        {randomSurprise ? (
+          <SpotlightCard randomSurprise={randomSurprise} />
+        ) : null}
+        {formResults.length > 0 && <PreviewCard formResults={formResults} />}
+      </StyledSection>
     </>
   );
 }
