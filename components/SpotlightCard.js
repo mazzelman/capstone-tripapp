@@ -8,11 +8,7 @@ import { StyledCardImage } from "./PreviewCard";
 import { StyledTitle } from "./PreviewCard";
 import { StyledInfo } from "./PreviewCard";
 
-export default function SpotlightCard({
-  randomSurprise,
-  isFavorite,
-  onToggleFavorite,
-}) {
+export default function SpotlightCard({ randomSurprise, toggleFavorite }) {
   return (
     <StyledCard key={randomSurprise._id}>
       <Link href={`/places/${randomSurprise._id}`}>
@@ -35,12 +31,10 @@ export default function SpotlightCard({
         </Link>
         <FavoriteButton
           id={randomSurprise._id}
-          isFavorite={isFavorite}
-          onToggleFavorite={onToggleFavorite}
+          toggleFavorite={toggleFavorite}
         />
-
         <StyledInfo>
-          {randomSurprise.region} &#183;
+          {randomSurprise.region} &#183; &nbsp;
           {randomSurprise.activities
             .map((activity) => activity.activityname)
             .join(", ")}

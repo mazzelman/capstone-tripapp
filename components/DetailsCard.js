@@ -5,12 +5,19 @@ import { faChevronLeft as faChevronLeftSolid } from "@fortawesome/free-solid-svg
 import Image from "next/image";
 import Link from "next/link";
 
+import FavoriteButton from "./FavoriteButton";
+
 import { StyledSection } from "@/pages/favorites";
 import { StyledCardBody } from "./PreviewCard";
 import { StyledTitle } from "./PreviewCard";
 import { StyledInfo } from "./PreviewCard";
 
-export default function DetailsCard({ matchingPlace }) {
+export default function DetailsCard({
+  id,
+  isFavorite,
+  toggleFavorite,
+  matchingPlace,
+}) {
   return (
     <StyledSection>
       <StyledLink href="/">
@@ -32,14 +39,24 @@ export default function DetailsCard({ matchingPlace }) {
         />
         <StyledCardBody>
           <StyledTitle>{matchingPlace.name}</StyledTitle>
-
+          <FavoriteButton
+            id={id}
+            isFavorite={isFavorite}
+            toggleFavorite={toggleFavorite}
+          />
           <StyledInfo>
-            {matchingPlace.region} &#183;{" "}
+            {matchingPlace.region} &#183; &nbsp;
             {matchingPlace.activities
               .map((activity) => activity.activityname)
               .join(", ")}
           </StyledInfo>
-          <p>Description: {matchingPlace.description}</p>
+          <p>
+            Description: <br /> {matchingPlace.description}
+          </p>
+          <p>
+            Reviews: <br />
+            {matchingPlace.reviews.map((review) => review.review).join(", ")}
+          </p>
         </StyledCardBody>
       </StyledCard>
     </StyledSection>

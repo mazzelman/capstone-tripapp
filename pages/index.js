@@ -1,9 +1,8 @@
 import styled from "styled-components";
-
 import Form from "@/components/Form";
 import SpotlightCard from "@/components/SpotlightCard";
 import PreviewCard from "@/components/PreviewCard";
-
+import { useSession } from "next-auth/react";
 export default function HomePage({
   formResults,
   setFormResults,
@@ -13,8 +12,6 @@ export default function HomePage({
   randomSurprise,
   setRandomSurprise,
   handleSurprise,
-  isFavorite,
-  onToggleFavorite,
 }) {
   return (
     <>
@@ -51,15 +48,13 @@ export default function HomePage({
         {randomSurprise ? (
           <SpotlightCard
             randomSurprise={randomSurprise}
-            isFavorite={isFavorite}
-            onToggleFavorite={onToggleFavorite}
+            // toggleFavorite={toggleFavorite}
           />
         ) : null}
         {formResults.length > 0 && (
           <PreviewCard
             formResults={formResults}
-            isFavorite={isFavorite}
-            onToggleFavorite={onToggleFavorite}
+            // toggleFavorite={toggleFavorite}
           />
         )}
       </StyledSection>
