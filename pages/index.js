@@ -78,7 +78,7 @@ export const StyledSectionEmpty = styled.section`
 `;
 
 export const StyledAvailableTrips = styled.h4`
-  margin: 0;
+  margin-bottom: 0;
   padding: var(--main-padding-mobile);
   @media only screen and (min-width: 600px) {
     padding: var(--main-padding-desktop);
