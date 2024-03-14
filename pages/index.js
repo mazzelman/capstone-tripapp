@@ -29,7 +29,7 @@ export default function HomePage({
           <h2>no matches...</h2>
         </StyledSectionEmpty>
       )}
-      {!formResults ? (
+      {!formResults && !randomSurprise ? (
         <StyledSectionEmpty>
           <h2>Howdy, and welcome to our site!</h2>
           <p>
@@ -40,16 +40,18 @@ export default function HomePage({
           </p>
         </StyledSectionEmpty>
       ) : null}
-      {formResults.length > 0 && (
+      {formResults.length > 0 || randomSurprise ? (
         <StyledAvailableTrips>Available trips:</StyledAvailableTrips>
-      )}
+      ) : null}
 
-      <StyledSection>
-        {randomSurprise ? (
-          <SpotlightCard randomSurprise={randomSurprise} />
-        ) : null}
-        {formResults.length > 0 && <PreviewCard formResults={formResults} />}
-      </StyledSection>
+      {randomSurprise || formResults.length > 0 ? (
+        <StyledSection>
+          {randomSurprise ? (
+            <SpotlightCard randomSurprise={randomSurprise} />
+          ) : null}
+          {formResults.length > 0 && <PreviewCard formResults={formResults} />}
+        </StyledSection>
+      ) : null}
     </>
   );
 }
@@ -76,7 +78,7 @@ export const StyledSectionEmpty = styled.section`
 `;
 
 export const StyledAvailableTrips = styled.h4`
-  margin-bottom: 0;
+  margin: 0;
   padding: var(--main-padding-mobile);
   @media only screen and (min-width: 600px) {
     padding: var(--main-padding-desktop);
