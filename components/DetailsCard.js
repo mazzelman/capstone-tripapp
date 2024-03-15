@@ -11,8 +11,15 @@ import { StyledSection } from "@/pages/favorites";
 import { StyledCardBody } from "./PreviewCard";
 import { StyledTitle } from "./PreviewCard";
 import { StyledInfo } from "./PreviewCard";
+import CommentForm from "./CommentForm";
 
-export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
+export default function DetailsCard({
+  id,
+  isFavorite,
+  toggleFavorite,
+  place,
+  newCommentDummy,
+}) {
   const {
     _id,
     name,
@@ -63,6 +70,7 @@ export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
           </p>
         </StyledCardBody>
       </StyledCard>
+      <CommentForm newCommentDummy={newCommentDummy} />
     </StyledSection>
   );
 }

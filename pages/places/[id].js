@@ -31,6 +31,12 @@ export default function Place({ places }) {
     return <StyledSectionEmpty>loading...</StyledSectionEmpty>;
   if (!place) return null;
 
+  //---------------------------------------------
+  function newCommentDummy(newComment) {
+    console.log(newComment);
+  }
+
+  //-------------------------------------------------
   async function toggleFavorite(id) {
     if (session.status === "unauthenticated") {
       alert("Please sign in to add favorites");
@@ -55,6 +61,7 @@ export default function Place({ places }) {
     .map((place) => place._id)
     .includes(id);
 
+  console.log(place);
   //----------------------------------------------------------------
 
   return (
@@ -63,6 +70,7 @@ export default function Place({ places }) {
       isFavorite={isFavorite}
       toggleFavorite={toggleFavorite}
       place={place}
+      newCommentDummy={newCommentDummy}
     />
   );
 }

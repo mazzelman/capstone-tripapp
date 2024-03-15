@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import "./Review";
 import "./Activity";
+import "./Comment";
+
 const { Schema } = mongoose;
 
 const placeSchema = new Schema({
@@ -11,6 +13,7 @@ const placeSchema = new Schema({
   isFavorite: { type: Boolean, required: false },
   reviews: { type: [Schema.Types.ObjectId], ref: "Review" },
   activities: { type: [Schema.Types.ObjectId], ref: "Activity" },
+  comments: { type: [Schema.Types.ObjectId], ref: "Comment" },
 });
 
 const Place = mongoose.models.Place || mongoose.model("Place", placeSchema);
