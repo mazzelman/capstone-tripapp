@@ -1,8 +1,10 @@
-import styled from "styled-components";
+// import fontawesome icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGift as faGiftSolid } from "@fortawesome/free-solid-svg-icons";
 import { faRotateRight as faRotateRightSolid } from "@fortawesome/free-solid-svg-icons";
 import { faUmbrellaBeach as faUmbrellaBeachSolid } from "@fortawesome/free-solid-svg-icons";
+// import components for styles
+import styled from "styled-components";
 
 export default function Form({
   setFormResults,

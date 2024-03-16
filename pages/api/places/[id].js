@@ -6,7 +6,9 @@ export default async function handler(request, response) {
   const { id } = request.query;
 
   if (request.method === "GET") {
-    const place = await Place.findById(id).populate("activities reviews");
+    const place = await Place.findById(id).populate(
+      "activities reviews comments"
+    );
 
     if (!place) {
       return response.status(404).json({ status: "Not Found" });

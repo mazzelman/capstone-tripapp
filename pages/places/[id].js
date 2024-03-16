@@ -1,9 +1,18 @@
-import DetailsCard from "@/components/DetailsCard";
+// import general things to run the app
+import useSWR, { mutate } from "swr";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import useSWR, { mutate } from "swr";
-
-import { StyledSectionEmpty } from "../favorites";
+import Link from "next/link";
+// import fontawesome icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft as faChevronLeftSolid } from "@fortawesome/free-solid-svg-icons";
+// import components
+import Wrapper700 from "@/components/Partials/Wrapper700";
+import DetailsCard from "@/components/Cards/DetailsCard";
+// import components for styles
+import StyledPrimarySection from "@/components/Sections/StyledPrimarySection";
+import StyledSecondarySection from "@/components/Sections/StyledSecondarySection";
+import StyledTertiarySectionCenter from "@/components/SectionsCentered/StyledTertiarySectionCenter";
 
 export default function Place({ places }) {
   const router = useRouter();
@@ -26,9 +35,17 @@ export default function Place({ places }) {
   } = useSWR(id ? `/api/places/${id}` : null);
 
   if (error || userError)
-    return <StyledSectionEmpty>failed to load...</StyledSectionEmpty>;
+    return (
+      <StyledTertiarySectionCenter>
+        <h2>failed to load...</h2>
+      </StyledTertiarySectionCenter>
+    );
   if (isLoading || userIsLoading)
-    return <StyledSectionEmpty>loading...</StyledSectionEmpty>;
+    return (
+      <StyledTertiarySectionCenter>
+        <h2>loading...</h2>
+      </StyledTertiarySectionCenter>
+    );
   if (!place) return null;
 
   async function toggleFavorite(id) {
@@ -58,11 +75,21 @@ export default function Place({ places }) {
   //----------------------------------------------------------------
 
   return (
-    <DetailsCard
-      id={id}
-      isFavorite={isFavorite}
-      toggleFavorite={toggleFavorite}
-      place={place}
-    />
+    <Wrapper700>
+      <StyledSecondarySection>
+        <Link href="/">
+          <FontAwesomeIcon icon={faChevronLeftSolid} size="xs" fixedWidth />
+          <span>go back</span>
+        </Link>
+      </StyledSecondarySection>
+      <StyledPrimarySection>
+        <DetailsCard
+          id={id}
+          isFavorite={isFavorite}
+          toggleFavorite={toggleFavorite}
+          place={place}
+        />
+      </StyledPrimarySection>
+    </Wrapper700>
   );
 }
