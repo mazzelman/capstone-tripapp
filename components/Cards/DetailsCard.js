@@ -6,7 +6,6 @@ import FavoriteButton from "../Buttons/FavoriteButton";
 import FormComments from "../Forms/FormComments";
 // import components for styles
 import styled from "styled-components";
-
 import { StyledCardArticle } from "./Card";
 import { StyledCardImage } from "./Card";
 import { StyledCardTitle } from "./Card";
@@ -89,13 +88,23 @@ export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
             .map((comment) => (
               <div key={comment._id}>
                 <StyledCommentsAnswers>
-                  <Image
-                    src="/images/profile-placeholder.png"
-                    width="50"
-                    height="50"
-                    alt="Profile picture"
-                    loading="lazy"
-                  />
+                  {!comment.userImage ? (
+                    <StyledCommentsImage
+                      src="/images/profile-placeholder.png"
+                      width="50"
+                      height="50"
+                      alt="Profile picture"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <StyledCommentsImage
+                      src={comment.userImage}
+                      width="50"
+                      height="50"
+                      alt="Profile picture"
+                      loading="lazy"
+                    />
+                  )}
                   <StyledCommentsBody>
                     <StyledCommentsName>{comment.username}</StyledCommentsName>
                     <StyledCommentsPostDate>
@@ -144,10 +153,13 @@ export const StyledCommentsBody = styled.article`
 
 export const StyledCommentsAnswers = styled.section`
   display: flex;
-  flex-wrap: wrap;
   gap: 1em;
   margin-top: 1em;
   padding: 1em 0;
+`;
+
+export const StyledCommentsImage = styled(Image)`
+  border-radius: 50%;
 `;
 
 export const StyledCommentsName = styled.h4`

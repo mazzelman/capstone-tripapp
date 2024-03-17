@@ -30,6 +30,7 @@ export default async function handler(request, response) {
         username,
         commenttext,
         placeId,
+        userImage: user.image,
       });
 
       const savedComment = await newComment.save();
