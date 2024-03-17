@@ -11,7 +11,7 @@ config.autoAddCss = false;
 // import components
 import Layout from "@/components/Partials/Layout";
 // import components for styles
-import StyledTertiarySectionCenter from "@/components/SectionsCentered/StyledTertiarySectionCenter";
+import StyledTertiarySection from "@/components/Sections/StyledTertiarySection";
 
 // global swr fetcher
 const fetcher = (url) => fetch(url).then((response) => response.json());
@@ -29,24 +29,24 @@ export default function App({
 
   if (error)
     return (
-      <StyledTertiarySectionCenter>
+      <StyledTertiarySection $textAlign={true}>
         <h2>Failed to load...</h2>
-      </StyledTertiarySectionCenter>
+      </StyledTertiarySection>
     );
 
   if (isLoading) {
     return (
-      <StyledTertiarySectionCenter>
+      <StyledTertiarySection $textAlign={true}>
         <h2>loading...</h2>
-      </StyledTertiarySectionCenter>
+      </StyledTertiarySection>
     );
   }
 
   if (!data) {
     return (
-      <StyledTertiarySectionCenter>
+      <StyledTertiarySection $textAlign={true}>
         <h2>Data could not be loaded...</h2>
-      </StyledTertiarySectionCenter>
+      </StyledTertiarySection>
     );
   }
 

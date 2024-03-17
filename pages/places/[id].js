@@ -12,7 +12,7 @@ import DetailsCard from "@/components/Cards/DetailsCard";
 // import components for styles
 import StyledPrimarySection from "@/components/Sections/StyledPrimarySection";
 import StyledSecondarySection from "@/components/Sections/StyledSecondarySection";
-import StyledTertiarySectionCenter from "@/components/SectionsCentered/StyledTertiarySectionCenter";
+import StyledTertiarySection from "@/components/Sections/StyledTertiarySection";
 
 export default function Place({ places }) {
   const router = useRouter();
@@ -36,15 +36,15 @@ export default function Place({ places }) {
 
   if (error || userError)
     return (
-      <StyledTertiarySectionCenter>
+      <StyledTertiarySection $textAlign={true}>
         <h2>failed to load...</h2>
-      </StyledTertiarySectionCenter>
+      </StyledTertiarySection>
     );
   if (isLoading || userIsLoading)
     return (
-      <StyledTertiarySectionCenter>
+      <StyledTertiarySection $textAlign={true}>
         <h2>loading...</h2>
-      </StyledTertiarySectionCenter>
+      </StyledTertiarySection>
     );
   if (!place) return null;
 

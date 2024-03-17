@@ -11,7 +11,7 @@ import Card from "@/components/Cards/Card";
 // import components for styles
 import StyledPrimarySection from "@/components/Sections/StyledPrimarySection";
 import StyledSecondarySection from "@/components/Sections/StyledSecondarySection";
-import StyledTertiarySectionCenter from "@/components/SectionsCentered/StyledTertiarySectionCenter";
+import StyledTertiarySection from "@/components/Sections/StyledTertiarySection";
 
 export default function Favorite() {
   const session = useSession();
@@ -25,31 +25,31 @@ export default function Favorite() {
 
   if (!session.data) {
     return (
-      <StyledTertiarySectionCenter>
+      <StyledTertiarySection $textAlign={true}>
         <h2>Please sign in to view your favorite places</h2>
-      </StyledTertiarySectionCenter>
+      </StyledTertiarySection>
     );
   }
 
   if (error)
     return (
-      <StyledTertiarySectionCenter>
+      <StyledTertiarySection $textAlign={true}>
         <h2>failed to load</h2>
-      </StyledTertiarySectionCenter>
+      </StyledTertiarySection>
     );
   if (isLoading)
     return (
-      <StyledTertiarySectionCenter>
+      <StyledTertiarySection $textAlign={true}>
         <h2>loading...</h2>
-      </StyledTertiarySectionCenter>
+      </StyledTertiarySection>
     );
 
   return (
     <>
       {user.favoritePlaces.length === 0 && (
-        <StyledTertiarySectionCenter>
+        <StyledTertiarySection $textAlign={true}>
           <h2>Wow, so much empty...</h2>
-        </StyledTertiarySectionCenter>
+        </StyledTertiarySection>
       )}
       {user.favoritePlaces.length > 0 && (
         <Wrapper700>

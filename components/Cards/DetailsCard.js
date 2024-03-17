@@ -1,13 +1,11 @@
 // import general things to run the app
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import Link from "next/link";
 import Image from "next/image";
 // import components
 import FavoriteButton from "../Buttons/FavoriteButton";
 import FormComments from "../Forms/FormComments";
 // import components for styles
-import StyledPrimarySection from "../Sections/StyledPrimarySection";
+import styled from "styled-components";
 
 import { StyledCardArticle } from "./Card";
 import { StyledCardImage } from "./Card";

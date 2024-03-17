@@ -3,7 +3,7 @@ import Form from "@/components/Forms/Form";
 import Card from "@/components/Cards/Card";
 // import components for styles
 import StyledSecondarySection from "@/components/Sections/StyledSecondarySection";
-import StyledTertiarySectionCenter from "@/components/SectionsCentered/StyledTertiarySectionCenter";
+import StyledTertiarySection from "@/components/Sections/StyledTertiarySection";
 import StyledGridSection from "@/components/Sections/StyledGridSection";
 
 export default function HomePage({
@@ -29,12 +29,12 @@ export default function HomePage({
         handleSurprise={handleSurprise}
       />
       {formResults === -1 && (
-        <StyledTertiarySectionCenter>
+        <StyledTertiarySection $textAlign={true}>
           <h2>no matches...</h2>
-        </StyledTertiarySectionCenter>
+        </StyledTertiarySection>
       )}
       {!formResults && !randomSurprise ? (
-        <StyledTertiarySectionCenter>
+        <StyledTertiarySection $textAlign={true}>
           <h2>Howdy, and welcome to our site!</h2>
           <p>
             At the moment you can search for a region, or an activity. Or both
@@ -42,7 +42,7 @@ export default function HomePage({
             leave a comment at github.
             <br /> Thanks, the Travel App Team Jeanny, Jeanette and Marcel.
           </p>
-        </StyledTertiarySectionCenter>
+        </StyledTertiarySection>
       ) : null}
       {formResults.length > 0 || randomSurprise ? (
         <StyledSecondarySection>

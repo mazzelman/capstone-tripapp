@@ -1,5 +1,6 @@
 import dbConnect from "../../../db/connect";
 import Comment from "@/db/models/Comment";
+import User from "@/db/models/User";
 
 export default async function handler(request, response) {
   await dbConnect();
@@ -18,13 +19,25 @@ export default async function handler(request, response) {
     try {
       const { username, commenttext, placeId } = request.body;
 
+      // Find the user who wrote the comment
+      const user = await User.findOne({ name: username });
+
+      if (!user) {
+        return response.status(404).json({ error: "User not found" });
+      }
+
       const newComment = new Comment({
         username,
         commenttext,
-        placeId, // Include the placeId when creating a new comment
+        placeId,
       });
 
       const savedComment = await newComment.save();
+
+      // Update the user's comments array with the new comment
+      await User.findByIdAndUpdate(user._id, {
+        $push: { userComments: savedComment._id },
+      });
 
       return response.status(201).json(savedComment);
     } catch (error) {
