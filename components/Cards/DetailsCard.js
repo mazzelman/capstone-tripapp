@@ -88,23 +88,17 @@ export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
             .map((comment) => (
               <div key={comment._id}>
                 <StyledCommentsAnswers>
-                  {!comment.userImage ? (
-                    <StyledCommentsImage
-                      src="/images/profile-placeholder.png"
-                      width="50"
-                      height="50"
-                      alt="Profile picture"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <StyledCommentsImage
-                      src={comment.userImage}
-                      width="50"
-                      height="50"
-                      alt="Profile picture"
-                      loading="lazy"
-                    />
-                  )}
+                  <StyledCommentsImage
+                    src={
+                      comment.userImage
+                        ? comment.userImage
+                        : "/images/profile-placeholder.png"
+                    }
+                    width="50"
+                    height="50"
+                    alt="Profile picture"
+                    loading="lazy"
+                  />
                   <StyledCommentsBody>
                     <StyledCommentsName>{comment.username}</StyledCommentsName>
                     <StyledCommentsPostDate>
