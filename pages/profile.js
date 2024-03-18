@@ -1,8 +1,11 @@
+// import general things to run the app
 import styled from "styled-components";
-import { StyledSection } from "./favorites";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import LoginButton from "@/components/LoginButton";
+// import components
+import LoginButton from "@/components/Buttons/LoginButton";
+// import components for styles
+import StyledPrimarySection from "@/components/Sections/StyledPrimarySection";
 
 export default function Profile() {
   const { data: session } = useSession();
@@ -10,7 +13,7 @@ export default function Profile() {
   if (session) {
     return (
       <>
-        <StyledSection>
+        <StyledPrimarySection>
           <StyledArticle>
             <h2>{session.user.name}</h2>
             <StyledProfilePicture
@@ -20,18 +23,18 @@ export default function Profile() {
               alt="profile picture"
             />
           </StyledArticle>
-        </StyledSection>
-        <StyledSection>
+        </StyledPrimarySection>
+        <StyledPrimarySection>
           <StyledArticle>
             <LoginButton />
           </StyledArticle>
-        </StyledSection>
+        </StyledPrimarySection>
       </>
     );
   } else {
     return (
       <>
-        <StyledSection>
+        <StyledPrimarySection>
           <StyledArticle>
             <h2>Lizzy Lazycat</h2>
             <Image
@@ -41,12 +44,12 @@ export default function Profile() {
               alt="profile picture"
             />
           </StyledArticle>
-        </StyledSection>
-        <StyledSection>
+        </StyledPrimarySection>
+        <StyledPrimarySection>
           <StyledArticle>
             <LoginButton />
           </StyledArticle>
-        </StyledSection>
+        </StyledPrimarySection>
       </>
     );
   }

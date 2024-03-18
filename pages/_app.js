@@ -1,15 +1,17 @@
+// import general things to run the app
 import { SWRConfig } from "swr";
 import useSWR from "swr";
 import { SessionProvider } from "next-auth/react";
+import { useState } from "react";
+// import fontawesome icons
 import GlobalStyle from "../styles";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 config.autoAddCss = false;
-
-import Layout from "@/components/Layout";
-import { StyledSectionEmpty } from "./favorites";
-import { StyledEmpty } from "./favorites";
-import { useState } from "react";
+// import components
+import Layout from "@/components/Partials/Layout";
+// import components for styles
+import StyledTertiarySection from "@/components/Sections/StyledTertiarySection";
 
 // global swr fetcher
 const fetcher = (url) => fetch(url).then((response) => response.json());
@@ -27,24 +29,24 @@ export default function App({
 
   if (error)
     return (
-      <StyledSectionEmpty>
-        <StyledEmpty>Failed to load...</StyledEmpty>
-      </StyledSectionEmpty>
+      <StyledTertiarySection $textAlign={true}>
+        <h2>Failed to load...</h2>
+      </StyledTertiarySection>
     );
 
   if (isLoading) {
     return (
-      <StyledSectionEmpty>
-        <StyledEmpty>loading...</StyledEmpty>
-      </StyledSectionEmpty>
+      <StyledTertiarySection $textAlign={true}>
+        <h2>loading...</h2>
+      </StyledTertiarySection>
     );
   }
 
   if (!data) {
     return (
-      <StyledSectionEmpty>
-        <StyledEmpty>Data could not be loaded...</StyledEmpty>
-      </StyledSectionEmpty>
+      <StyledTertiarySection $textAlign={true}>
+        <h2>Data could not be loaded...</h2>
+      </StyledTertiarySection>
     );
   }
 

@@ -1,7 +1,11 @@
-import styled from "styled-components";
-import Form from "@/components/Form";
-import SpotlightCard from "@/components/SpotlightCard";
-import PreviewCard from "@/components/PreviewCard";
+// import components
+import Form from "@/components/Forms/Form";
+import Card from "@/components/Cards/Card";
+// import components for styles
+import StyledSecondarySection from "@/components/Sections/StyledSecondarySection";
+import StyledTertiarySection from "@/components/Sections/StyledTertiarySection";
+import StyledGridSection from "@/components/Sections/StyledGridSection";
+
 export default function HomePage({
   formResults,
   setFormResults,
@@ -25,12 +29,12 @@ export default function HomePage({
         handleSurprise={handleSurprise}
       />
       {formResults === -1 && (
-        <StyledSectionEmpty>
+        <StyledTertiarySection $textAlign={true}>
           <h2>no matches...</h2>
-        </StyledSectionEmpty>
+        </StyledTertiarySection>
       )}
       {!formResults && !randomSurprise ? (
-        <StyledSectionEmpty>
+        <StyledTertiarySection $textAlign={true}>
           <h2>Howdy, and welcome to our site!</h2>
           <p>
             At the moment you can search for a region, or an activity. Or both
@@ -38,49 +42,25 @@ export default function HomePage({
             leave a comment at github.
             <br /> Thanks, the Travel App Team Jeanny, Jeanette and Marcel.
           </p>
-        </StyledSectionEmpty>
+        </StyledTertiarySection>
       ) : null}
       {formResults.length > 0 || randomSurprise ? (
-        <StyledAvailableTrips>Available trips:</StyledAvailableTrips>
+        <StyledSecondarySection>
+          <h4>Available trips:</h4>
+        </StyledSecondarySection>
       ) : null}
 
       {randomSurprise || formResults.length > 0 ? (
-        <StyledSection>
+        <StyledGridSection>
           {randomSurprise ? (
-            <SpotlightCard randomSurprise={randomSurprise} />
+            <Card $spotlight={true} place={randomSurprise} />
           ) : null}
-          {formResults.length > 0 && <PreviewCard formResults={formResults} />}
-        </StyledSection>
+          {formResults.length > 0 &&
+            formResults.map((place) => {
+              return <Card key={place._id} place={place} />;
+            })}
+        </StyledGridSection>
       ) : null}
     </>
   );
 }
-
-export const StyledSection = styled.section`
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
-  grid-column-gap: 1em;
-  grid-row-gap: 1em;
-  padding: var(--main-padding-mobile);
-  @media only screen and (min-width: 600px) {
-    grid-template-columns: repeat(2, 1fr);
-    padding: var(--main-padding-desktop);
-  }
-`;
-
-export const StyledSectionEmpty = styled.section`
-  text-align: center;
-  padding: var(--main-padding-mobile);
-  @media only screen and (min-width: 600px) {
-    padding: var(--card-padding-desktop);
-  }
-`;
-
-export const StyledAvailableTrips = styled.h4`
-  margin-bottom: 0;
-  padding: var(--main-padding-mobile);
-  @media only screen and (min-width: 600px) {
-    padding: var(--main-padding-desktop);
-  }
-`;

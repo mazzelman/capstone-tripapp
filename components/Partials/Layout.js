@@ -1,7 +1,10 @@
-import styled from "styled-components";
+// import general things to run the app
 import Head from "next/head";
+// import components
 import Header from "./Header";
 import Footer from "./Footer";
+// import components for styles
+import styled from "styled-components";
 
 export default function Layout({ children, togglePageActive }) {
   return (
