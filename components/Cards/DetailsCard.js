@@ -72,7 +72,7 @@ export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
 
       // Check if the edited comment text is not empty
       if (editedCommentText.trim() === "") {
-        console.error("Edited comment text is empty");
+        window.alert("Edited comment text is empty");
         return; // Exit early if the edited comment text is empty
       }
 
@@ -217,7 +217,7 @@ export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
                     </StyledCommentsText>
                     {renderEditTextarea(comment._id, comment.commenttext)}
 
-                    {session.data.user.name === comment.username && (
+                    {session.status === "authenticated" && (
                       <StyledCommentButtonsWrapper>
                         <StyledEditCommentButton
                           type="button"
