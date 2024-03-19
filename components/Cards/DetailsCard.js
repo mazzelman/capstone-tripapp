@@ -217,22 +217,23 @@ export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
                     </StyledCommentsText>
                     {renderEditTextarea(comment._id, comment.commenttext)}
 
-                    {session.status === "authenticated" && (
-                      <StyledCommentButtonsWrapper>
-                        <StyledEditCommentButton
-                          type="button"
-                          onClick={() => handleEdit(comment._id)}
-                        >
-                          <FontAwesomeIcon icon={faPencilSolid} />
-                        </StyledEditCommentButton>
-                        <StyledDeleteCommentButton
-                          type="button"
-                          onClick={() => handleDelete(comment._id)}
-                        >
-                          <FontAwesomeIcon icon={faTrashSolid} />
-                        </StyledDeleteCommentButton>
-                      </StyledCommentButtonsWrapper>
-                    )}
+                    {session.status === "authenticated" &&
+                      comment.username === session.data.user.name && (
+                        <StyledCommentButtonsWrapper>
+                          <StyledEditCommentButton
+                            type="button"
+                            onClick={() => handleEdit(comment._id)}
+                          >
+                            <FontAwesomeIcon icon={faPencilSolid} />
+                          </StyledEditCommentButton>
+                          <StyledDeleteCommentButton
+                            type="button"
+                            onClick={() => handleDelete(comment._id)}
+                          >
+                            <FontAwesomeIcon icon={faTrashSolid} />
+                          </StyledDeleteCommentButton>
+                        </StyledCommentButtonsWrapper>
+                      )}
                   </StyledCommentsBody>
                 </StyledCommentsAnswers>
                 <StyledCommentHr />
