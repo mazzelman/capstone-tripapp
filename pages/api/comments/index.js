@@ -5,6 +5,8 @@ import User from "@/db/models/User";
 export default async function handler(request, response) {
   await dbConnect();
 
+  //----------------------------------------------------------------
+
   if (request.method === "GET") {
     try {
       const { placeId } = request.query;
@@ -14,6 +16,8 @@ export default async function handler(request, response) {
       return response.status(500).json({ error: "Server error" });
     }
   }
+
+  //----------------------------------------------------------------
 
   if (request.method === "POST") {
     try {
@@ -45,6 +49,8 @@ export default async function handler(request, response) {
       return response.status(500).json({ error: "Server error" });
     }
   }
+
+  //----------------------------------------------------------------
 
   response.status(405).end(); // Method Not Allowed
 }

@@ -1,9 +1,16 @@
 // import general things to run the app
 import React, { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
+// import fontawesome icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencil as faPencilSolid } from "@fortawesome/free-solid-svg-icons";
+import { faTrash as faTrashSolid } from "@fortawesome/free-solid-svg-icons";
 // import components
 import FavoriteButton from "../Buttons/FavoriteButton";
 import FormComments from "../Forms/FormComments";
+import StyledPrimaryButton from "../Buttons/StyledPrimaryButton";
+import StyledSecondaryButton from "../Buttons/StyledSecondaryButton";
 // import components for styles
 import styled from "styled-components";
 import { StyledCardArticle } from "./Card";
@@ -24,6 +31,105 @@ export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
   } = place;
 
   const [comments, setComments] = useState([]);
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const session = useSession();
+
+  //----------------------------------------------------------------
+
+  const handleEdit = (commentId) => {
+    setEditingCommentId(commentId);
+  };
+
+  //----------------------------------------------------------------
+
+  const handleDelete = async (commentId) => {
+    try {
+      const response = await fetch(`/api/comments/${commentId}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        console.log("Comment deleted successfully");
+        fetchComments();
+      } else {
+        console.error("Failed to delete comment");
+      }
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+    }
+  };
+
+  //----------------------------------------------------------------
+
+  const handleEditSubmit = async (commentId) => {
+    try {
+      // Get the edited comment text from the corresponding textarea
+      const editedCommentTextarea = document.getElementById(
+        `edit-comment-${commentId}`
+      );
+      const editedCommentText = editedCommentTextarea
+        ? editedCommentTextarea.value
+        : "";
+
+      // Check if the edited comment text is not empty
+      if (editedCommentText.trim() === "") {
+        console.error("Edited comment text is empty");
+        return; // Exit early if the edited comment text is empty
+      }
+
+      // Send the edited comment to the server
+      const response = await fetch(`/api/comments/${commentId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ commenttext: editedCommentText }),
+      });
+
+      // Handle response from the server
+      if (response.ok) {
+        console.log("Comment edited successfully");
+        fetchComments(); // Fetch updated comments after successful edit
+        setEditingCommentId(null); // Reset editing state
+      } else {
+        console.error("Failed to edit comment");
+      }
+    } catch (error) {
+      console.error("Error editing comment:", error);
+    }
+  };
+
+  //----------------------------------------------------------------
+
+  const handleCancelEdit = () => {
+    setEditingCommentId(null);
+  };
+
+  //----------------------------------------------------------------
+
+  // Add logic to render edit textarea for the clicked comment
+  const renderEditTextarea = (commentId, commentText) => {
+    if (editingCommentId === commentId) {
+      return (
+        <StyledEditTextareaWrapper>
+          <textarea
+            defaultValue={commentText}
+            id={`edit-comment-${commentId}`}
+            rows="4"
+            required
+          ></textarea>
+          <StyledPrimaryButton onClick={() => handleEditSubmit(commentId)}>
+            Save
+          </StyledPrimaryButton>
+          <StyledSecondaryButton onClick={() => handleCancelEdit()}>
+            Cancel
+          </StyledSecondaryButton>
+        </StyledEditTextareaWrapper>
+      );
+    }
+    return null;
+  };
+
+  //----------------------------------------------------------------
 
   // Define fetchComments function outside the useEffect
   const fetchComments = async () => {
@@ -45,6 +151,8 @@ export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
     fetchComments();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [_id]);
+
+  //----------------------------------------------------------------
 
   return (
     <>
@@ -107,6 +215,27 @@ export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
                     <StyledCommentsText>
                       {comment.commenttext}
                     </StyledCommentsText>
+
+                    {/* Render comment */}
+                    {/* Add logic for edit and delete buttons */}
+                    {renderEditTextarea(comment._id, comment.commenttext)}
+
+                    {session.data.user.name === comment.username && (
+                      <StyledCommentButtonsWrapper>
+                        <StyledEditCommentButton
+                          type="button"
+                          onClick={() => handleEdit(comment._id)}
+                        >
+                          <FontAwesomeIcon icon={faPencilSolid} />
+                        </StyledEditCommentButton>
+                        <StyledDeleteCommentButton
+                          type="button"
+                          onClick={() => handleDelete(comment._id)}
+                        >
+                          <FontAwesomeIcon icon={faTrashSolid} />
+                        </StyledDeleteCommentButton>
+                      </StyledCommentButtonsWrapper>
+                    )}
                   </StyledCommentsBody>
                 </StyledCommentsAnswers>
                 <StyledCommentHr />
@@ -171,4 +300,35 @@ export const StyledCommentsText = styled.div`
 `;
 export const StyledCommentHr = styled.hr`
   border: 1px solid var(--primary-color-background);
+`;
+
+export const StyledCommentButtonsWrapper = styled.div`
+  display: flex;
+  justify-content: end;
+  margin-top: 0.5em;
+`;
+
+export const StyledEditCommentButton = styled.button`
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    color: var(--primary-color);
+  }
+`;
+
+export const StyledDeleteCommentButton = styled.button`
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    color: var(--secondary-color);
+  }
+`;
+
+export const StyledEditTextareaWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  margin-top: 0.5em;
 `;
