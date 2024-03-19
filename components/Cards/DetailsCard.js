@@ -48,13 +48,13 @@ export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
         method: "DELETE",
       });
       if (response.ok) {
-        console.log("Comment deleted successfully");
+        window.alert("Comment deleted successfully");
         fetchComments();
       } else {
-        console.error("Failed to delete comment");
+        window.alert("Failed to delete comment");
       }
     } catch (error) {
-      console.error("Error deleting comment:", error);
+      window.alert("Error deleting comment:", error);
     }
   };
 
@@ -87,14 +87,14 @@ export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
 
       // Handle response from the server
       if (response.ok) {
-        console.log("Comment edited successfully");
+        window.alert("Comment edited successfully");
         fetchComments(); // Fetch updated comments after successful edit
         setEditingCommentId(null); // Reset editing state
       } else {
-        console.error("Failed to edit comment");
+        window.alert("Failed to edit comment");
       }
     } catch (error) {
-      console.error("Error editing comment:", error);
+      window.alert("Error editing comment:", error);
     }
   };
 
@@ -215,9 +215,6 @@ export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
                     <StyledCommentsText>
                       {comment.commenttext}
                     </StyledCommentsText>
-
-                    {/* Render comment */}
-                    {/* Add logic for edit and delete buttons */}
                     {renderEditTextarea(comment._id, comment.commenttext)}
 
                     {session.data.user.name === comment.username && (
