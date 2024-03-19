@@ -7,7 +7,6 @@ import StyledPrimaryButton from "../Buttons/StyledPrimaryButton";
 import StyledSecondaryButton from "../Buttons/StyledSecondaryButton";
 // import components for styles
 import styled from "styled-components";
-import StyledPrimarySection from "../Sections/StyledPrimarySection";
 import Link from "next/link";
 
 export default function FormComments({ fetchComments }) {
