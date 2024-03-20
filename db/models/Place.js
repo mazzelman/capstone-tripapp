@@ -5,8 +5,9 @@ const { Schema } = mongoose;
 
 const placeSchema = new Schema({
   name: { type: String, required: true },
+  region: { type: String, required: true },
   description: { type: String, required: true },
-  image: { type: String, required: true },
+  image: { type: String, required: false },
   temperature: { type: Number, required: false },
   isFavorite: { type: Boolean, required: false },
   reviews: { type: [Schema.Types.ObjectId], ref: "Review" },

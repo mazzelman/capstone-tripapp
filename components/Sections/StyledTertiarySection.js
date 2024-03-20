@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default function StyledSecondarySection({ $textAlign, children }) {
+export default function StyledTertiarySection({ $textAlign, children }) {
   return <StyledSection $textAlign={$textAlign}>{children}</StyledSection>;
 }
 
