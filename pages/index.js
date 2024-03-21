@@ -1,3 +1,6 @@
+// import general things to run the app
+import ScrollToTop from "react-scroll-to-top";
+
 // import components
 import Form from "@/components/Forms/Form";
 import Card from "@/components/Cards/Card";
@@ -61,6 +64,7 @@ export default function HomePage({
             })}
         </StyledGridSection>
       ) : null}
+      <ScrollToTop smooth />
     </>
   );
 }
