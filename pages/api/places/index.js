@@ -24,7 +24,6 @@ export default async function handler(request, response) {
         image,
       });
 
-      //console.log(newPlace);
       const savedPlace = await newPlace.save(); ///-----TURN ON AGAIN!!!
 
       return response.status(201).json(savedPlace);

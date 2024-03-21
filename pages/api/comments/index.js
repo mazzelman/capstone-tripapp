@@ -22,7 +22,7 @@ export default async function handler(request, response) {
   if (request.method === "POST") {
     try {
       const { username, commenttext, placeId } = request.body;
-      console.log(request.body);
+
       // Find the user who wrote the comment
       const user = await User.findOne({ name: username });
 
