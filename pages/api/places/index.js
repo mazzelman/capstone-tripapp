@@ -6,6 +6,31 @@ export default async function handler(request, response) {
 
   if (request.method === "GET") {
     const places = await Place.find().populate("activities reviews");
+
     return response.status(200).json(places);
   }
+
+  if (request.method === "POST") {
+    try {
+      const { name, region, description, initialReview, activities } =
+        request.body;
+      const image = "/images/placeholder.jpg";
+      const newPlace = new Place({
+        name,
+        region,
+        description,
+        initialReview,
+        activities,
+        image,
+      });
+
+      //console.log(newPlace);
+      const savedPlace = await newPlace.save(); ///-----TURN ON AGAIN!!!
+
+      return response.status(201).json(savedPlace);
+    } catch (error) {
+      return response.status(500).json({ error: "Server error" });
+    }
+  }
+  response.status(405).end(); // Method Not Allowed
 }
