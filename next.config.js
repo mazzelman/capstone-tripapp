@@ -10,6 +10,7 @@ const nextConfig = {
       "source.unsplash.com",
       "unsplash.com",
       "avatars.githubusercontent.com",
+      "lh3.googleusercontent.com",
     ],
   },
   webpack(config) {

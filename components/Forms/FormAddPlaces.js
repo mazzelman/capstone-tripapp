@@ -37,10 +37,11 @@ export default function AddPlaces({ getUniqueValues }) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
+    const xdata = Object.fromEntries(formData);
 
-    const activityArray = Object.values(data);
-    console.log(activityArray);
+    const data = { ...xdata, activities: isChecked };
+
+    setIsChecked([]);
 
     try {
       const response = await fetch("/api/places", {
@@ -63,10 +64,17 @@ export default function AddPlaces({ getUniqueValues }) {
     }
   }
 
-  function handleChange(checkbox) {
-    setIsChecked(isChecked.push(...checkbox));
-    console.log(isChecked);
-  }
+  const handleChange = (event) => {
+    const { value, checked } = event.target;
+
+    if (checked) {
+      setIsChecked((prevCheckedValues) => [...prevCheckedValues, value]);
+    } else {
+      setIsChecked((prevCheckedValues) =>
+        prevCheckedValues.filter((item) => item !== value)
+      );
+    }
+  };
 
   return (
     <>
@@ -98,13 +106,15 @@ export default function AddPlaces({ getUniqueValues }) {
               id={activities._id}
               name={activities.activityname}
               value={activities._id}
-              onClick={() => handleChange(activities._id)}
+              onChange={handleChange}
             />
             <label htmlFor={activities._id}>{activities.activityname}</label>
           </div>
         ))}
 
-        <label htmlFor="ownPlaceRating">Rating</label>
+        {/* Rating Field ----- Saved for Later!!!
+
+        <label htmlFor="ownPlaceRating">Rating</label> 
         <input
           type="range"
           id="ownPlaceRating"
@@ -120,15 +130,24 @@ export default function AddPlaces({ getUniqueValues }) {
           <option value="3" label="3"></option>
           <option value="4" label="4"></option>
           <option value="5" label="5"></option>
-        </StyledDatalist>
+        </StyledDatalist> */}
 
         <label htmlFor="description">Description:</label>
         <textarea
           id="description"
           name="description"
-          placeholder="Share your thoughts... "
+          placeholder="Describe this place... "
           required
         ></textarea>
+
+        <label htmlFor="initialReview">Your review:</label>
+        <textarea
+          id="initialReview"
+          name="initialReview"
+          placeholder="Add your review... "
+          required
+        ></textarea>
+
         <button type="submit" name="submit" id="submit">
           Submit
         </button>

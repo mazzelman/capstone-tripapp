@@ -27,6 +27,7 @@ export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
     image,
     temperature,
     reviews,
+    initialReview,
     activities,
   } = place;
 
@@ -183,9 +184,7 @@ export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
           <StyledCardSubHeadings>Description:</StyledCardSubHeadings>
           <StyledCardText>{description}</StyledCardText>
           <StyledCardSubHeadings>Reviews:</StyledCardSubHeadings>
-          <StyledCardText>
-            {reviews.map((review) => review.review).join(", ")}
-          </StyledCardText>
+          <StyledCardText>{initialReview}</StyledCardText>
         </StyledCardBody>
       </StyledCardArticle>
       <FormComments fetchComments={fetchComments} />
