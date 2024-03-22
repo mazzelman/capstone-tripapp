@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import React from "react";
 import StyledTertiarySection from "../Sections/StyledTertiarySection";
+import UploadImage from "./FormImageUpload";
 
 import { useState } from "react";
 import useSWR from "swr";
 
 export default function AddPlaces({ getUniqueValues }) {
   const [isChecked, setIsChecked] = useState([]);
+  const [isImage, setIsImage] = useState();
 
   const { data, error, isLoading } = useSWR("/api/activities");
 
@@ -37,9 +39,9 @@ export default function AddPlaces({ getUniqueValues }) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
-    const xdata = Object.fromEntries(formData);
+    const ownPlace = Object.fromEntries(formData);
 
-    const data = { ...xdata, activities: isChecked };
+    const data = { ...ownPlace, activities: isChecked, image: isImage };
 
     setIsChecked([]);
 
@@ -78,41 +80,43 @@ export default function AddPlaces({ getUniqueValues }) {
 
   return (
     <>
-      <StyledAddPlacesForm onSubmit={handleOwnPlaceSubmit}>
-        <label htmlFor="name">Name:</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          placeholder="Paris"
-          required
-        ></input>
-        <label htmlFor="region">Region:</label>
+      <UploadImage isImage={isImage} setIsImage={setIsImage} />
+      {isImage && (
+        <StyledAddPlacesForm onSubmit={handleOwnPlaceSubmit}>
+          <label htmlFor="name">Name:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Paris"
+            required
+          ></input>
+          <label htmlFor="region">Region:</label>
 
-        <select name="region" id="region" required>
-          <option value="disabled">---</option>
-          {getUniqueValues("region").map((region, id) => (
-            <option key={id} value={region}>
-              {region}
-            </option>
+          <select name="region" id="region" required>
+            <option value="disabled">---</option>
+            {getUniqueValues("region").map((region, id) => (
+              <option key={id} value={region}>
+                {region}
+              </option>
+            ))}
+          </select>
+
+          <p>Activities:</p>
+          {data.map((activities) => (
+            <div key={activities._id}>
+              <input
+                type="checkbox"
+                id={activities._id}
+                name={activities.activityname}
+                value={activities._id}
+                onChange={handleChange}
+              />
+              <label htmlFor={activities._id}>{activities.activityname}</label>
+            </div>
           ))}
-        </select>
 
-        <p>Activities:</p>
-        {data.map((activities) => (
-          <div key={activities._id}>
-            <input
-              type="checkbox"
-              id={activities._id}
-              name={activities.activityname}
-              value={activities._id}
-              onChange={handleChange}
-            />
-            <label htmlFor={activities._id}>{activities.activityname}</label>
-          </div>
-        ))}
-
-        {/* Rating Field ----- Saved for Later!!!
+          {/* Rating Field ----- Saved for Later!!!
 
         <label htmlFor="ownPlaceRating">Rating</label> 
         <input
@@ -132,26 +136,27 @@ export default function AddPlaces({ getUniqueValues }) {
           <option value="5" label="5"></option>
         </StyledDatalist> */}
 
-        <label htmlFor="description">Description:</label>
-        <textarea
-          id="description"
-          name="description"
-          placeholder="Describe this place... "
-          required
-        ></textarea>
+          <label htmlFor="description">Description:</label>
+          <textarea
+            id="description"
+            name="description"
+            placeholder="Describe this place... "
+            required
+          ></textarea>
 
-        <label htmlFor="initialReview">Your review:</label>
-        <textarea
-          id="initialReview"
-          name="initialReview"
-          placeholder="Add your review... "
-          required
-        ></textarea>
+          <label htmlFor="initialReview">Your review:</label>
+          <textarea
+            id="initialReview"
+            name="initialReview"
+            placeholder="Add your review... "
+            required
+          ></textarea>
 
-        <button type="submit" name="submit" id="submit">
-          Submit
-        </button>
-      </StyledAddPlacesForm>
+          <button type="submit" name="submit" id="submit">
+            Submit
+          </button>
+        </StyledAddPlacesForm>
+      )}
     </>
   );
 }

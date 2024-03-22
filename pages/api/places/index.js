@@ -12,9 +12,9 @@ export default async function handler(request, response) {
 
   if (request.method === "POST") {
     try {
-      const { name, region, description, initialReview, activities } =
+      const { name, region, description, initialReview, activities, image } =
         request.body;
-      const image = "/images/placeholder.jpg";
+
       const newPlace = new Place({
         name,
         region,
