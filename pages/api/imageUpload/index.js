@@ -19,7 +19,6 @@ export default async function handler(req, res) {
           crop: "fill",
         },
       });
-      console.log(result.secure_url);
       res.status(200).json({ url: result.secure_url });
     } catch (error) {
       res.status(500).json({ error: "Something went wrong" });

@@ -39,11 +39,9 @@ export default function AddPlaces({ getUniqueValues }) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
-    const xdata = Object.fromEntries(formData);
+    const ownPlace = Object.fromEntries(formData);
 
-    const data = { ...xdata, activities: isChecked, image: isImage };
-
-    console.log(data);
+    const data = { ...ownPlace, activities: isChecked, image: isImage };
 
     setIsChecked([]);
 

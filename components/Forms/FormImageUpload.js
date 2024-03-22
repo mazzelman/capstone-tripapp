@@ -29,7 +29,6 @@ const UploadImage = ({ isImage, setIsImage }) => {
       const data = await res.json();
       setIsImage(data.url);
       window.alert("Image uploaded");
-      //console.log(isImage);
     } catch (error) {
       console.error("Error uploading image:", error);
     }
