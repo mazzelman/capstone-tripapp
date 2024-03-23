@@ -7,7 +7,7 @@ export default async function handler(request, response) {
   const { id } = request.query;
 
   const user = await User.findById(id).populate({
-    path: "favoritePlaces",
+    path: "favoritePlaces createdPlaces",
     populate: { path: "activities reviews" },
   });
 

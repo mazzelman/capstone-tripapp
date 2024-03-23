@@ -217,7 +217,7 @@ export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
                     {renderEditTextarea(comment._id, comment.commenttext)}
 
                     {session.status === "authenticated" &&
-                      comment.username === session.data.user.name && (
+                      comment.userId === session.data.user.id && (
                         <StyledCommentButtonsWrapper>
                           <StyledEditCommentButton
                             type="button"

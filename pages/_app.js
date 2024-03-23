@@ -3,6 +3,7 @@ import { SWRConfig } from "swr";
 import useSWR from "swr";
 import { SessionProvider } from "next-auth/react";
 import { useState } from "react";
+import ScrollToTop from "react-scroll-to-top";
 // import fontawesome icons
 import GlobalStyle from "../styles";
 import { config } from "@fortawesome/fontawesome-svg-core";
@@ -108,6 +109,7 @@ export default function App({
               handleSurprise={handleSurprise}
               {...pageProps}
             />
+            <ScrollToTop smooth style={{ bottom: "120px" }} />
           </Layout>
         </SWRConfig>
       </SessionProvider>

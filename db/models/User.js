@@ -10,6 +10,7 @@ const userSchema = new Schema({
   email: { type: String },
   favoritePlaces: [{ type: Schema.Types.ObjectId, ref: "Place" }],
   userComments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
+  createdPlaces: [{ type: Schema.Types.ObjectId, ref: "Place" }],
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);

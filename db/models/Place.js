@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import "./Review";
 import "./Activity";
+import "./User";
 const { Schema } = mongoose;
 
 const placeSchema = new Schema({
@@ -14,6 +15,7 @@ const placeSchema = new Schema({
   activities: { type: [Schema.Types.ObjectId], ref: "Activity" },
   comments: { type: [Schema.Types.ObjectId], ref: "Comment" },
   initialReview: { type: String, required: true },
+  userId: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
 // Pre-save middleware to convert activities to strings

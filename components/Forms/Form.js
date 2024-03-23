@@ -106,6 +106,7 @@ export const StyledSection = styled.section`
   padding: var(--main-padding-mobile);
   background-image: url(/images/hero.jpg);
   background-size: cover;
+  border-radius: var(--border-radius);
   @media only screen and (min-width: 600px) {
     margin: 0 2em;
     padding: var(--hero-padding-desktop);

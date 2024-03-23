@@ -1,5 +1,6 @@
 // import general things to run the app
 import Head from "next/head";
+import Image from "next/image";
 // import components
 import Header from "./Header";
 import Footer from "./Footer";
@@ -17,6 +18,18 @@ export default function Layout({ children, togglePageActive }) {
       </Head>
       <Header togglePageActive={togglePageActive} />
       <StyledMain>{children}</StyledMain>
+      <StyledFooterImage
+        src="/images/footer-70.png"
+        sizes="100vw"
+        style={{
+          width: "100%",
+          height: "auto",
+        }}
+        width="0"
+        height="0"
+        alt="Travel the world"
+        loading="lazy"
+      />
       <Footer toggleActivePage={togglePageActive} />
     </>
   );
@@ -25,4 +38,10 @@ export default function Layout({ children, togglePageActive }) {
 export const StyledMain = styled.main`
   max-width: var(--max-with);
   margin: var(--main-margin);
+`;
+
+export const StyledFooterImage = styled(Image)`
+  position: fixed;
+  bottom: 0;
+  z-index: -999;
 `;

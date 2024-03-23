@@ -32,6 +32,11 @@ export default NextAuth({
         currentUser.save();
       }
 
+      if (currentUser.createdPlaces == null) {
+        currentUser.createdPlaces = [];
+        currentUser.save();
+      }
+
       return { ...session, user: { ...session.user, id: user.id } };
     },
   },
