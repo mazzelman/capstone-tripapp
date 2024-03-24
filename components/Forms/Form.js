@@ -109,7 +109,7 @@ export const StyledSection = styled.section`
   border-radius: var(--border-radius);
   @media only screen and (min-width: 600px) {
     margin: 0 2em;
-    padding: var(--hero-padding-desktop);
+    padding: 4.5em;
   }
 `;
 

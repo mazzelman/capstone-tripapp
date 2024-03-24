@@ -16,6 +16,7 @@ import StyledPrimaryButton from "../Buttons/StyledPrimaryButton";
 export default function AddPlaces({ getUniqueValues }) {
   const [isChecked, setIsChecked] = useState([]);
   const [isImage, setIsImage] = useState();
+  const [publicId, setPublicId] = useState();
 
   const router = useRouter();
 
@@ -57,6 +58,7 @@ export default function AddPlaces({ getUniqueValues }) {
       ...ownPlace,
       activities: isChecked,
       image: isImage,
+      imageId: publicId,
       userId: userId,
     };
 
@@ -107,7 +109,11 @@ export default function AddPlaces({ getUniqueValues }) {
         file size is limited to <strong>1MB</strong>.
       </p>
       <Divider />
-      <UploadImage isImage={isImage} setIsImage={setIsImage} />
+      <UploadImage
+        isImage={isImage}
+        setIsImage={setIsImage}
+        setPublicId={setPublicId}
+      />
       {isImage && (
         <StyledAddPlacesForm onSubmit={handleOwnPlaceSubmit}>
           <StyledFormGroup>

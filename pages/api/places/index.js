@@ -23,6 +23,7 @@ export default async function handler(request, response) {
         activities,
         image,
         userId,
+        imageId,
       } = request.body;
 
       const newPlace = new Place({
@@ -33,6 +34,7 @@ export default async function handler(request, response) {
         activities,
         image,
         userId,
+        imageId,
       });
 
       const savedPlace = await newPlace.save(); ///-----TURN ON AGAIN!!!

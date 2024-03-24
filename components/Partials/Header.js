@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 // import components for styles
 import styled from "styled-components";
-// import components for styles
+// import components
 import { navigationLinks } from "@/lib/navigation";
 
 export default function Header({ togglePageActive }) {

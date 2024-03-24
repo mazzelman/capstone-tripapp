@@ -38,7 +38,9 @@ export default createGlobalStyle`
     color: var(--text-color);
     background-color: var(--primary-color-background);
     margin: 0;
+    @media only screen and (max-width: 1280px) {
     margin-bottom: 12em;
+    }
   }
 
   h1, h2, h3, h4, h5, h6 {

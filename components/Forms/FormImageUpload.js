@@ -10,7 +10,7 @@ import StyledSecondaryButton from "../Buttons/StyledSecondaryButton";
 // import components for styles
 import styled from "styled-components";
 
-const UploadImage = ({ isImage, setIsImage }) => {
+const UploadImage = ({ isImage, setIsImage, setPublicId }) => {
   const [image, setImage] = useState(null);
 
   const handleImageChange = (event) => {
@@ -37,6 +37,7 @@ const UploadImage = ({ isImage, setIsImage }) => {
       });
       const data = await res.json();
       setIsImage(data.url);
+      setPublicId(data.public_id);
       //window.alert("Image uploaded");
     } catch (error) {
       window.alert(

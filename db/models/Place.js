@@ -10,12 +10,12 @@ const placeSchema = new Schema({
   description: { type: String, required: true },
   image: { type: String, required: false },
   temperature: { type: Number, required: false },
-  isFavorite: { type: Boolean, required: false },
   reviews: { type: [Schema.Types.ObjectId], ref: "Review" },
   activities: { type: [Schema.Types.ObjectId], ref: "Activity" },
   comments: { type: [Schema.Types.ObjectId], ref: "Comment" },
   initialReview: { type: String, required: true },
   userId: { type: Schema.Types.ObjectId, ref: "User" },
+  imageId: { type: String, required: false },
 });
 
 // Pre-save middleware to convert activities to strings

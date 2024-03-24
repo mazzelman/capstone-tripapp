@@ -41,7 +41,12 @@ export const StyledMain = styled.main`
 `;
 
 export const StyledFooterImage = styled(Image)`
-  position: fixed;
-  bottom: 0;
-  z-index: -999;
+  @media only screen and (max-width: 1280px) {
+    position: fixed;
+    bottom: 0;
+    z-index: -999;
+  }
+  @media only screen and (max-width: 600px) {
+    bottom: 5em;
+  }
 `;
