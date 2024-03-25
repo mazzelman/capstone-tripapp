@@ -21,10 +21,6 @@ export default function Layout({ children, togglePageActive }) {
       <StyledFooterImage
         src="/images/footer-70.png"
         sizes="100vw"
-        style={{
-          width: "100%",
-          height: "auto",
-        }}
         width="0"
         height="0"
         alt="Travel the world"
@@ -41,6 +37,8 @@ export const StyledMain = styled.main`
 `;
 
 export const StyledFooterImage = styled(Image)`
+  width: 100%;
+  height: auto;
   @media only screen and (max-width: 1280px) {
     position: fixed;
     bottom: 0;

@@ -52,10 +52,6 @@ const UploadImage = ({ isImage, setIsImage, setPublicId }) => {
         {image && (
           <StyledUploadImage
             sizes="100vw"
-            style={{
-              width: "100%",
-              height: "auto",
-            }}
             width="0"
             height="0"
             src={image}
@@ -100,6 +96,8 @@ const UploadImage = ({ isImage, setIsImage, setPublicId }) => {
 export default UploadImage;
 
 export const StyledUploadImage = styled(Image)`
+  width: 100%;
+  height: auto;
   border-radius: var(--border-radius);
 `;
 
