@@ -6,10 +6,15 @@ export default async function handler(request, response) {
 
   const { id } = request.query;
 
-  const user = await User.findById(id).populate({
-    path: "favoritePlaces createdPlaces",
-    populate: { path: "activities reviews" },
-  });
+  const user = await User.findById(id)
+    .populate({
+      path: "favoritePlaces",
+      populate: { path: "reviews activities" },
+    })
+    .populate({
+      path: "createdPlaces",
+      populate: { path: "reviews activities" },
+    });
 
   if (request.method === "GET") {
     if (!user) {
