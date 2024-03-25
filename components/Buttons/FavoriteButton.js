@@ -1,18 +1,47 @@
-import styled from "styled-components";
+// import general things to run the app
+import { useSession } from "next-auth/react";
+import useSWR from "swr";
+// import fontawesome icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
+// import components for styles
+import styled from "styled-components";
 
-export default function FavoriteButton({ id, isFavorite, toggleFavorite }) {
+export default function FavoriteButton({ id, toggleFavorite }) {
+  const session = useSession();
+  const userId = session.data?.user.id;
+
+  const {
+    data: user,
+    error: userError,
+    isLoading: userIsLoading,
+  } = useSWR(userId ? `/api/user/${userId}` : null);
+
+  if (userIsLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (userError) {
+    return <div>Error loading user data...</div>;
+  }
+
   return (
     <>
-      <StyledFavoriteButton type="button" onClick={() => toggleFavorite(id)}>
-        {isFavorite ? (
-          <FontAwesomeIcon icon={faHeartSolid} size="2x" />
-        ) : (
+      {session.status === "authenticated" && (
+        <StyledFavoriteButton type="button" onClick={() => toggleFavorite(id)}>
+          {user.favoritePlaces.find((favorite) => favorite._id === id) ? (
+            <FontAwesomeIcon icon={faHeartSolid} size="2x" />
+          ) : (
+            <FontAwesomeIcon icon={faHeartRegular} size="2x" />
+          )}
+        </StyledFavoriteButton>
+      )}
+      {session.status === "unauthenticated" && (
+        <StyledFavoriteButton type="button" onClick={() => toggleFavorite(id)}>
           <FontAwesomeIcon icon={faHeartRegular} size="2x" />
-        )}
-      </StyledFavoriteButton>
+        </StyledFavoriteButton>
+      )}
     </>
   );
 }

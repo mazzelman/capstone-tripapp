@@ -1,6 +1,9 @@
 // import general things to run the app
+import useFavoriteToggle from "@/utils/favoriteHook";
 import Link from "next/link";
 import Image from "next/image";
+// import components
+import FavoriteButton from "../Buttons/FavoriteButton";
 // import components for styles
 import styled from "styled-components";
 
@@ -16,16 +19,14 @@ export default function Card({ $spotlight, place }) {
     activities,
   } = place;
 
+  const { isFavorite, toggleFavorite } = useFavoriteToggle();
+
   return (
     <StyledCardArticle $spotlight={$spotlight}>
       <Link href={`/places/${_id}`}>
         <StyledCardImage
           src={image}
           sizes="100vw"
-          style={{
-            width: "100%",
-            height: "auto",
-          }}
           width="0"
           height="0"
           alt={name}
@@ -36,6 +37,11 @@ export default function Card({ $spotlight, place }) {
         <Link href={`/places/${_id}`}>
           <StyledCardTitle>{place.name}</StyledCardTitle>
         </Link>
+        <FavoriteButton
+          id={_id}
+          isFavorite={isFavorite}
+          toggleFavorite={toggleFavorite}
+        />
         <StyledCardSubHeading>
           {region} &#183; &nbsp;
           {activities.map((activity) => activity.activityname).join(", ")}
@@ -56,11 +62,14 @@ export const StyledCardArticle = styled.article`
 
 export const StyledCardBody = styled.article`
   padding: 1em;
+  position: relative;
 `;
 
 export const StyledCardImage = styled(Image)`
   border-top-left-radius: 0.3em;
   border-top-right-radius: 0.3em;
+  width: 100%;
+  height: auto;
 `;
 
 export const StyledCardTitle = styled.h3`
