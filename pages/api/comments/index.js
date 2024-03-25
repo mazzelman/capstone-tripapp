@@ -32,6 +32,7 @@ export default async function handler(request, response) {
 
       const newComment = new Comment({
         username,
+        userId: user._id,
         commenttext,
         placeId,
         userImage: user.image,

@@ -1,6 +1,7 @@
 // import general things to run the app
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import Image from "next/image";
 // import fontawesome icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -29,11 +30,14 @@ export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
     reviews,
     initialReview,
     activities,
+    userId,
   } = place;
 
   const [comments, setComments] = useState([]);
   const [editingCommentId, setEditingCommentId] = useState(null);
   const session = useSession();
+
+  const router = useRouter();
 
   //----------------------------------------------------------------
 
@@ -42,7 +46,26 @@ export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
   };
 
   //----------------------------------------------------------------
+  // for the places
 
+  const handleDeletePlace = async () => {
+    try {
+      const response = await fetch(`/api/places/${id}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        window.alert("Place deleted successfully");
+        router.push("/places"); // Redirect to the home page after successful delete
+      } else {
+        window.alert("Failed to delete place");
+      }
+    } catch (error) {
+      window.alert("Error deleting place:", error);
+    }
+  };
+
+  //----------------------------------------------------------------
+  // for the comments
   const handleDelete = async (commentId) => {
     try {
       const response = await fetch(`/api/comments/${commentId}`, {
@@ -185,6 +208,19 @@ export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
           <StyledCardText>{description}</StyledCardText>
           <StyledCardSubHeadings>Reviews:</StyledCardSubHeadings>
           <StyledCardText>{initialReview}</StyledCardText>
+          {session.status === "authenticated" &&
+            userId === session.data.user.id && (
+              <StyledCardButtonWrapper>
+                <StyledSecondaryButton onClick={handleDeletePlace}>
+                  <FontAwesomeIcon icon={faTrashSolid} />
+                  &nbsp;Delete Place
+                </StyledSecondaryButton>
+                <StyledSecondaryButton>
+                  <FontAwesomeIcon icon={faPencilSolid} />
+                  &nbsp;Edit Place
+                </StyledSecondaryButton>
+              </StyledCardButtonWrapper>
+            )}
         </StyledCardBody>
       </StyledCardArticle>
       <FormComments fetchComments={fetchComments} />
@@ -217,7 +253,7 @@ export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
                     {renderEditTextarea(comment._id, comment.commenttext)}
 
                     {session.status === "authenticated" &&
-                      comment.username === session.data.user.name && (
+                      comment.userId === session.data.user.id && (
                         <StyledCommentButtonsWrapper>
                           <StyledEditCommentButton
                             type="button"
@@ -257,6 +293,11 @@ export const StyledCardSubHeadings = styled.h4`
 
 export const StyledCardText = styled.p`
   margin-top: 0.5em;
+`;
+
+export const StyledCardButtonWrapper = styled.div`
+  display: flex;
+  gap: 0.5em;
 `;
 
 export const StyledComments = styled.article`

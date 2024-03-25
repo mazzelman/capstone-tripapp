@@ -1,7 +1,12 @@
-import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import general things to run the app
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
+// import fontawesome icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import components for styles
+import styled from "styled-components";
+// import components
 import { navigationLinks } from "@/lib/navigation";
 
 export default function Footer({ togglePageActive }) {
@@ -37,11 +42,9 @@ export default function Footer({ togglePageActive }) {
 
 export const StyledFooter = styled.footer`
   background-color: var(--secondary-color-background);
-  @media only screen and (max-width: 600px) {
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-  }
+  width: 100%;
+  position: fixed;
+  bottom: 0;
 `;
 
 export const StyledFooterInner = styled.div`

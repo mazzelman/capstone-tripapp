@@ -21,7 +21,7 @@ export const StyledFavoriteButton = styled.button`
   color: var(--secondary-color);
   position: absolute;
   right: 1em;
-  top: 1.5em;
+  top: 0.5em;
   border: none;
   background-color: transparent;
 `;

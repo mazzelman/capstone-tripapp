@@ -1,14 +1,27 @@
-import styled from "styled-components";
+// import general things to run the app
 import React from "react";
-import StyledTertiarySection from "../Sections/StyledTertiarySection";
-import UploadImage from "./FormImageUpload";
-
-import { useState } from "react";
 import useSWR from "swr";
+import { useSession } from "next-auth/react";
+import { useState } from "react";
+import { useRouter } from "next/router";
+import UploadImage from "./FormImageUpload";
+// import components for styles
+import styled from "styled-components";
+import StyledSecondarySection from "../Sections/StyledSecondarySection";
+import StyledTertiarySection from "../Sections/StyledTertiarySection";
+import Divider from "../dividers/divider";
+// import components
+import StyledPrimaryButton from "../Buttons/StyledPrimaryButton";
 
 export default function AddPlaces({ getUniqueValues }) {
   const [isChecked, setIsChecked] = useState([]);
   const [isImage, setIsImage] = useState();
+  const [publicId, setPublicId] = useState();
+
+  const router = useRouter();
+
+  const session = useSession();
+  const userId = session.data?.user.id;
 
   const { data, error, isLoading } = useSWR("/api/activities");
 
@@ -41,7 +54,13 @@ export default function AddPlaces({ getUniqueValues }) {
     const formData = new FormData(event.target);
     const ownPlace = Object.fromEntries(formData);
 
-    const data = { ...ownPlace, activities: isChecked, image: isImage };
+    const data = {
+      ...ownPlace,
+      activities: isChecked,
+      image: isImage,
+      imageId: publicId,
+      userId: userId,
+    };
 
     setIsChecked([]);
 
@@ -55,11 +74,13 @@ export default function AddPlaces({ getUniqueValues }) {
       });
 
       if (response.ok) {
-        console.log("Place added successfully");
+        window.alert("Place added successfully");
         // Clear the input field and textarea
         event.target.reset();
+        // reload the page
+        router.reload();
       } else {
-        console.error("Failed to add place");
+        window.alert("Failed to add place");
       }
     } catch (error) {
       console.error("Error adding place:", error);
@@ -79,97 +100,118 @@ export default function AddPlaces({ getUniqueValues }) {
   };
 
   return (
-    <>
-      <UploadImage isImage={isImage} setIsImage={setIsImage} />
+    <StyledSecondarySection>
+      <h2>Create your own places!</h2>
+      <p>
+        The first step is to upload an image. When the image is successfully
+        uploaded, you will become a confirmation right here under the image
+        upload. After that, you will be able fill out the form that appears. The
+        file size is limited to <strong>1MB</strong>.
+      </p>
+      <Divider />
+      <UploadImage
+        isImage={isImage}
+        setIsImage={setIsImage}
+        setPublicId={setPublicId}
+      />
       {isImage && (
         <StyledAddPlacesForm onSubmit={handleOwnPlaceSubmit}>
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Paris"
-            required
-          ></input>
-          <label htmlFor="region">Region:</label>
+          <StyledFormGroup>
+            <StyledFormLabel htmlFor="name">Name:</StyledFormLabel>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="The name of the place..."
+              required
+            ></input>
+          </StyledFormGroup>
 
-          <select name="region" id="region" required>
-            <option value="disabled">---</option>
-            {getUniqueValues("region").map((region, id) => (
-              <option key={id} value={region}>
-                {region}
-              </option>
-            ))}
-          </select>
+          <StyledFormGroup>
+            <StyledFormLabel htmlFor="region">Region:</StyledFormLabel>
+            <select name="region" id="region" required>
+              <option value="disabled">---</option>
+              {getUniqueValues("region").map((region, id) => (
+                <option key={id} value={region}>
+                  {region}
+                </option>
+              ))}
+            </select>
+          </StyledFormGroup>
 
-          <p>Activities:</p>
-          {data.map((activities) => (
-            <div key={activities._id}>
-              <input
-                type="checkbox"
-                id={activities._id}
-                name={activities.activityname}
-                value={activities._id}
-                onChange={handleChange}
-              />
-              <label htmlFor={activities._id}>{activities.activityname}</label>
-            </div>
-          ))}
+          <StyledFormGroup>
+            <p>Activities:</p>
+            <StyledActivities>
+              {data.map((activities) => (
+                <label key={activities._id} htmlFor={activities._id}>
+                  <input
+                    type="checkbox"
+                    id={activities._id}
+                    name={activities.activityname}
+                    value={activities._id}
+                    onChange={handleChange}
+                  />
+                  {activities.activityname}
+                </label>
+              ))}
+            </StyledActivities>
+          </StyledFormGroup>
 
-          {/* Rating Field ----- Saved for Later!!!
+          <StyledFormGroup>
+            <StyledFormLabel htmlFor="description">
+              Description:
+            </StyledFormLabel>
+            <textarea
+              id="description"
+              name="description"
+              placeholder="Describe this place... "
+              rows="4"
+              cols="50"
+              required
+            ></textarea>
+          </StyledFormGroup>
 
-        <label htmlFor="ownPlaceRating">Rating</label> 
-        <input
-          type="range"
-          id="ownPlaceRating"
-          name="ownPlaceRating"
-          min="1"
-          max="5"
-          list="markers"
-        ></input>
+          <StyledFormGroup>
+            <StyledFormLabel htmlFor="initialReview">
+              Your review:
+            </StyledFormLabel>
+            <textarea
+              id="initialReview"
+              name="initialReview"
+              placeholder="Add your review... "
+              rows="4"
+              cols="50"
+              required
+            ></textarea>
+          </StyledFormGroup>
 
-        <StyledDatalist id="markers">
-          <option value="1" label="1"></option>
-          <option value="2" label="2"></option>
-          <option value="3" label="3"></option>
-          <option value="4" label="4"></option>
-          <option value="5" label="5"></option>
-        </StyledDatalist> */}
-
-          <label htmlFor="description">Description:</label>
-          <textarea
-            id="description"
-            name="description"
-            placeholder="Describe this place... "
-            required
-          ></textarea>
-
-          <label htmlFor="initialReview">Your review:</label>
-          <textarea
-            id="initialReview"
-            name="initialReview"
-            placeholder="Add your review... "
-            required
-          ></textarea>
-
-          <button type="submit" name="submit" id="submit">
+          <StyledPrimaryButton type="submit" name="submit" id="submit">
             Submit
-          </button>
+          </StyledPrimaryButton>
         </StyledAddPlacesForm>
       )}
-    </>
+    </StyledSecondarySection>
   );
 }
 
 export const StyledAddPlacesForm = styled.form`
   display: flex;
+  gap: 0.5em;
   flex-direction: column;
 `;
 
-export const StyledDatalist = styled.datalist`
+export const StyledFormGroup = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  writing-mode: vertical-lr;
-  width: 200px;
+  margin-bottom: 1em;
+`;
+
+export const StyledFormLabel = styled.label`
+  margin-bottom: 0.5em;
+`;
+
+export const StyledActivities = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
 `;

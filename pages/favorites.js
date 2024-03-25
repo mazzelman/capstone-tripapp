@@ -8,6 +8,7 @@ import { faChevronLeft as faChevronLeftSolid } from "@fortawesome/free-solid-svg
 // import components
 import Wrapper700 from "@/components/Partials/Wrapper700";
 import Card from "@/components/Cards/Card";
+import LoginButton from "@/components/Buttons/LoginButton";
 // import components for styles
 import StyledPrimarySection from "@/components/Sections/StyledPrimarySection";
 import StyledSecondarySection from "@/components/Sections/StyledSecondarySection";
@@ -27,6 +28,7 @@ export default function Favorite() {
     return (
       <StyledTertiarySection $textAlign={true}>
         <h2>Please sign in to view your favorite places</h2>
+        <LoginButton />
       </StyledTertiarySection>
     );
   }

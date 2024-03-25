@@ -38,9 +38,8 @@ export default createGlobalStyle`
     color: var(--text-color);
     background-color: var(--primary-color-background);
     margin: 0;
-    line-height: 1.2;
-     @media only screen and (max-width: 600px) {
-      margin-bottom: 8em;
+    @media only screen and (max-width: 1280px) {
+    margin-bottom: 12em;
     }
   }
 
@@ -62,5 +61,6 @@ export default createGlobalStyle`
   border: 1px solid var(--primary-color);
   border-radius: var(--border-radius);
 }
+
 
 `;

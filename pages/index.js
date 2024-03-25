@@ -1,13 +1,14 @@
-// import general things to run the app
-import ScrollToTop from "react-scroll-to-top";
-
 // import components
 import Form from "@/components/Forms/Form";
 import Card from "@/components/Cards/Card";
+import { navigationLinks } from "@/lib/navigation";
+import Link from "next/link";
 // import components for styles
+import styled from "styled-components";
 import StyledSecondarySection from "@/components/Sections/StyledSecondarySection";
 import StyledTertiarySection from "@/components/Sections/StyledTertiarySection";
 import StyledGridSection from "@/components/Sections/StyledGridSection";
+import Wrapper700 from "@/components/Partials/Wrapper700";
 
 export default function HomePage({
   formResults,
@@ -37,15 +38,26 @@ export default function HomePage({
         </StyledTertiarySection>
       )}
       {!formResults && !randomSurprise ? (
-        <StyledTertiarySection $textAlign={true}>
-          <h2>Howdy, and welcome to our site!</h2>
-          <p>
-            At the moment you can search for a region, or an activity. Or both
-            if you like. If you find a bug, or want to give feedback, please
-            leave a comment at github.
-            <br /> Thanks, the Travel App Team Jeanny, Jeanette and Marcel.
-          </p>
-        </StyledTertiarySection>
+        <Wrapper700>
+          <StyledSecondarySection $textAlign={true}>
+            <StyledHeroTitle>Travel with us, around the world!</StyledHeroTitle>
+            <StyledHeroText>
+              Hello and welcome to our travel website! We are here to help you
+              find the best places to visit around the world. You can search for
+              places based on your preferences or let us surprise you with a
+              random destination. <strong>Enjoy</strong> your trip!
+            </StyledHeroText>
+            <StyledPillsWrapper>
+              {navigationLinks.map((link) =>
+                link.isHeader ? (
+                  <StyledPills key={link.id} href={link.href}>
+                    {link.name}
+                  </StyledPills>
+                ) : null
+              )}
+            </StyledPillsWrapper>
+          </StyledSecondarySection>
+        </Wrapper700>
       ) : null}
       {formResults.length > 0 || randomSurprise ? (
         <StyledSecondarySection>
@@ -64,7 +76,40 @@ export default function HomePage({
             })}
         </StyledGridSection>
       ) : null}
-      <ScrollToTop smooth />
     </>
   );
 }
+
+export const StyledHeroTitle = styled.h1`
+  font-size: 1.5em;
+  @media only screen and (min-width: 600px) {
+    font-size: 2.5em;
+  }
+`;
+
+export const StyledHeroText = styled.p`
+  font-size: 1em;
+  @media only screen and (min-width: 600px) {
+    font-size: 1.2em;
+  }
+`;
+
+export const StyledPillsWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  justify-content: center;
+  margin-top: 2.5em;
+`;
+
+export const StyledPills = styled(Link)`
+  color: var(--secondary-color-background);
+  background-color: var(--primary-color);
+  padding: 0.4em 1em;
+  border-radius: var(--border-radius);
+  &:hover {
+    text-decoration: none;
+    background-color: var(--secondary-color);
+    transition: 500ms ease-in-out;
+  }
+`;
