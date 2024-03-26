@@ -104,9 +104,9 @@ export default function AddPlaces({ getUniqueValues }) {
       <h2>Create your own places!</h2>
       <p>
         The first step is to upload an image. When the image is successfully
-        uploaded, you will become a confirmation right here under the image
-        upload. After that, you will be able fill out the form that appears. The
-        file size is limited to <strong>1MB</strong>.
+        uploaded, you will get a confirmation right here under the image upload.
+        After that, you will be able to fill out the form that appears. The file
+        size is limited to <strong>1MB</strong>.
       </p>
       <Divider />
       <UploadImage

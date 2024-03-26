@@ -12,7 +12,7 @@ import StyledPrimarySection from "@/components/Sections/StyledPrimarySection";
 import StyledSecondarySection from "@/components/Sections/StyledSecondarySection";
 import StyledTertiarySection from "@/components/Sections/StyledTertiarySection";
 
-export default function Place() {
+export default function Place({ getUniqueValues }) {
   const { place, error, isLoading, toggleFavorite, isFavorite } =
     useFavoriteToggle();
   if (error)
@@ -43,6 +43,7 @@ export default function Place() {
           isFavorite={isFavorite}
           toggleFavorite={toggleFavorite}
           place={place}
+          getUniqueValues={getUniqueValues}
         />
       </StyledPrimarySection>
     </Wrapper700>

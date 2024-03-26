@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Image from "next/image";
+
 // import fontawesome icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil as faPencilSolid } from "@fortawesome/free-solid-svg-icons";
@@ -18,8 +19,17 @@ import { StyledCardArticle } from "./Card";
 import { StyledCardImage } from "./Card";
 import { StyledCardTitle } from "./Card";
 import { StyledCardSubHeading } from "./Card";
+import { StyledFormGroup } from "../Forms/FormAddPlaces";
+import { StyledFormLabel } from "../Forms/FormAddPlaces";
+import StyledTertiarySection from "../Sections/StyledTertiarySection";
 
-export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
+export default function DetailsCard({
+  id,
+  isFavorite,
+  toggleFavorite,
+  place,
+  getUniqueValues,
+}) {
   const {
     _id,
     name,
@@ -35,6 +45,7 @@ export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
 
   const [comments, setComments] = useState([]);
   const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editingPlaceId, setEditingPlaceId] = useState(false);
   const session = useSession();
 
   const router = useRouter();
@@ -46,7 +57,75 @@ export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
   };
 
   //----------------------------------------------------------------
+
   // for the places
+
+  function handleEditPlace() {
+    setEditingPlaceId(true);
+  }
+
+  function cancelEditPlace() {
+    setEditingPlaceId(false);
+  }
+
+  //----------------------------------------------------------------
+
+  // for the place
+  async function handleEditPlaceSubmit() {
+    try {
+      // Get the edited place data
+      const editedPlaceText = getTextAreaValue("initialReview");
+      const editedDescriptionText = getTextAreaValue("description");
+      const editedPlaceName = getInputValue("placeName");
+      const editedRegion = getInputValue("region");
+
+      // Check if any of the required fields are empty
+      if (!editedPlaceText || !editedDescriptionText || !editedPlaceName) {
+        window.alert("Please fill out all fields");
+        return;
+      }
+
+      // Send the edited place to the server
+      const response = await fetch(`/api/places/${_id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          initialReview: editedPlaceText,
+          description: editedDescriptionText,
+          name: editedPlaceName,
+          region: editedRegion,
+        }),
+      });
+
+      // Handle response from the server
+      if (response.ok) {
+        window.alert("Place edited successfully");
+        setEditingPlaceId(false); // Reset editing state
+      } else {
+        window.alert("Failed to edit Place");
+      }
+    } catch (error) {
+      window.alert("Error editing Place:", error);
+    }
+  }
+
+  // Helper function to get value from textarea
+  function getTextAreaValue(id) {
+    const textarea = document.getElementById(id);
+    return textarea ? textarea.value.trim() : "";
+  }
+
+  // Helper function to get value from input field
+  function getInputValue(id) {
+    const input = document.getElementById(id);
+    return input ? input.value.trim() : "";
+  }
+
+  //----------------------------------------------------------------
+
+  // for the place
 
   const handleDeletePlace = async () => {
     try {
@@ -190,7 +269,16 @@ export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
           loading="lazy"
         />
         <StyledCardBody>
-          <StyledCardTitle>{name}</StyledCardTitle>
+          {editingPlaceId ? (
+            <input
+              type="text"
+              defaultValue={name}
+              id="placeName"
+              name="placeName"
+            ></input>
+          ) : (
+            <StyledCardTitle>{name}</StyledCardTitle>
+          )}
           <FavoriteButton
             id={_id}
             isFavorite={isFavorite}
@@ -200,22 +288,84 @@ export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
             {region} &#183; &nbsp;
             {activities.map((activity) => activity.activityname).join(", ")}
           </StyledCardSubHeading>
+          {editingPlaceId ? (
+            <StyledFormGroup>
+              <StyledFormLabel htmlFor="region">Region:</StyledFormLabel>
+              <select name="region" id="region" required>
+                <option value="disabled">---</option>
+                {getUniqueValues("region").map((region, id) => (
+                  <option key={id} value={region}>
+                    {region}
+                  </option>
+                ))}
+              </select>
+            </StyledFormGroup>
+          ) : null}
           <StyledCardSubHeadings>Description:</StyledCardSubHeadings>
-          <StyledCardText>{description}</StyledCardText>
+          {editingPlaceId ? (
+            <StyledFormGroup>
+              <StyledFormLabel htmlFor="description"></StyledFormLabel>
+              <textarea
+                defaultValue={description}
+                id="description"
+                name="description"
+                rows="8"
+                cols="50"
+                required
+              ></textarea>
+            </StyledFormGroup>
+          ) : (
+            <StyledCardText>{description}</StyledCardText>
+          )}
           <StyledCardSubHeadings>Reviews:</StyledCardSubHeadings>
-          <StyledCardText>{initialReview}</StyledCardText>
+          {editingPlaceId ? (
+            <StyledFormGroup>
+              <StyledFormLabel htmlFor="initialReview"></StyledFormLabel>
+              <textarea
+                defaultValue={initialReview}
+                id="initialReview"
+                name="initialReview"
+                rows="8"
+                cols="50"
+                required
+              ></textarea>
+            </StyledFormGroup>
+          ) : (
+            <StyledCardText>{initialReview}</StyledCardText>
+          )}
+
           {session.status === "authenticated" &&
             userId === session.data.user.id && (
-              <StyledCardButtonWrapper>
-                <StyledSecondaryButton onClick={handleDeletePlace}>
-                  <FontAwesomeIcon icon={faTrashSolid} />
-                  &nbsp;Delete Place
-                </StyledSecondaryButton>
-                <StyledSecondaryButton>
-                  <FontAwesomeIcon icon={faPencilSolid} />
-                  &nbsp;Edit Place
-                </StyledSecondaryButton>
-              </StyledCardButtonWrapper>
+              <>
+                <StyledCardButtonWrapper>
+                  {editingPlaceId ? (
+                    <StyledSecondaryButton onClick={cancelEditPlace}>
+                      <FontAwesomeIcon icon={faTrashSolid} />
+                      &nbsp;cancel edit
+                    </StyledSecondaryButton>
+                  ) : null}
+                  {!editingPlaceId ? (
+                    <StyledSecondaryButton onClick={handleEditPlace}>
+                      <FontAwesomeIcon icon={faPencilSolid} />
+                      &nbsp;Edit Place
+                    </StyledSecondaryButton>
+                  ) : null}
+                </StyledCardButtonWrapper>
+                <StyledCardButtonWrapper>
+                  {!editingPlaceId ? (
+                    <StyledSecondaryButton onClick={handleDeletePlace}>
+                      <FontAwesomeIcon icon={faTrashSolid} />
+                      &nbsp;Delete Place
+                    </StyledSecondaryButton>
+                  ) : null}
+                  {editingPlaceId ? (
+                    <StyledSecondaryButton onClick={handleEditPlaceSubmit}>
+                      <FontAwesomeIcon icon={faTrashSolid} />
+                      &nbsp;Submit
+                    </StyledSecondaryButton>
+                  ) : null}
+                </StyledCardButtonWrapper>
+              </>
             )}
         </StyledCardBody>
       </StyledCardArticle>

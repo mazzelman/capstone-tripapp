@@ -27,6 +27,22 @@ export default async function handler(request, response) {
 
     response.status(200).json(place);
   }
+  //----------------------------------------------------------------
+
+  if (request.method === "PUT") {
+    try {
+      const { initialReview, description, name, region } = request.body;
+      const updatedPlace = await Place.findByIdAndUpdate(
+        id,
+        { initialReview, description, name, region },
+
+        { new: true }
+      );
+      return response.status(200).json(updatedPlace);
+    } catch (error) {
+      return response.status(500).json({ error: "Server error" });
+    }
+  }
 
   //----------------------------------------------------------------
 
