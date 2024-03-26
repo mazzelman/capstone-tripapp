@@ -184,10 +184,6 @@ export default function DetailsCard({ id, isFavorite, toggleFavorite, place }) {
         <StyledCardImage
           src={image}
           sizes="100vw"
-          style={{
-            width: "100%",
-            height: "auto",
-          }}
           width="0"
           height="0"
           alt={name}
