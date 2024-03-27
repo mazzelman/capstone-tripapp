@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import useSWR from "swr";
 
 // import fontawesome icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,6 +13,7 @@ import { faTrash as faTrashSolid } from "@fortawesome/free-solid-svg-icons";
 import FavoriteButton from "../Buttons/FavoriteButton";
 import FormComments from "../Forms/FormComments";
 import StyledPrimaryButton from "../Buttons/StyledPrimaryButton";
+import UploadImage from "../Forms/FormImageUpload";
 import StyledSecondaryButton from "../Buttons/StyledSecondaryButton";
 // import components for styles
 import styled from "styled-components";
@@ -19,7 +21,7 @@ import { StyledCardArticle } from "./Card";
 import { StyledCardImage } from "./Card";
 import { StyledCardTitle } from "./Card";
 import { StyledCardSubHeading } from "./Card";
-import { StyledFormGroup } from "../Forms/FormAddPlaces";
+import { StyledActivities, StyledFormGroup } from "../Forms/FormAddPlaces";
 import { StyledFormLabel } from "../Forms/FormAddPlaces";
 import StyledTertiarySection from "../Sections/StyledTertiarySection";
 
@@ -46,9 +48,38 @@ export default function DetailsCard({
   const [comments, setComments] = useState([]);
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editingPlaceId, setEditingPlaceId] = useState(false);
+  const [editingActivities, setEditingActivities] = useState([]);
+  const [editingImage, setEditingImage] = useState();
+  const [editingPublicId, setEditingPublicId] = useState();
+
   const session = useSession();
 
   const router = useRouter();
+
+  const { data, error, isLoading } = useSWR("/api/activities");
+
+  if (error)
+    return (
+      <StyledTertiarySection $textAlign={true}>
+        <h2>Failed to load...</h2>
+      </StyledTertiarySection>
+    );
+
+  if (isLoading) {
+    return (
+      <StyledTertiarySection $textAlign={true}>
+        <h2>loading...</h2>
+      </StyledTertiarySection>
+    );
+  }
+
+  if (!data) {
+    return (
+      <StyledTertiarySection $textAlign={true}>
+        <h2>Data could not be loaded...</h2>
+      </StyledTertiarySection>
+    );
+  }
 
   //----------------------------------------------------------------
 
@@ -78,6 +109,9 @@ export default function DetailsCard({
       const editedDescriptionText = getTextAreaValue("description");
       const editedPlaceName = getInputValue("placeName");
       const editedRegion = getInputValue("region");
+      const editedActivities = editingActivities;
+
+      console.log(editedActivities);
 
       // Check if any of the required fields are empty
       if (!editedPlaceText || !editedDescriptionText || !editedPlaceName) {
@@ -96,6 +130,7 @@ export default function DetailsCard({
           description: editedDescriptionText,
           name: editedPlaceName,
           region: editedRegion,
+          activities: editedActivities,
         }),
       });
 
@@ -123,6 +158,20 @@ export default function DetailsCard({
     return input ? input.value.trim() : "";
   }
 
+  const handleChange = (event) => {
+    const { value, checked } = event.target;
+
+    if (checked) {
+      setEditingActivities((prevCheckedValues) => [
+        ...prevCheckedValues,
+        value,
+      ]);
+    } else {
+      setEditingActivities((prevCheckedValues) =>
+        prevCheckedValues.filter((item) => item !== value)
+      );
+    }
+  };
   //----------------------------------------------------------------
 
   // for the place
@@ -249,25 +298,29 @@ export default function DetailsCard({
     }
   };
 
-  useEffect(() => {
-    // Fetch comments associated with the current place
-    fetchComments();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [_id]);
+  // useEffect(() => {
+  //   // Fetch comments associated with the current place
+  //   fetchComments();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [_id]);
 
   //----------------------------------------------------------------
 
   return (
     <>
       <StyledCardArticle key={_id}>
-        <StyledCardImage
-          src={image}
-          sizes="100vw"
-          width="0"
-          height="0"
-          alt={name}
-          loading="lazy"
-        />
+        {editingPlaceId ? (
+          "test"
+        ) : (
+          <StyledCardImage
+            src={image}
+            sizes="100vw"
+            width="0"
+            height="0"
+            alt={name}
+            loading="lazy"
+          />
+        )}
         <StyledCardBody>
           {editingPlaceId ? (
             <input
@@ -284,15 +337,34 @@ export default function DetailsCard({
             isFavorite={isFavorite}
             toggleFavorite={toggleFavorite}
           />
-          <StyledCardSubHeading>
-            {region} &#183; &nbsp;
-            {activities.map((activity) => activity.activityname).join(", ")}
-          </StyledCardSubHeading>
+          {editingPlaceId ? (
+            <StyledFormGroup>
+              <p>Activities:</p>
+              <StyledActivities>
+                {data.map((allActivities) => (
+                  <label key={allActivities._id} htmlFor={allActivities._id}>
+                    <input
+                      type="checkbox"
+                      id={allActivities._id}
+                      name={allActivities.activityname}
+                      value={allActivities._id}
+                      onChange={handleChange}
+                    />
+                    {allActivities.activityname}
+                  </label>
+                ))}
+              </StyledActivities>
+            </StyledFormGroup>
+          ) : (
+            <StyledCardSubHeading>
+              {region} &#183; &nbsp;
+              {activities.map((activity) => activity.activityname).join(", ")}
+            </StyledCardSubHeading>
+          )}
           {editingPlaceId ? (
             <StyledFormGroup>
               <StyledFormLabel htmlFor="region">Region:</StyledFormLabel>
               <select name="region" id="region" required>
-                <option value="disabled">---</option>
                 {getUniqueValues("region").map((region, id) => (
                   <option key={id} value={region}>
                     {region}

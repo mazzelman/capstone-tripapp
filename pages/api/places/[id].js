@@ -31,10 +31,11 @@ export default async function handler(request, response) {
 
   if (request.method === "PUT") {
     try {
-      const { initialReview, description, name, region } = request.body;
+      const { initialReview, description, name, region, activities } =
+        request.body;
       const updatedPlace = await Place.findByIdAndUpdate(
         id,
-        { initialReview, description, name, region },
+        { initialReview, description, name, region, activities },
 
         { new: true }
       );
