@@ -47,10 +47,8 @@ export default function DetailsCard({
 
   const [comments, setComments] = useState([]);
   const [editingCommentId, setEditingCommentId] = useState(null);
-  const [editingPlaceId, setEditingPlaceId] = useState(false);
+  const [isEditingPlaceId, setIsEditingPlaceId] = useState(false);
   const [editingActivities, setEditingActivities] = useState([]);
-  const [editingImage, setEditingImage] = useState();
-  const [editingPublicId, setEditingPublicId] = useState();
 
   const session = useSession();
 
@@ -92,11 +90,11 @@ export default function DetailsCard({
   // for the places
 
   function handleEditPlace() {
-    setEditingPlaceId(true);
+    setIsEditingPlaceId(true);
   }
 
   function cancelEditPlace() {
-    setEditingPlaceId(false);
+    setIsEditingPlaceId(false);
   }
 
   //----------------------------------------------------------------
@@ -110,8 +108,6 @@ export default function DetailsCard({
       const editedPlaceName = getInputValue("placeName");
       const editedRegion = getInputValue("region");
       const editedActivities = editingActivities;
-
-      console.log(editedActivities);
 
       // Check if any of the required fields are empty
       if (!editedPlaceText || !editedDescriptionText || !editedPlaceName) {
@@ -137,7 +133,7 @@ export default function DetailsCard({
       // Handle response from the server
       if (response.ok) {
         window.alert("Place edited successfully");
-        setEditingPlaceId(false); // Reset editing state
+        setIsEditingPlaceId(false); // Reset editing state
       } else {
         window.alert("Failed to edit Place");
       }
@@ -298,18 +294,12 @@ export default function DetailsCard({
     }
   };
 
-  // useEffect(() => {
-  //   // Fetch comments associated with the current place
-  //   fetchComments();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [_id]);
-
   //----------------------------------------------------------------
 
   return (
     <>
       <StyledCardArticle key={_id}>
-        {editingPlaceId ? (
+        {isEditingPlaceId ? (
           "test"
         ) : (
           <StyledCardImage
@@ -322,7 +312,7 @@ export default function DetailsCard({
           />
         )}
         <StyledCardBody>
-          {editingPlaceId ? (
+          {isEditingPlaceId ? (
             <input
               type="text"
               defaultValue={name}
@@ -337,7 +327,7 @@ export default function DetailsCard({
             isFavorite={isFavorite}
             toggleFavorite={toggleFavorite}
           />
-          {editingPlaceId ? (
+          {isEditingPlaceId ? (
             <StyledFormGroup>
               <p>Activities:</p>
               <StyledActivities>
@@ -361,7 +351,7 @@ export default function DetailsCard({
               {activities.map((activity) => activity.activityname).join(", ")}
             </StyledCardSubHeading>
           )}
-          {editingPlaceId ? (
+          {isEditingPlaceId ? (
             <StyledFormGroup>
               <StyledFormLabel htmlFor="region">Region:</StyledFormLabel>
               <select name="region" id="region" required>
@@ -374,7 +364,7 @@ export default function DetailsCard({
             </StyledFormGroup>
           ) : null}
           <StyledCardSubHeadings>Description:</StyledCardSubHeadings>
-          {editingPlaceId ? (
+          {isEditingPlaceId ? (
             <StyledFormGroup>
               <StyledFormLabel htmlFor="description"></StyledFormLabel>
               <textarea
@@ -390,7 +380,7 @@ export default function DetailsCard({
             <StyledCardText>{description}</StyledCardText>
           )}
           <StyledCardSubHeadings>Reviews:</StyledCardSubHeadings>
-          {editingPlaceId ? (
+          {isEditingPlaceId ? (
             <StyledFormGroup>
               <StyledFormLabel htmlFor="initialReview"></StyledFormLabel>
               <textarea
@@ -410,32 +400,32 @@ export default function DetailsCard({
             userId === session.data.user.id && (
               <>
                 <StyledCardButtonWrapper>
-                  {editingPlaceId ? (
+                  {isEditingPlaceId && (
                     <StyledSecondaryButton onClick={cancelEditPlace}>
                       <FontAwesomeIcon icon={faTrashSolid} />
                       &nbsp;cancel edit
                     </StyledSecondaryButton>
-                  ) : null}
-                  {!editingPlaceId ? (
+                  )}
+                  {!isEditingPlaceId && (
                     <StyledSecondaryButton onClick={handleEditPlace}>
                       <FontAwesomeIcon icon={faPencilSolid} />
                       &nbsp;Edit Place
                     </StyledSecondaryButton>
-                  ) : null}
+                  )}
                 </StyledCardButtonWrapper>
                 <StyledCardButtonWrapper>
-                  {!editingPlaceId ? (
+                  {!isEditingPlaceId && (
                     <StyledSecondaryButton onClick={handleDeletePlace}>
                       <FontAwesomeIcon icon={faTrashSolid} />
                       &nbsp;Delete Place
                     </StyledSecondaryButton>
-                  ) : null}
-                  {editingPlaceId ? (
+                  )}
+                  {isEditingPlaceId && (
                     <StyledSecondaryButton onClick={handleEditPlaceSubmit}>
                       <FontAwesomeIcon icon={faTrashSolid} />
                       &nbsp;Submit
                     </StyledSecondaryButton>
-                  ) : null}
+                  )}
                 </StyledCardButtonWrapper>
               </>
             )}
