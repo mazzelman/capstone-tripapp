@@ -26,6 +26,7 @@ export default createGlobalStyle`
     --text-color: #171A21;
     --primary-color: #59a2b7;
     --secondary-color: #f4b157;
+    --delete-color: #ff5a5f;
     --primary-color-background: #eef1f3 ;
     --secondary-color-background: #fafafa;
     --primary-disabled-color: #afb8c6;

@@ -13,18 +13,20 @@ import Divider from "../dividers/divider";
 // import components
 import StyledPrimaryButton from "../Buttons/StyledPrimaryButton";
 
-export default function AddPlaces({ getUniqueValues }) {
+export default function AddPlaces({
+  getUniqueValues,
+  isImage,
+  setIsImage,
+  publicId,
+  setPublicId,
+}) {
   const [isChecked, setIsChecked] = useState([]);
-  const [isImage, setIsImage] = useState();
-  const [publicId, setPublicId] = useState();
 
   const router = useRouter();
 
   const session = useSession();
   const userId = session.data?.user.id;
   const userName = session.data?.user.name;
-
-  console.log(session.data);
 
   const { data, error, isLoading } = useSWR("/api/activities");
 

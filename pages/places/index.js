@@ -9,7 +9,13 @@ import LoginButton from "@/components/Buttons/LoginButton";
 import StyledPrimarySection from "@/components/Sections/StyledPrimarySection";
 import StyledTertiarySection from "@/components/Sections/StyledTertiarySection";
 
-export default function OwnPlaces({ getUniqueValues }) {
+export default function OwnPlaces({
+  getUniqueValues,
+  isImage,
+  setIsImage,
+  publicId,
+  setPublicId,
+}) {
   const session = useSession();
   const userId = session.data?.user.id;
 
@@ -46,7 +52,13 @@ export default function OwnPlaces({ getUniqueValues }) {
     <>
       <Wrapper700>
         <StyledPrimarySection></StyledPrimarySection>
-        <AddPlaces getUniqueValues={getUniqueValues} />
+        <AddPlaces
+          isImage={isImage}
+          setIsImage={setIsImage}
+          publicId={publicId}
+          setPublicId={setPublicId}
+          getUniqueValues={getUniqueValues}
+        />
       </Wrapper700>
     </>
   );

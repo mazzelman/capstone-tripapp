@@ -7,6 +7,7 @@ import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
 // import components for styles
 import styled from "styled-components";
+import StyledTertiarySection from "@/components/Sections/StyledTertiarySection";
 
 export default function FavoriteButton({ id, toggleFavorite }) {
   const session = useSession();
@@ -19,11 +20,19 @@ export default function FavoriteButton({ id, toggleFavorite }) {
   } = useSWR(userId ? `/api/user/${userId}` : null);
 
   if (userIsLoading) {
-    return <div>Loading...</div>;
+    return (
+      <StyledTertiarySection>
+        <h2>Loading...</h2>
+      </StyledTertiarySection>
+    );
   }
 
   if (userError) {
-    return <div>Error loading user data...</div>;
+    return (
+      <StyledTertiarySection>
+        <h2>Error loading user data...</h2>
+      </StyledTertiarySection>
+    );
   }
 
   return (

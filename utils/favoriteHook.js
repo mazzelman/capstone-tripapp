@@ -1,12 +1,19 @@
+// import general things to run the app
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import useSWR, { mutate } from "swr";
+
+function usePlaceData(id) {
+  return useSWR(id ? `/api/places/${id}` : null);
+}
 
 function useFavoriteToggle() {
   const router = useRouter();
   const { id } = router.query;
   const session = useSession();
   const userId = session.data?.user.id;
+
+  const isProfilePage = router.pathname.startsWith("/profile");
 
   const {
     data: user,
@@ -18,7 +25,7 @@ function useFavoriteToggle() {
     data: place,
     error,
     isLoading,
-  } = useSWR(id ? `/api/places/${id}` : null);
+  } = usePlaceData(isProfilePage ? null : id);
 
   async function toggleFavorite(id) {
     if (session.status === "unauthenticated") {
@@ -41,7 +48,9 @@ function useFavoriteToggle() {
     if (response.ok) {
       // Trigger a mutation to update data
       mutate(`/api/user/${userId}`);
-      mutate(`/api/places/${id}`);
+      if (!isProfilePage) {
+        mutate(`/api/places/${id}`);
+      }
     }
   }
 
