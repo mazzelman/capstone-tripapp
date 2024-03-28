@@ -15,6 +15,7 @@ const placeSchema = new Schema({
   comments: { type: [Schema.Types.ObjectId], ref: "Comment" },
   initialReview: { type: String, required: true },
   userId: { type: Schema.Types.ObjectId, ref: "User" },
+  userName: { type: String, required: true },
   imageId: { type: String, required: false },
 });
 

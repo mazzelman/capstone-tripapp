@@ -22,6 +22,9 @@ export default function AddPlaces({ getUniqueValues }) {
 
   const session = useSession();
   const userId = session.data?.user.id;
+  const userName = session.data?.user.name;
+
+  console.log(session.data);
 
   const { data, error, isLoading } = useSWR("/api/activities");
 
@@ -60,6 +63,7 @@ export default function AddPlaces({ getUniqueValues }) {
       image: isImage,
       imageId: publicId,
       userId: userId,
+      userName: userName,
     };
 
     setIsChecked([]);
