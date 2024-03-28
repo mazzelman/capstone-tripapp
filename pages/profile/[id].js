@@ -17,7 +17,7 @@ export default function OpenProfile() {
     data: user,
     error: userError,
     isLoading: userIsLoading,
-  } = useSWR(`/api/user/`);
+  } = useSWR(`/api/user/${id}`);
 
   if (userIsLoading) {
     return <div>Loading...</div>;
@@ -27,18 +27,14 @@ export default function OpenProfile() {
     return <div>Error loading user data...</div>;
   }
 
-  const singleUser = user.find((user) => id === user._id);
-
-  //console.log(singleUser);
-
   return (
     <>
       <Wrapper700>
         <StyledPrimarySection>
           <StyledArticle>
-            <StyledUserName>{singleUser.name}</StyledUserName>
+            <StyledUserName>{user.name}</StyledUserName>
             <StyledProfilePicture
-              src={singleUser.image}
+              src={user.image}
               width={100}
               height={100}
               alt="profile picture"
@@ -52,7 +48,7 @@ export default function OpenProfile() {
         <StyledPrimarySection>
           <h2>Created places</h2>
         </StyledPrimarySection>
-        {singleUser.createdPlaces.map((place) => {
+        {user.createdPlaces.map((place) => {
           return (
             <StyledPrimarySection key={place._id}>
               <Card place={place} />
