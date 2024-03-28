@@ -24,6 +24,7 @@ import { StyledCardSubHeading } from "./Card";
 import { StyledActivities, StyledFormGroup } from "../Forms/FormAddPlaces";
 import { StyledFormLabel } from "../Forms/FormAddPlaces";
 import StyledTertiarySection from "../Sections/StyledTertiarySection";
+import Link from "next/link";
 
 export default function DetailsCard({
   id,
@@ -43,6 +44,7 @@ export default function DetailsCard({
     initialReview,
     activities,
     userId,
+    userName,
   } = place;
 
   const [comments, setComments] = useState([]);
@@ -53,6 +55,31 @@ export default function DetailsCard({
   const session = useSession();
 
   const router = useRouter();
+
+  //-----------------------------------------------------
+
+  // Define fetchComments function outside the useEffect
+  const fetchComments = async () => {
+    try {
+      const response = await fetch(`/api/comments?placeId=${_id}`);
+      if (response.ok) {
+        const data = await response.json();
+        setComments(data);
+      } else {
+        console.error("Failed to fetch comments");
+      }
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+    }
+  };
+
+  useEffect(() => {
+    // Fetch comments associated with the current place
+    fetchComments();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [_id]);
+
+  //-----------------------------------------------------
 
   const { data, error, isLoading } = useSWR("/api/activities");
 
@@ -279,29 +306,12 @@ export default function DetailsCard({
 
   //----------------------------------------------------------------
 
-  // Define fetchComments function outside the useEffect
-  const fetchComments = async () => {
-    try {
-      const response = await fetch(`/api/comments?placeId=${_id}`);
-      if (response.ok) {
-        const data = await response.json();
-        setComments(data);
-      } else {
-        console.error("Failed to fetch comments");
-      }
-    } catch (error) {
-      console.error("Error fetching comments:", error);
-    }
-  };
-
   //----------------------------------------------------------------
 
   return (
     <>
       <StyledCardArticle key={_id}>
-        {isEditingPlaceId ? (
-          "test"
-        ) : (
+        {isEditingPlaceId ? null : (
           <StyledCardImage
             src={image}
             sizes="100vw"
@@ -395,6 +405,13 @@ export default function DetailsCard({
           ) : (
             <StyledCardText>{initialReview}</StyledCardText>
           )}
+
+          <StyledCardSubHeadings>Author:</StyledCardSubHeadings>
+          <StyledCardText>
+            <StyledAuthorLink href={`/profile/${userId}`}>
+              {userName}
+            </StyledAuthorLink>
+          </StyledCardText>
 
           {session.status === "authenticated" &&
             userId === session.data.user.id && (
@@ -577,4 +594,13 @@ export const StyledEditTextareaWrapper = styled.div`
   flex-direction: column;
   gap: 0.5em;
   margin-top: 0.5em;
+`;
+
+export const StyledAuthorLink = styled(Link)`
+  transition: 500ms ease-in-out;
+
+  &:hover {
+    color: var(--secondary-color);
+    text-decoration: none;
+  }
 `;
