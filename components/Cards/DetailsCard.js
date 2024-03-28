@@ -212,14 +212,22 @@ export default function DetailsCard({
 
   const handleDeletePlace = async () => {
     try {
-      const response = await fetch(`/api/places/${id}`, {
-        method: "DELETE",
-      });
-      if (response.ok) {
-        window.alert("Place deleted successfully");
-        router.push("/places"); // Redirect to the home page after successful delete
-      } else {
-        window.alert("Failed to delete place");
+      // Display confirmation dialog
+      const confirmed = window.confirm(
+        "Are you sure you want to delete this place?"
+      );
+
+      // If user confirms deletion
+      if (confirmed) {
+        const response = await fetch(`/api/places/${id}`, {
+          method: "DELETE",
+        });
+        if (response.ok) {
+          window.alert("Place deleted successfully");
+          router.push("/places"); // Redirect to the home page after successful delete
+        } else {
+          window.alert("Failed to delete place");
+        }
       }
     } catch (error) {
       window.alert("Error deleting place:", error);
@@ -230,14 +238,22 @@ export default function DetailsCard({
   // for the comments
   const handleDelete = async (commentId) => {
     try {
-      const response = await fetch(`/api/comments/${commentId}`, {
-        method: "DELETE",
-      });
-      if (response.ok) {
-        window.alert("Comment deleted successfully");
-        fetchComments();
-      } else {
-        window.alert("Failed to delete comment");
+      // Display confirmation dialog
+      const confirmed = window.confirm(
+        "Are you sure you want to delete this comment?"
+      );
+
+      // If user confirms deletion
+      if (confirmed) {
+        const response = await fetch(`/api/comments/${commentId}`, {
+          method: "DELETE",
+        });
+        if (response.ok) {
+          window.alert("Comment deleted successfully");
+          fetchComments();
+        } else {
+          window.alert("Failed to delete comment");
+        }
       }
     } catch (error) {
       window.alert("Error deleting comment:", error);
