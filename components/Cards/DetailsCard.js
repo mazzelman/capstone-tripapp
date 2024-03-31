@@ -387,6 +387,9 @@ export default function DetailsCard({
                       name={allActivities.activityname}
                       value={allActivities._id}
                       onChange={handleChange}
+                      defaultChecked={activities.some(
+                        (activity) => activity._id === allActivities._id
+                      )}
                     />
                     {allActivities.activityname}
                   </label>

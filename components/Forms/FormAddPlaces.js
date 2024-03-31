@@ -5,13 +5,13 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import UploadImage from "./FormImageUpload";
+// import components
+import StyledPrimaryButton from "../Buttons/StyledPrimaryButton";
 // import components for styles
 import styled from "styled-components";
 import StyledSecondarySection from "../Sections/StyledSecondarySection";
 import StyledTertiarySection from "../Sections/StyledTertiarySection";
 import Divider from "../dividers/divider";
-// import components
-import StyledPrimaryButton from "../Buttons/StyledPrimaryButton";
 
 export default function AddPlaces({
   getUniqueValues,
@@ -19,6 +19,8 @@ export default function AddPlaces({
   setIsImage,
   publicId,
   setPublicId,
+  isUploading,
+  setIsUploading,
 }) {
   const [isChecked, setIsChecked] = useState([]);
 
@@ -119,6 +121,8 @@ export default function AddPlaces({
         isImage={isImage}
         setIsImage={setIsImage}
         setPublicId={setPublicId}
+        isUploading={isUploading}
+        setIsUploading={setIsUploading}
       />
       {isImage && (
         <StyledAddPlacesForm onSubmit={handleOwnPlaceSubmit}>

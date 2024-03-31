@@ -3,6 +3,8 @@ import Form from "@/components/Forms/Form";
 import Card from "@/components/Cards/Card";
 import { navigationLinks } from "@/lib/navigation";
 import Link from "next/link";
+// import components
+import { LineWave } from "react-loader-spinner";
 // import components for styles
 import styled from "styled-components";
 import StyledSecondarySection from "@/components/Sections/StyledSecondarySection";
@@ -19,6 +21,8 @@ export default function HomePage({
   randomSurprise,
   setRandomSurprise,
   handleSurprise,
+  isUploading,
+  setIsUploading,
 }) {
   return (
     <>
@@ -31,6 +35,8 @@ export default function HomePage({
         randomSurprise={randomSurprise}
         setRandomSurprise={setRandomSurprise}
         handleSurprise={handleSurprise}
+        isUploading={isUploading}
+        setIsUploading={setIsUploading}
       />
       {formResults === -1 && (
         <StyledTertiarySection $textAlign={true}>

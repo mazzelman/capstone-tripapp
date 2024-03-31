@@ -1,4 +1,4 @@
-// pages/api/upload.js
+// import components
 import cloudinary from "cloudinary";
 
 cloudinary.config({

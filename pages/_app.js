@@ -27,6 +27,7 @@ export default function App({
   const [isPageActive, setPageActive] = useState(false);
   const [isImage, setIsImage] = useState();
   const [publicId, setPublicId] = useState();
+  const [isUploading, setIsUploading] = useState(false);
 
   const { data, error, isLoading } = useSWR("/api/places", fetcher);
 
@@ -113,6 +114,8 @@ export default function App({
               setIsImage={setIsImage}
               publicId={publicId}
               setPublicId={setPublicId}
+              isUploading={isUploading}
+              setIsUploading={setIsUploading}
               {...pageProps}
             />
             <ScrollToTop smooth style={{ bottom: "120px" }} />

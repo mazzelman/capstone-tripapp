@@ -63,5 +63,11 @@ export default createGlobalStyle`
   border-radius: var(--border-radius);
 }
 
+.line-wave-loading {
+  display: flex;
+  align-self: center;
+  margin-left: 1.875em;
+}
+
 
 `;

@@ -15,6 +15,8 @@ export default function OwnPlaces({
   setIsImage,
   publicId,
   setPublicId,
+  isUploading,
+  setIsUploading,
 }) {
   const session = useSession();
   const userId = session.data?.user.id;
@@ -58,6 +60,8 @@ export default function OwnPlaces({
           publicId={publicId}
           setPublicId={setPublicId}
           getUniqueValues={getUniqueValues}
+          isUploading={isUploading}
+          setIsUploading={setIsUploading}
         />
       </Wrapper700>
     </>
