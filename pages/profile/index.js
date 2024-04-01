@@ -11,6 +11,7 @@ import styled from "styled-components";
 import StyledPrimarySection from "@/components/Sections/StyledPrimarySection";
 import StyledTertiarySection from "@/components/Sections/StyledTertiarySection";
 import Divider from "@/components/dividers/divider";
+import FormAboutMe from "@/components/Forms/FormAboutme";
 
 export default function Profile() {
   const session = useSession();
@@ -21,6 +22,23 @@ export default function Profile() {
     error,
     isLoading,
   } = useSWR(userId ? `/api/user/${userId}` : null);
+
+  console.log(user);
+
+  const handleDelete = async (user) => {
+    try {
+      const response = await fetch(`/api/user`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        window.alert("Text deleted successfully");
+      } else {
+        window.alert("Failed to delete text");
+      }
+    } catch (error) {
+      window.alert("Error deleting text:", error);
+    }
+  };
 
   if (!session.data) {
     return (
@@ -58,6 +76,21 @@ export default function Profile() {
             />
           </StyledArticle>
         </StyledPrimarySection>
+
+        <StyledPrimarySection>
+          {user.aboutmetext.length > 0 ? (
+            <StyledArticle>
+              <h2>About Me:</h2>
+              {user.aboutmetext}
+              <button type="button" name="deleteAboutMe" onClick={handleDelete}>
+                Delete
+              </button>
+            </StyledArticle>
+          ) : (
+            <FormAboutMe user={user} />
+          )}
+        </StyledPrimarySection>
+
         <StyledPrimarySection>
           <StyledArticle>
             <LoginButton />

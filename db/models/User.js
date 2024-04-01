@@ -11,6 +11,7 @@ const userSchema = new Schema({
   favoritePlaces: [{ type: Schema.Types.ObjectId, ref: "Place" }],
   userComments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   createdPlaces: [{ type: Schema.Types.ObjectId, ref: "Place" }],
+  aboutmetext: { type: String },
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);

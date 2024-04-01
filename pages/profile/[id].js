@@ -1,13 +1,12 @@
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import Wrapper700 from "@/components/Partials/Wrapper700";
-import Card from "@/components/Cards/Card";
+import Minicard from "@/components/Cards/MiniCard";
 // import components for styles
-
 import StyledPrimarySection from "@/components/Sections/StyledPrimarySection";
-
 import Divider from "@/components/dividers/divider";
 import { StyledArticle, StyledProfilePicture, StyledUserName } from ".";
+import styled from "styled-components";
 
 export default function OpenProfile() {
   const router = useRouter();
@@ -48,10 +47,11 @@ export default function OpenProfile() {
         <StyledPrimarySection>
           <h2>Created places</h2>
         </StyledPrimarySection>
+
         {user.createdPlaces.map((place) => {
           return (
             <StyledPrimarySection key={place._id}>
-              <Card place={place} />
+              <Minicard place={place} />
             </StyledPrimarySection>
           );
         })}
