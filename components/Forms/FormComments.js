@@ -48,7 +48,7 @@ export default function FormComments({ fetchComments }) {
       });
 
       if (response.ok) {
-        console.log("Comment posted successfully");
+        window.alert("Comment posted successfully");
         // Clear the input field and textarea
         event.target.reset();
         fetchComments();
