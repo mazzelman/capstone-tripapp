@@ -9,8 +9,11 @@ import useSWR from "swr";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil as faPencilSolid } from "@fortawesome/free-solid-svg-icons";
 import { faTrash as faTrashSolid } from "@fortawesome/free-solid-svg-icons";
+import { faXmark as faXmarkSolid } from "@fortawesome/free-solid-svg-icons";
+import { faCheck as faCheckSolid } from "@fortawesome/free-solid-svg-icons";
 // import components
 import FavoriteButton from "../Buttons/FavoriteButton";
+import StyledDeleteButton from "../Buttons/StyledDeleteButton";
 import FormComments from "../Forms/FormComments";
 import StyledPrimaryButton from "../Buttons/StyledPrimaryButton";
 import UploadImage from "../Forms/FormImageUpload";
@@ -24,6 +27,7 @@ import { StyledCardSubHeading } from "./Card";
 import { StyledActivities, StyledFormGroup } from "../Forms/FormAddPlaces";
 import { StyledFormLabel } from "../Forms/FormAddPlaces";
 import StyledTertiarySection from "../Sections/StyledTertiarySection";
+import Divider from "../dividers/divider";
 import Link from "next/link";
 
 export default function DetailsCard({
@@ -32,6 +36,10 @@ export default function DetailsCard({
   toggleFavorite,
   place,
   getUniqueValues,
+  isImage,
+  setIsImage,
+  publicId,
+  setPublicId,
 }) {
   const {
     _id,
@@ -39,8 +47,6 @@ export default function DetailsCard({
     description,
     region,
     image,
-    temperature,
-    reviews,
     initialReview,
     activities,
     userId,
@@ -136,6 +142,9 @@ export default function DetailsCard({
       const editedRegion = getInputValue("region");
       const editedActivities = editingActivities;
 
+      const editedImageUrl = isImage;
+      const editedPublicId = publicId;
+
       // Check if any of the required fields are empty
       if (!editedPlaceText || !editedDescriptionText || !editedPlaceName) {
         window.alert("Please fill out all fields");
@@ -154,6 +163,8 @@ export default function DetailsCard({
           name: editedPlaceName,
           region: editedRegion,
           activities: editedActivities,
+          image: editedImageUrl,
+          imageId: editedPublicId,
         }),
       });
 
@@ -201,14 +212,22 @@ export default function DetailsCard({
 
   const handleDeletePlace = async () => {
     try {
-      const response = await fetch(`/api/places/${id}`, {
-        method: "DELETE",
-      });
-      if (response.ok) {
-        window.alert("Place deleted successfully");
-        router.push("/places"); // Redirect to the home page after successful delete
-      } else {
-        window.alert("Failed to delete place");
+      // Display confirmation dialog
+      const confirmed = window.confirm(
+        "Are you sure you want to delete this place?"
+      );
+
+      // If user confirms deletion
+      if (confirmed) {
+        const response = await fetch(`/api/places/${id}`, {
+          method: "DELETE",
+        });
+        if (response.ok) {
+          window.alert("Place deleted successfully");
+          router.push("/places"); // Redirect to the home page after successful delete
+        } else {
+          window.alert("Failed to delete place");
+        }
       }
     } catch (error) {
       window.alert("Error deleting place:", error);
@@ -219,14 +238,22 @@ export default function DetailsCard({
   // for the comments
   const handleDelete = async (commentId) => {
     try {
-      const response = await fetch(`/api/comments/${commentId}`, {
-        method: "DELETE",
-      });
-      if (response.ok) {
-        window.alert("Comment deleted successfully");
-        fetchComments();
-      } else {
-        window.alert("Failed to delete comment");
+      // Display confirmation dialog
+      const confirmed = window.confirm(
+        "Are you sure you want to delete this comment?"
+      );
+
+      // If user confirms deletion
+      if (confirmed) {
+        const response = await fetch(`/api/comments/${commentId}`, {
+          method: "DELETE",
+        });
+        if (response.ok) {
+          window.alert("Comment deleted successfully");
+          fetchComments();
+        } else {
+          window.alert("Failed to delete comment");
+        }
       }
     } catch (error) {
       window.alert("Error deleting comment:", error);
@@ -322,6 +349,15 @@ export default function DetailsCard({
           />
         )}
         <StyledCardBody>
+          <StyledFormGroup>
+            {isEditingPlaceId && (
+              <UploadImage
+                isImage={isImage}
+                setIsImage={setIsImage}
+                setPublicId={setPublicId}
+              />
+            )}
+          </StyledFormGroup>
           {isEditingPlaceId ? (
             <input
               type="text"
@@ -332,11 +368,13 @@ export default function DetailsCard({
           ) : (
             <StyledCardTitle>{name}</StyledCardTitle>
           )}
-          <FavoriteButton
-            id={_id}
-            isFavorite={isFavorite}
-            toggleFavorite={toggleFavorite}
-          />
+          {!isEditingPlaceId && (
+            <FavoriteButton
+              id={_id}
+              isFavorite={isFavorite}
+              toggleFavorite={toggleFavorite}
+            />
+          )}
           {isEditingPlaceId ? (
             <StyledFormGroup>
               <p>Activities:</p>
@@ -349,6 +387,9 @@ export default function DetailsCard({
                       name={allActivities.activityname}
                       value={allActivities._id}
                       onChange={handleChange}
+                      defaultChecked={activities.some(
+                        (activity) => activity._id === allActivities._id
+                      )}
                     />
                     {allActivities.activityname}
                   </label>
@@ -416,10 +457,12 @@ export default function DetailsCard({
           {session.status === "authenticated" &&
             userId === session.data.user.id && (
               <>
+                <Divider />
+
                 <StyledCardButtonWrapper>
                   {isEditingPlaceId && (
                     <StyledSecondaryButton onClick={cancelEditPlace}>
-                      <FontAwesomeIcon icon={faTrashSolid} />
+                      <FontAwesomeIcon icon={faXmarkSolid} />
                       &nbsp;cancel edit
                     </StyledSecondaryButton>
                   )}
@@ -429,17 +472,16 @@ export default function DetailsCard({
                       &nbsp;Edit Place
                     </StyledSecondaryButton>
                   )}
-                </StyledCardButtonWrapper>
-                <StyledCardButtonWrapper>
+
                   {!isEditingPlaceId && (
-                    <StyledSecondaryButton onClick={handleDeletePlace}>
+                    <StyledDeleteButton onClick={handleDeletePlace}>
                       <FontAwesomeIcon icon={faTrashSolid} />
                       &nbsp;Delete Place
-                    </StyledSecondaryButton>
+                    </StyledDeleteButton>
                   )}
                   {isEditingPlaceId && (
                     <StyledSecondaryButton onClick={handleEditPlaceSubmit}>
-                      <FontAwesomeIcon icon={faTrashSolid} />
+                      <FontAwesomeIcon icon={faCheckSolid} />
                       &nbsp;Submit
                     </StyledSecondaryButton>
                   )}
@@ -448,8 +490,8 @@ export default function DetailsCard({
             )}
         </StyledCardBody>
       </StyledCardArticle>
-      <FormComments fetchComments={fetchComments} />
-      {comments.length > 0 && (
+      {!isEditingPlaceId && <FormComments fetchComments={fetchComments} />}
+      {comments.length > 0 && !isEditingPlaceId && (
         <StyledComments>
           <h3>Comments:</h3>
           {comments
@@ -522,6 +564,7 @@ export const StyledCardText = styled.p`
 
 export const StyledCardButtonWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5em;
 `;
 

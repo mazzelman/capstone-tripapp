@@ -7,10 +7,17 @@ import { faCloudArrowUp as faCloudArrowUpSolid } from "@fortawesome/free-solid-s
 import { faImage as faImageSolid } from "@fortawesome/free-solid-svg-icons";
 // import components
 import StyledSecondaryButton from "../Buttons/StyledSecondaryButton";
+import { LineWave } from "react-loader-spinner";
 // import components for styles
 import styled from "styled-components";
 
-const UploadImage = ({ isImage, setIsImage, setPublicId }) => {
+const UploadImage = ({
+  isImage,
+  setIsImage,
+  setPublicId,
+  isUploading,
+  setIsUploading,
+}) => {
   const [image, setImage] = useState(null);
 
   const handleImageChange = (event) => {
@@ -28,6 +35,7 @@ const UploadImage = ({ isImage, setIsImage, setPublicId }) => {
 
   const uploadImage = async () => {
     try {
+      setIsUploading(true); // Set uploading status to true
       const res = await fetch("/api/imageUpload", {
         method: "POST",
         headers: {
@@ -43,6 +51,8 @@ const UploadImage = ({ isImage, setIsImage, setPublicId }) => {
       window.alert(
         "Error uploading image, the file seems too big. Only 1MB allowed."
       );
+    } finally {
+      setIsUploading(false); // Reset uploading status
     }
   };
 
@@ -81,6 +91,16 @@ const UploadImage = ({ isImage, setIsImage, setPublicId }) => {
         <StyledSecondaryButton onClick={uploadImage}>
           Upload Image
         </StyledSecondaryButton>
+        {isUploading && (
+          <LineWave
+            visible={true}
+            height="100"
+            width="100"
+            color="#f4b157"
+            ariaLabel="line-wave-loading"
+            wrapperClass="line-wave-loading"
+          />
+        )}
       </StyledUpload>
       {isImage && (
         <StyledUploadMessage>

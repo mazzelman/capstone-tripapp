@@ -8,16 +8,7 @@ import FavoriteButton from "../Buttons/FavoriteButton";
 import styled from "styled-components";
 
 export default function Card({ $spotlight, place }) {
-  const {
-    _id,
-    name,
-    description,
-    region,
-    image,
-    temperature,
-    reviews,
-    activities,
-  } = place;
+  const { _id, name, region, image, activities } = place;
 
   const { isFavorite, toggleFavorite } = useFavoriteToggle();
 

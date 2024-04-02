@@ -5,26 +5,30 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import UploadImage from "./FormImageUpload";
+// import components
+import StyledPrimaryButton from "../Buttons/StyledPrimaryButton";
 // import components for styles
 import styled from "styled-components";
 import StyledSecondarySection from "../Sections/StyledSecondarySection";
 import StyledTertiarySection from "../Sections/StyledTertiarySection";
 import Divider from "../dividers/divider";
-// import components
-import StyledPrimaryButton from "../Buttons/StyledPrimaryButton";
 
-export default function AddPlaces({ getUniqueValues }) {
+export default function AddPlaces({
+  getUniqueValues,
+  isImage,
+  setIsImage,
+  publicId,
+  setPublicId,
+  isUploading,
+  setIsUploading,
+}) {
   const [isChecked, setIsChecked] = useState([]);
-  const [isImage, setIsImage] = useState();
-  const [publicId, setPublicId] = useState();
 
   const router = useRouter();
 
   const session = useSession();
   const userId = session.data?.user.id;
   const userName = session.data?.user.name;
-
-  console.log(session.data);
 
   const { data, error, isLoading } = useSWR("/api/activities");
 
@@ -117,6 +121,8 @@ export default function AddPlaces({ getUniqueValues }) {
         isImage={isImage}
         setIsImage={setIsImage}
         setPublicId={setPublicId}
+        isUploading={isUploading}
+        setIsUploading={setIsUploading}
       />
       {isImage && (
         <StyledAddPlacesForm onSubmit={handleOwnPlaceSubmit}>

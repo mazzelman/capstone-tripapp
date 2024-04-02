@@ -63,15 +63,15 @@ export default function Favorite() {
           </StyledSecondarySection>
         </Wrapper700>
       )}
-      {user.favoritePlaces.map((place) => {
-        return (
-          <Wrapper700 key={place._id}>
-            <StyledPrimarySection>
+      <Wrapper700>
+        {user.favoritePlaces.map((place) => {
+          return (
+            <StyledPrimarySection key={place._id}>
               <Card place={place} />
             </StyledPrimarySection>
-          </Wrapper700>
-        );
-      })}
+          );
+        })}
+      </Wrapper700>
     </>
   );
 }

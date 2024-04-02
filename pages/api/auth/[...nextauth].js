@@ -13,11 +13,13 @@ export default NextAuth({
     GoogleProvider({
       clientId: process.env.GG_ID,
       clientSecret: process.env.GG_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }),
 
     GithubProvider({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }),
   ],
 
