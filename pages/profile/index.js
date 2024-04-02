@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import LoginButton from "@/components/Buttons/LoginButton";
 import Wrapper700 from "@/components/Partials/Wrapper700";
 import Card from "@/components/Cards/Card";
+import FormAboutme from "@/components/Forms/FormAboutme";
 // import components for styles
 import styled from "styled-components";
 import StyledPrimarySection from "@/components/Sections/StyledPrimarySection";
@@ -57,6 +58,9 @@ export default function Profile() {
               alt="profile picture"
             />
           </StyledArticle>
+        </StyledPrimarySection>
+        <StyledPrimarySection>
+          <FormAboutme aboutmetext={user.aboutmetext} />
         </StyledPrimarySection>
         <StyledPrimarySection>
           <StyledArticle>
