@@ -350,13 +350,13 @@ export default function DetailsCard({
         )}
         <StyledCardBody>
           <StyledFormGroup>
-            {isEditingPlaceId ? (
+            {isEditingPlaceId && (
               <UploadImage
                 isImage={isImage}
                 setIsImage={setIsImage}
                 setPublicId={setPublicId}
               />
-            ) : null}
+            )}
           </StyledFormGroup>
           {isEditingPlaceId ? (
             <input
@@ -490,9 +490,7 @@ export default function DetailsCard({
             )}
         </StyledCardBody>
       </StyledCardArticle>
-      {!isEditingPlaceId ? (
-        <FormComments fetchComments={fetchComments} />
-      ) : null}
+      {!isEditingPlaceId && <FormComments fetchComments={fetchComments} />}
       {comments.length > 0 && !isEditingPlaceId && (
         <StyledComments>
           <h3>Comments:</h3>
