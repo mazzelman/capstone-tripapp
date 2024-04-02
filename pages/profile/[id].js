@@ -6,6 +6,7 @@ import MiniCard from "@/components/Cards/MiniCard";
 import Divider from "@/components/dividers/divider";
 import Wrapper700 from "@/components/Partials/Wrapper700";
 // import components for styles
+import styled from "styled-components";
 import StyledPrimarySection from "@/components/Sections/StyledPrimarySection";
 import { StyledArticle, StyledProfilePicture, StyledUserName } from ".";
 import StyledTertiarySection from "@/components/Sections/StyledTertiarySection";
@@ -50,7 +51,12 @@ export default function OpenProfile() {
         </StyledArticle>
       </StyledPrimarySection>
       <StyledPrimarySection>
-        <StyledArticle></StyledArticle>
+        {user.aboutmetext.length > 0 && (
+          <>
+            <h3>About Me:</h3>
+            <StyledAboutMe>{user.aboutmetext}</StyledAboutMe>
+          </>
+        )}
       </StyledPrimarySection>
       <Divider />
       <StyledPrimarySection>
@@ -67,3 +73,9 @@ export default function OpenProfile() {
     </Wrapper700>
   );
 }
+
+export const StyledAboutMe = styled.div`
+  padding: var(--main-padding);
+  background-color: var(--secondary-color-background);
+  border-radius: var(--border-radius);
+`;
