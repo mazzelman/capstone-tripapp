@@ -641,7 +641,6 @@ export const StyledEditTextareaWrapper = styled.div`
 
 export const StyledAuthorLink = styled(Link)`
   transition: 500ms ease-in-out;
-
   &:hover {
     color: var(--secondary-color);
     text-decoration: none;

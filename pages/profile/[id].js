@@ -2,7 +2,7 @@
 import useSWR from "swr";
 import { useRouter } from "next/router";
 // import components
-import Card from "@/components/Cards/Card";
+import MiniCard from "@/components/Cards/MiniCard";
 import Divider from "@/components/dividers/divider";
 import Wrapper700 from "@/components/Partials/Wrapper700";
 // import components for styles
@@ -60,7 +60,7 @@ export default function OpenProfile() {
       {user.createdPlaces.map((place) => {
         return (
           <StyledPrimarySection key={place._id}>
-            <Card place={place} />
+            <MiniCard place={place} />
           </StyledPrimarySection>
         );
       })}
