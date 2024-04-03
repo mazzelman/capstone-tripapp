@@ -60,7 +60,7 @@ export default function OpenProfile() {
       </StyledPrimarySection>
       <Divider />
       <StyledPrimarySection>
-        <h2>Created places</h2>
+        <h2>Created trips </h2>
       </StyledPrimarySection>
 
       {user.createdPlaces.map((place) => {

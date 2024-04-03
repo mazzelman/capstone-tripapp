@@ -69,7 +69,7 @@ export default function Profile() {
         </StyledPrimarySection>
         <Divider />
         <StyledPrimarySection>
-          <h2>Created places</h2>
+          <h2>My trips</h2>
         </StyledPrimarySection>
         {user.createdPlaces.map((place) => {
           return (
