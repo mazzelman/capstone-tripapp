@@ -88,7 +88,6 @@ export default function FormAboutme({ aboutmetext }) {
         required
       ></textarea>
       <StyledPrimaryButton type="submit">Submit</StyledPrimaryButton>
-      <StyledSecondaryButton type="reset">Reset</StyledSecondaryButton>
       <StyledDeleteButton onClick={handleDelete} type="button">
         Delete
       </StyledDeleteButton>
